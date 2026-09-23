@@ -4,9 +4,83 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mackforge</title>
+<meta name="description" content="Tools I built with coding agents for my own day, each labeled with how much I still use it.">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main></main>
+<header class="nav">
+  <a class="brand" href="./">mackforge</a>
+  <nav>
+    <a href="#projects">projects</a>
+    <a href="https://github.com/dtiger1889-ops">github</a>
+  </nav>
+</header>
+
+<main>
+  <p class="intro">I have always tried to streamline any task I have to do more than once. I'm not a developer, but coding agents turned that habit into the projects below, and almost all of them started with something in my own day that was slow or easy to forget. Everything here was built for my own use first, and the label next to each one says how much I still use it.</p>
+
+  <section id="projects">
+    <h2>Everyday tools</h2>
+    <ul class="projects">
+      <li><a href="https://github.com/dtiger1889-ops/life-os">Life OS</a> <span class="tag daily">daily use</span>
+        <p>My life admin in one SQLite database on my own PC, with an offline-first Android app, browser dashboards, and an agent on top.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/concur-buddy-app">Concur Buddy</a> <span class="tag">in use</span>
+        <p>Log an expense in one field when it happens, so the details are still there when it's time to file the Concur report.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/whatdoweplay">whatdoweplay</a> <span class="tag">in use</span>
+        <p>Scores Steam sales against what I actually play, and picks a game everyone on the call already owns.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/finance-receipts-pipeline">finance-receipts-pipeline</a> <span class="tag">stable</span>
+        <p>Matches email receipts and card statements against a budgeting-app export, into a local database and a dashboard.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/ics-to-csv">ics-to-csv</a> <span class="tag">stable</span>
+        <p>Turns a calendar file into a spreadsheet right in the browser, with nothing uploaded.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/social-crm-template">social-crm-template</a> <span class="tag">template</span>
+        <p>A personal social CRM in Airtable that works by hand or through an agent.</p></li>
+    </ul>
+
+    <h2>Working with coding agents</h2>
+    <ul class="projects">
+      <li><a href="https://github.com/dtiger1889-ops/claude-harness-toolbox">Claude Code Harness Toolbox</a> <span class="tag daily">daily use</span>
+        <p>Checkpoint files, hooks, and skills that carry a project from one agent session to the next.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/obsidian-agent-integration">Obsidian agent integration</a> <span class="tag daily">daily use</span>
+        <p>How I capture notes on my phone and let an agent file them into an Obsidian vault, with approval gates along the way.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/agent-ladder">agent-ladder</a> <span class="tag">in use</span>
+        <p>Which agent or model gets which job, and when work should be handed down to a cheaper one.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/telegram-notifier-mcp">telegram-notifier-mcp</a> <span class="tag">in use</span>
+        <p>Gives an agent one tool, sending me a Telegram message when the long job finishes.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/read-pdf">read-pdf</a> <span class="tag">stable</span>
+        <p>An agent skill that reads web pages saved as PDFs for a fraction of the tokens.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/yolo-alchemy">yolo-alchemy</a> <span class="tag">experiment</span>
+        <p>An overnight agent that spends leftover weekly quota pulling ideas from unrelated fields into my projects.</p></li>
+      <li><a href="https://github.com/dtiger1889-ops/harness-benchmark-report">harness-benchmark-report</a> <span class="tag">finished</span>
+        <p>A 154-trial benchmark of whether the harness actually makes agents cheaper and more reliable, including what did not work.</p></li>
+    </ul>
+
+    <h2>Hintforge</h2>
+    <ul class="projects">
+      <li><a href="https://github.com/hintforge/builder">builder</a> <span class="tag">in use</span>
+        <p>Builds a spoiler-safe hint companion for a game, one that knows where you are and only answers what you ask.</p></li>
+      <li><a href="https://github.com/hintforge/reader">reader</a> <span class="tag">in use</span>
+        <p>The half you play with: point it at an installed guide and ask your question.</p></li>
+      <li><a href="https://github.com/hintforge">Game guides</a> <span class="tag">8 so far</span>
+        <p>Finished guides built with the builder, from Portal to Rogue Trader.</p></li>
+    </ul>
+  </section>
+
+  <section class="legend">
+    <h2>What the labels mean</h2>
+    <dl>
+      <dt>daily use</dt><dd>I open it most days.</dd>
+      <dt>in use</dt><dd>I use it regularly, and it still changes when something annoys me.</dd>
+      <dt>stable</dt><dd>It works and rarely needs a change.</dd>
+      <dt>finished</dt><dd>Done, and kept for the record.</dd>
+      <dt>experiment</dt><dd>Running, but the jury is still out.</dd>
+      <dt>template</dt><dd>A starting point to copy, not a running system.</dd>
+    </dl>
+  </section>
+</main>
+
+<footer>
+  <p>D.M. &middot; <a href="https://github.com/dtiger1889-ops">github.com/dtiger1889-ops</a> &middot; updated September 2026</p>
+</footer>
 </body>
 </html>

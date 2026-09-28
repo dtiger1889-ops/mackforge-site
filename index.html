@@ -23,6 +23,15 @@
   <nav>
     <a href="#projects">projects</a>
     <a href="https://github.com/dtiger1889-ops">github</a>
+    <span class="share"><a href="#" id="share-btn" aria-haspopup="true" aria-expanded="false">share</a>
+      <span class="share-menu" id="share-menu" hidden>
+        <a data-net="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+        <a data-net="reddit" target="_blank" rel="noopener">Reddit</a>
+        <a data-net="x" target="_blank" rel="noopener">X</a>
+        <a data-net="bluesky" target="_blank" rel="noopener">Bluesky</a>
+        <a href="#" id="share-copy">Copy link</a>
+        <a href="#" id="share-native" hidden>More&hellip;</a>
+      </span></span>
   </nav>
 </header>
 
@@ -91,5 +100,32 @@
 <footer>
   <p>D.M. &middot; <a href="https://github.com/dtiger1889-ops">github.com/dtiger1889-ops</a> &middot; updated September 2026</p>
 </footer>
+<script>
+(function () {
+  const url = "https://mackforge.dev/";
+  const title = "mackforge: tools I built with coding agents for my own day";
+  const u = encodeURIComponent(url), t = encodeURIComponent(title);
+  const links = {
+    linkedin: "https://www.linkedin.com/sharing/share-offsite/?url=" + u,
+    reddit: "https://www.reddit.com/submit?url=" + u + "&title=" + t,
+    x: "https://x.com/intent/post?url=" + u + "&text=" + t,
+    bluesky: "https://bsky.app/intent/compose?text=" + encodeURIComponent(title + " " + url),
+  };
+  const btn = document.getElementById("share-btn"), menu = document.getElementById("share-menu");
+  menu.querySelectorAll("a[data-net]").forEach(a => { a.href = links[a.dataset.net]; });
+  const close = () => { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); };
+  btn.addEventListener("click", e => { e.preventDefault(); e.stopPropagation(); menu.hidden = !menu.hidden; btn.setAttribute("aria-expanded", menu.hidden ? "false" : "true"); });
+  document.addEventListener("click", e => { if (!menu.contains(e.target)) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+  const copy = document.getElementById("share-copy");
+  copy.addEventListener("click", async e => {
+    e.preventDefault();
+    try { await navigator.clipboard.writeText(url); copy.textContent = "Link copied"; } catch (err) { window.prompt("Copy this link:", url); }
+    setTimeout(() => { copy.textContent = "Copy link"; close(); }, 1200);
+  });
+  const native = document.getElementById("share-native");
+  if (navigator.share) { native.hidden = false; native.addEventListener("click", e => { e.preventDefault(); close(); navigator.share({ title: document.title, text: title, url }).catch(() => {}); }); }
+})();
+</script>
 </body>
 </html>

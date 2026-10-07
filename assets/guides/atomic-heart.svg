@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" width="1500" height="820" role="img" aria-label="Atomic Heart Hintforge companion status dossier">
+  <!-- ============================================================
+       ATOMIC HEART - Hintforge status card. Same skeleton as every
+       Hintforge guide card; only the :root THEME block + the visible
+       text strings change per game.
+       ============================================================ -->
+  <style>
+    :root{
+      --paper:#e7dcc2; --paper-edge:#d1c3a2; --ink:#241f1c; --ink-soft:#5a5040;
+      --primary:#9a2d28; --primary-lt:#b7635a; --seg:#8a6b26; --seg-dk:#5f4715;
+      --cream:#f1e9d5; --active:#3f7d6e; --rule:#cbbd9c; --redact:#201b16;
+    }
+    .mono{font-family:'Courier New',Consolas,'DejaVu Sans Mono',monospace;}
+    .b{font-weight:700;}
+    text{fill:var(--ink);}
+    .tag{font-size:20px;letter-spacing:1px;}
+    .tag-o{fill:var(--primary);}
+    .soft{fill:var(--ink-soft);}
+    .title{font-size:82px;letter-spacing:2px;fill:var(--ink);}
+    .sub{font-size:27px;fill:var(--ink-soft);}
+    .seclbl{font-size:25px;letter-spacing:1px;fill:var(--primary);}
+    .cap{font-size:21px;fill:var(--ink-soft);}
+    .seg{font-size:20px;letter-spacing:1px;fill:var(--cream);}
+    .seg-thin{font-size:20px;letter-spacing:1px;fill:var(--seg);}
+    .rlbl{font-size:23px;letter-spacing:1px;fill:var(--primary);}
+    .rval{font-size:22px;fill:var(--ink);}
+    .rval-mute{font-size:22px;fill:var(--ink-soft);}
+    .foot{font-size:21px;fill:var(--ink-soft);}
+    .stamp-t{font-size:46px;letter-spacing:3px;fill:var(--primary);}
+    .stamp-s{font-size:23px;letter-spacing:2px;fill:var(--primary);}
+  </style>
+
+  <defs>
+    <radialGradient id="vig" cx="50%" cy="42%" r="78%">
+      <stop offset="55%" stop-color="var(--paper)"/>
+      <stop offset="100%" stop-color="var(--paper-edge)"/>
+    </radialGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0"/></filter>
+    <filter id="worn"><feTurbulence type="fractalNoise" baseFrequency="0.04 0.06" numOctaves="3" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="6"/></filter>
+  </defs>
+
+  <!-- paper -->
+  <rect x="0" y="0" width="1500" height="820" fill="url(#vig)"/>
+  <rect x="0" y="0" width="1500" height="820" filter="url(#grain)" opacity="0.5"/>
+
+  <!-- double frame -->
+  <rect x="38" y="38" width="1424" height="744" fill="none" stroke="var(--primary)" stroke-width="3"/>
+  <rect x="47" y="47" width="1406" height="726" fill="none" stroke="var(--primary-lt)" stroke-width="1"/>
+  <g stroke="var(--primary)" stroke-width="3">
+    <path d="M47 47 h26 M47 47 v26"/>
+    <path d="M1453 47 h-26 M1453 47 v26"/>
+    <path d="M47 773 h26 M47 773 v-26"/>
+    <path d="M1453 773 h-26 M1453 773 v-26"/>
+  </g>
+
+  <!-- top tag row -->
+  <text class="mono b tag tag-o" x="78" y="82">FACILITY 3826</text>
+  <text class="mono tag soft" x="272" y="82">//  FIELD MANUAL</text>
+  <text class="mono tag soft" x="1422" y="82" text-anchor="end">FILE No. HF-AH-001</text>
+  <line x1="78" y1="100" x2="1422" y2="100" stroke="var(--primary-lt)" stroke-width="1"/>
+
+  <!-- title -->
+  <text class="mono b title" x="78" y="200">ATOMIC HEART</text>
+  <text class="mono sub" x="80" y="250">First-person action-RPG &#8212; alternate-1955 USSR</text>
+
+  <!-- coverage -->
+  <text class="mono b seclbl" x="78" y="340">COVERAGE</text>
+  <text class="mono cap" x="288" y="340">base game mapped &#8212; DLC &amp; Testing Grounds run thinner</text>
+  <g>
+    <rect x="78"   y="366" width="212" height="52" rx="6" fill="var(--seg)" stroke="var(--seg-dk)"/>
+    <text class="mono b seg" x="184"  y="399" text-anchor="middle">MECHANICS</text>
+    <rect x="302"  y="366" width="212" height="52" rx="6" fill="var(--seg)" stroke="var(--seg-dk)"/>
+    <text class="mono b seg" x="408"  y="399" text-anchor="middle">ZONES</text>
+    <rect x="526"  y="366" width="212" height="52" rx="6" fill="var(--seg)" stroke="var(--seg-dk)"/>
+    <text class="mono b seg" x="632"  y="399" text-anchor="middle">NPCS</text>
+    <rect x="750"  y="366" width="212" height="52" rx="6" fill="var(--seg)" stroke="var(--seg-dk)"/>
+    <text class="mono b seg" x="856"  y="399" text-anchor="middle">ITEMS</text>
+    <!-- thin section: outlined, not filled -->
+    <rect x="974"  y="366" width="212" height="52" rx="6" fill="none" stroke="var(--seg)" stroke-width="2" stroke-dasharray="6 4"/>
+    <text class="mono b seg-thin" x="1080" y="399" text-anchor="middle">PUZZLES</text>
+    <rect x="1198" y="366" width="224" height="52" rx="6" fill="var(--seg)" stroke="var(--seg-dk)"/>
+    <text class="mono b seg" x="1310" y="399" text-anchor="middle">ACHIEVEMENTS</text>
+  </g>
+
+  <!-- status rows -->
+  <!-- VERIFIED (active) -->
+  <circle cx="96" cy="470" r="10" fill="var(--active)" stroke="#26473d"/>
+  <text class="mono b rlbl" x="130" y="478">VERIFIED</text>
+  <text class="mono rval" x="352" y="478">vs game v1.16.3.0 (still current) &#8212; checked May 2026</text>
+  <line x1="78" y1="500" x2="1422" y2="500" stroke="var(--rule)" stroke-width="1"/>
+  <!-- SPOILER CTRL (attention) -->
+  <circle cx="96" cy="536" r="10" fill="var(--active)" stroke="#26473d"/>
+  <text class="mono b rlbl" x="130" y="544">SPOILER CTRL</text>
+  <text class="mono rval" x="352" y="544">you set two dials &#8212; enemy (0-5) &amp; puzzle (0-3), both start silent</text>
+  <line x1="78" y1="566" x2="1422" y2="566" stroke="var(--rule)" stroke-width="1"/>
+  <!-- SAVE READER (partial) -->
+  <circle cx="96" cy="602" r="10" fill="none" stroke="var(--seg)" stroke-width="2"/>
+  <path d="M96 592 A10 10 0 0 0 96 612 Z" fill="var(--seg)"/>
+  <text class="mono b rlbl" x="130" y="610">SAVE READER</text>
+  <text class="mono rval" x="352" y="610">LIMITED &#8212; reads your zone &amp; glove skills; deep save is encrypted</text>
+  <line x1="78" y1="632" x2="1422" y2="632" stroke="var(--rule)" stroke-width="1"/>
+  <!-- TOOLS (partial) -->
+  <circle cx="96" cy="668" r="10" fill="none" stroke="var(--seg)" stroke-width="2"/>
+  <path d="M96 658 A10 10 0 0 0 96 678 Z" fill="var(--seg)"/>
+  <text class="mono b rlbl" x="130" y="676">TOOLS</text>
+  <text class="mono rval" x="352" y="676">PARTIAL &#8212; skill-tree planner built; weapon-upgrade planner planned</text>
+
+  <!-- fine print: save-reader spoiler caveat -->
+  <path d="M90 700 l11 19 h-22 z" fill="none" stroke="var(--primary)" stroke-width="1.5"/>
+  <circle cx="90" cy="714" r="1.4" fill="var(--primary)"/>
+  <text class="mono foot" x="118" y="720" font-style="italic">Save reading is header-only &amp; hard to spoiler-gate; any leak surfaces there, not in guide answers.</text>
+
+  <!-- footer -->
+  <text class="mono foot" x="78" y="762">github.com/hintforge/atomic-heart</text>
+  <text class="mono foot" x="1422" y="762" text-anchor="end">reads only the files you control</text>
+
+  <!-- worn 'VERIFIED' rubber stamp -->
+  <g transform="translate(1235 92) rotate(7)" opacity="0.82" filter="url(#worn)">
+    <rect x="0" y="0" width="210" height="104" rx="12" fill="none" stroke="var(--primary)" stroke-width="6"/>
+    <rect x="12" y="12" width="186" height="80" rx="8" fill="none" stroke="var(--primary)" stroke-width="2"/>
+    <text class="mono b stamp-t" x="105" y="52" text-anchor="middle">VERIFIED</text>
+    <text class="mono b stamp-s" x="105" y="80" text-anchor="middle">MAY 2026</text>
+  </g>
+</svg>

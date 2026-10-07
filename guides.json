@@ -1,0 +1,100 @@
+{
+ "organisation": "hintforge",
+ "reader": "https://github.com/hintforge/reader",
+ "guides": [
+  {
+   "repo": "atomic-heart",
+   "game": "Atomic Heart",
+   "description": "The first-person action-RPG set in an alternate 1955 USSR.",
+   "url": "https://github.com/hintforge/atomic-heart",
+   "image": "assets/guides/atomic-heart.svg",
+   "imageAlt": "Atomic Heart companion status: coverage, live-game verification, spoiler control, and save reader",
+   "updated": "2026-09-17T05:04:44Z",
+   "updatedText": "17 September 2026"
+  },
+  {
+   "repo": "frostpunk",
+   "game": "Frostpunk",
+   "description": "11 bit studios' frostbitten survival city-builder where you keep the last city on Earth alive around a coal generator.",
+   "url": "https://github.com/hintforge/frostpunk",
+   "image": "assets/guides/frostpunk.svg",
+   "imageAlt": "Frostpunk companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-09-17T02:15:30Z",
+   "updatedText": "17 September 2026"
+  },
+  {
+   "repo": "ftl-faster-than-light",
+   "game": "FTL: Faster Than Light",
+   "description": "The spaceship-management roguelike where you run one ship ahead of a pursuing fleet, one jump at a time.",
+   "url": "https://github.com/hintforge/ftl-faster-than-light",
+   "image": "assets/guides/ftl-faster-than-light.svg",
+   "imageAlt": "FTL companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-09-17T18:49:38Z",
+   "updatedText": "17 September 2026"
+  },
+  {
+   "repo": "into-the-breach",
+   "game": "Into the Breach",
+   "description": "Subset Games' turn-based mech tactics roguelike where you defend islands from the Vek.",
+   "url": "https://github.com/hintforge/into-the-breach",
+   "image": "assets/guides/into-the-breach.svg",
+   "imageAlt": "Into the Breach companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-09-17T02:15:37Z",
+   "updatedText": "17 September 2026"
+  },
+  {
+   "repo": "planet-zoo",
+   "game": "Planet Zoo",
+   "description": "Frontier's wildlife management sim where you design habitats, breed species, and build the zoo of your dreams across career scenarios and sandbox.",
+   "url": "https://github.com/hintforge/planet-zoo",
+   "image": "assets/guides/planet-zoo.svg",
+   "imageAlt": "Planet Zoo companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-09-17T13:06:46Z",
+   "updatedText": "17 September 2026"
+  },
+  {
+   "repo": "portal",
+   "game": "Portal",
+   "description": "Aperture Science's first-person puzzler about a portal gun, a series of test chambers, and a passive-aggressive AI.",
+   "url": "https://github.com/hintforge/portal",
+   "image": "assets/guides/portal.svg",
+   "imageAlt": "Portal companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-09-17T20:04:26Z",
+   "updatedText": "17 September 2026"
+  },
+  {
+   "repo": "the-stanley-parable",
+   "game": "The Stanley Parable",
+   "description": "The narrative game about choice and an increasingly exasperated Narrator.",
+   "url": "https://github.com/hintforge/the-stanley-parable",
+   "image": "assets/guides/the-stanley-parable.svg",
+   "imageAlt": "The Stanley Parable companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-08-23T17:43:44Z",
+   "updatedText": "23 August 2026"
+  },
+  {
+   "repo": "warhammer-40-000-rogue-trader",
+   "game": "Warhammer 40,000: Rogue Trader",
+   "description": "Owlcat's grimdark CRPG in the Koronus Expanse.",
+   "url": "https://github.com/hintforge/warhammer-40-000-rogue-trader",
+   "image": "assets/guides/warhammer-40-000-rogue-trader.svg",
+   "imageAlt": "Rogue Trader companion status: coverage, how current it is, spoiler control, and save reader",
+   "updated": "2026-09-17T18:48:27Z",
+   "updatedText": "17 September 2026"
+  }
+ ],
+ "framework": [
+  {
+   "repo": "builder",
+   "label": "Builder",
+   "url": "https://github.com/hintforge/builder",
+   "description": "Turns researched material about a game into a Hintforge guide."
+  },
+  {
+   "repo": "reader",
+   "label": "Reader",
+   "url": "https://github.com/hintforge/reader",
+   "description": "Runs a guide inside your coding agent and answers at the spoiler level you set."
+  }
+ ]
+}

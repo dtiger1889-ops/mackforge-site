@@ -118,9 +118,9 @@ def card(guide):
     return (
         f'<article class="project has-image guide" data-search="{search}">\n'
         f'{image}<div class="project-body"><div class="project-meta">Updated {e(guide["updatedText"])}</div>'
-        f'<h3><a href="{e(guide["url"])}">{e(guide["game"])}</a></h3><p>{e(guide["description"])}</p>'
+        f'<h3><a href="{e(guide["url"])}" target="_blank" rel="noopener noreferrer">{e(guide["game"])}</a></h3><p>{e(guide["description"])}</p>'
         f'<div class="project-bottom"><div class="actions">'
-        f'<a class="action" href="{e(guide["url"])}" aria-label="Guide repository: {e(guide["game"])}">Guide <span aria-hidden="true">↗</span></a>'
+        f'<a class="action" href="{e(guide["url"])}" target="_blank" rel="noopener noreferrer" aria-label="Guide repository: {e(guide["game"])}">Guide <span aria-hidden="true">↗</span></a>'
         f"</div></div></div></article>"
     )
 
@@ -128,7 +128,7 @@ def card(guide):
 def framework_item(repo):
     e = html.escape
     return (
-        f'<li><a href="{e(repo["url"])}">{e(repo["label"])} <span aria-hidden="true">↗</span></a>'
+        f'<li><a href="{e(repo["url"])}" target="_blank" rel="noopener noreferrer">{e(repo["label"])} <span aria-hidden="true">↗</span></a>'
         f'<span>{e(repo["description"])}</span></li>'
     )
 

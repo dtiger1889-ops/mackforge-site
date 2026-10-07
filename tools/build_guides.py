@@ -121,7 +121,6 @@ def card(guide):
         f'<h3><a href="{e(guide["url"])}">{e(guide["game"])}</a></h3><p>{e(guide["description"])}</p>'
         f'<div class="project-bottom"><div class="actions">'
         f'<a class="action" href="{e(guide["url"])}" aria-label="Guide repository: {e(guide["game"])}">Guide <span aria-hidden="true">↗</span></a>'
-        f'<a class="action" href="{READER_URL}" aria-label="Hintforge reader, which runs this guide">Reader <span aria-hidden="true">↗</span></a>'
         f"</div></div></div></article>"
     )
 

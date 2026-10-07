@@ -4,22 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mackforge</title>
-<meta name="description" content="Tools I built with coding agents for my own day, each labeled with how much I still use it.">
+<meta name="description" content="Tools I built with coding agents for my own day.">
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="website">
 <meta property="og:title" content="mackforge">
-<meta property="og:description" content="Tools I built with coding agents for my own day, each labeled with how much I still use it.">
+<meta property="og:description" content="Tools I built with coding agents for my own day.">
 <meta property="og:url" content="https://mackforge.dev/">
 <meta property="og:image" content="https://mackforge.dev/assets/preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://mackforge.dev/assets/preview.png">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%220%22 fill=%22%231f3dff%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Georgia,serif%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22%23ffffff%22%3Em%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="nav">
-  <a class="brand" href="./">mackforge</a>
+  <a class="brand" href="./"><span class="mark" aria-hidden="true">m</span>mackforge</a>
   <nav>
     <a href="#projects">projects</a>
     <a href="https://github.com/dtiger1889-ops">github</a>
@@ -36,71 +41,131 @@
 </header>
 
 <main>
-  <p class="intro">I have always tried to streamline any task I have to do more than once. I'm not a developer, but coding agents turned that habit into the projects below, and almost all of them started with something in my own day that was slow or easy to forget. Everything here was built for my own use first, and the label next to each one says how much I still use it.</p>
+  <section class="hero">
+    <h1>mackforge<span class="dot">.</span></h1>
+    <p class="intro">I have always tried to streamline any task I have to do more than once. I'm not a developer, but coding agents turned that habit into the projects below, and almost all of them started with something in my own day that was slow or easy to forget. Everything here was built for my own use first.</p>
+  </section>
+
+  <div class="filters" role="group" aria-label="Filter projects">
+    <p class="filters-label">Filter</p>
+    <div class="chips">
+      <button type="button" data-tag="" aria-pressed="true">All <span>17</span></button>
+      <button type="button" data-tag="games" aria-pressed="false">Games <span>4</span></button>
+      <button type="button" data-tag="agent-skill" aria-pressed="false">Agent skill <span>3</span></button>
+      <button type="button" data-tag="claude-code" aria-pressed="false">Claude Code <span>3</span></button>
+      <button type="button" data-tag="codex" aria-pressed="false">Codex <span>2</span></button>
+      <button type="button" data-tag="money" aria-pressed="false">Money <span>2</span></button>
+      <button type="button" data-tag="research" aria-pressed="false">Research <span>2</span></button>
+      <button type="button" data-tag="airtable" aria-pressed="false">Airtable <span>1</span></button>
+      <button type="button" data-tag="android" aria-pressed="false">Android <span>1</span></button>
+      <button type="button" data-tag="browser" aria-pressed="false">Browser <span>1</span></button>
+      <button type="button" data-tag="life-admin" aria-pressed="false">Life admin <span>1</span></button>
+      <button type="button" data-tag="mcp" aria-pressed="false">MCP <span>1</span></button>
+      <button type="button" data-tag="obsidian" aria-pressed="false">Obsidian <span>1</span></button>
+      <button type="button" data-tag="windows" aria-pressed="false">Windows <span>1</span></button>
+    </div>
+  </div>
 
   <section id="projects">
-    <h2>Everyday tools</h2>
+    <h2><span>Everyday tools</span> <span class="count">06</span></h2>
     <ul class="projects">
-      <li><a href="https://github.com/dtiger1889-ops/life-os">Life OS</a> <span class="tag daily">daily use</span>
-        <p>My life admin in one SQLite database on my own PC, with an offline-first Android app, browser dashboards, and an agent on top.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/concur-buddy-app">Concur Buddy</a> <span class="tag">in use</span>
-        <p>Log an expense in one field when it happens, so the details are still there when it's time to file the Concur report.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/whatdoweplay">whatdoweplay</a> <span class="tag">in use</span>
-        <p>Scores Steam sales against what I actually play, and picks a game everyone on the call already owns.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/finance-receipts-pipeline">finance-receipts-pipeline</a> <span class="tag">stable</span>
-        <p>Matches email receipts and card statements against a budgeting-app export, into a local database and a dashboard.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/ics-to-csv">ics-to-csv</a> <span class="tag">stable</span>
-        <p>Turns a calendar file into a spreadsheet right in the browser, with nothing uploaded.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/social-crm-template">social-crm-template</a> <span class="tag">template</span>
-        <p>A personal social CRM in Airtable that works by hand or through an agent.</p></li>
+      <li data-tags="android life-admin"><a class="row" href="https://github.com/dtiger1889-ops/life-os">
+          <span class="text"><span class="title">Life OS</span> <span class="tags"><span class="tag">Android</span><span class="tag">Life admin</span></span>
+          <span class="desc">My life admin in one SQLite database on my own PC, with an offline-first Android app, browser dashboards, and an agent on top.</span></span></a></li>
+      <li data-tags="windows money"><a class="row" href="https://github.com/dtiger1889-ops/concur-buddy-app">
+          <span class="text"><span class="title">Concur Buddy</span> <span class="tags"><span class="tag">Windows</span><span class="tag">Money</span></span>
+          <span class="desc">Log an expense in one field when it happens, so the details are still there when it's time to file the Concur report.</span></span>
+          <img class="thumb" src="assets/thumbs/concur-buddy.webp" alt="Screenshot of Concur Buddy" width="720" height="598" loading="lazy"></a></li>
+      <li data-tags="games"><a class="row" href="https://github.com/dtiger1889-ops/whatdoweplay">
+          <span class="text"><span class="title">whatdoweplay</span> <span class="tags"><span class="tag">Games</span></span>
+          <span class="desc">Scores Steam sales against what I actually play, and picks a game everyone on the call already owns.</span></span>
+          <img class="thumb" src="assets/thumbs/whatdoweplay.webp" alt="Screenshot of whatdoweplay" width="720" height="587" loading="lazy"></a></li>
+      <li data-tags="money"><a class="row" href="https://github.com/dtiger1889-ops/finance-receipts-pipeline">
+          <span class="text"><span class="title">finance-receipts-pipeline</span> <span class="tags"><span class="tag">Money</span></span>
+          <span class="desc">Matches email receipts and card statements against a budgeting-app export, into a local database and a dashboard.</span></span></a></li>
+      <li data-tags="browser"><a class="row" href="https://github.com/dtiger1889-ops/ics-to-csv">
+          <span class="text"><span class="title">ics-to-csv</span> <span class="tags"><span class="tag">Browser</span></span>
+          <span class="desc">Turns a calendar file into a spreadsheet right in the browser, with nothing uploaded.</span></span>
+          <img class="thumb" src="assets/thumbs/ics-to-csv.webp" alt="Screenshot of ics-to-csv" width="720" height="648" loading="lazy"></a></li>
+      <li data-tags="airtable"><a class="row" href="https://github.com/dtiger1889-ops/social-crm-template">
+          <span class="text"><span class="title">social-crm-template</span> <span class="tags"><span class="tag">Airtable</span></span>
+          <span class="desc">A personal social CRM in Airtable that works by hand or through an agent.</span></span></a></li>
     </ul>
 
-    <h2>Working with coding agents</h2>
+    <h2><span>Working with coding agents</span> <span class="count">08</span></h2>
     <ul class="projects">
-      <li><a href="https://github.com/dtiger1889-ops/claude-harness-toolbox">Claude Code Harness Toolbox</a> <span class="tag daily">daily use</span>
-        <p>Checkpoint files, hooks, and skills that carry a project from one agent session to the next.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/obsidian-agent-integration">Obsidian agent integration</a> <span class="tag daily">daily use</span>
-        <p>How I capture notes on my phone and let an agent file them into an Obsidian vault, with approval gates along the way.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/agent-ladder">agent-ladder</a> <span class="tag">in use</span>
-        <p>Which agent or model gets which job, and when work should be handed down to a cheaper one.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/telegram-notifier-mcp">telegram-notifier-mcp</a> <span class="tag">in use</span>
-        <p>Gives an agent one tool, sending me a Telegram message when the long job finishes.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/read-pdf">read-pdf</a> <span class="tag">stable</span>
-        <p>An agent skill that reads web pages saved as PDFs for a fraction of the tokens.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/yolo-alchemy">yolo-alchemy</a> <span class="tag">experiment</span>
-        <p>An overnight agent that spends leftover weekly quota pulling ideas from unrelated fields into my projects.</p></li>
-      <li><a href="https://github.com/dtiger1889-ops/harness-benchmark-report">harness-benchmark-report</a> <span class="tag">finished</span>
-        <p>A 154-trial benchmark of whether the harness actually makes agents cheaper and more reliable, including what did not work.</p></li>
+      <li data-tags="claude-code codex"><a class="row" href="https://github.com/dtiger1889-ops/claude-harness-toolbox">
+          <span class="text"><span class="title">Claude Code Harness Toolbox</span> <span class="tags"><span class="tag">Claude Code</span><span class="tag">Codex</span></span>
+          <span class="desc">Checkpoint files, hooks, and skills that carry a project from one agent session to the next.</span></span></a></li>
+      <li data-tags="obsidian"><a class="row" href="https://github.com/dtiger1889-ops/obsidian-agent-integration">
+          <span class="text"><span class="title">Obsidian agent integration</span> <span class="tags"><span class="tag">Obsidian</span></span>
+          <span class="desc">How I capture notes on my phone and let an agent file them into an Obsidian vault, with approval gates along the way.</span></span></a></li>
+      <li data-tags="claude-code codex"><a class="row" href="https://github.com/dtiger1889-ops/agent-ladder">
+          <span class="text"><span class="title">agent-ladder</span> <span class="tags"><span class="tag">Claude Code</span><span class="tag">Codex</span></span>
+          <span class="desc">Which agent or model gets which job, and when work should be handed down to a cheaper one.</span></span></a></li>
+      <li data-tags="research"><a class="row" href="https://dtiger1889-ops.github.io/agent-deck-comparison/">
+          <span class="text"><span class="title">Agent-manager comparison</span> <span class="tags"><span class="tag">Research</span></span>
+          <span class="desc">A sortable table of the apps that run several coding agents at once, from Orca and T3 Code to Claude Desktop, checked feature by feature.</span></span>
+          <img class="thumb" src="assets/thumbs/agent-deck-comparison.webp" alt="Screenshot of the agent-manager comparison table" width="720" height="463" loading="lazy"></a></li>
+      <li data-tags="mcp"><a class="row" href="https://github.com/dtiger1889-ops/telegram-notifier-mcp">
+          <span class="text"><span class="title">telegram-notifier-mcp</span> <span class="tags"><span class="tag">MCP</span></span>
+          <span class="desc">Gives an agent one tool, sending me a Telegram message when the long job finishes.</span></span></a></li>
+      <li data-tags="agent-skill"><a class="row" href="https://github.com/dtiger1889-ops/read-pdf">
+          <span class="text"><span class="title">read-pdf</span> <span class="tags"><span class="tag">Agent skill</span></span>
+          <span class="desc">An agent skill that reads web pages saved as PDFs for a fraction of the tokens.</span></span></a></li>
+      <li data-tags="claude-code"><a class="row" href="https://github.com/dtiger1889-ops/yolo-alchemy">
+          <span class="text"><span class="title">yolo-alchemy</span> <span class="tags"><span class="tag">Claude Code</span></span>
+          <span class="desc">An overnight agent that spends leftover weekly quota pulling ideas from unrelated fields into my projects.</span></span></a></li>
+      <li data-tags="research"><a class="row" href="https://github.com/dtiger1889-ops/harness-benchmark-report">
+          <span class="text"><span class="title">harness-benchmark-report</span> <span class="tags"><span class="tag">Research</span></span>
+          <span class="desc">A 154-trial benchmark of whether the harness actually makes agents cheaper and more reliable, including what did not work.</span></span></a></li>
     </ul>
 
-    <h2>Hintforge</h2>
+    <h2><span>Hintforge</span> <span class="count">03</span></h2>
     <ul class="projects">
-      <li><a href="https://github.com/hintforge/builder">builder</a> <span class="tag">in use</span>
-        <p>Builds a spoiler-safe hint companion for a game, one that knows where you are and only answers what you ask.</p></li>
-      <li><a href="https://github.com/hintforge/reader">reader</a> <span class="tag">in use</span>
-        <p>The half you play with: point it at an installed guide and ask your question.</p></li>
-      <li><a href="https://github.com/hintforge">Game guides</a> <span class="tag">stable</span>
-        <p>Eight finished guides built with the builder, from Portal to Rogue Trader.</p></li>
+      <li data-tags="games agent-skill"><a class="row" href="https://github.com/hintforge/builder">
+          <span class="text"><span class="title">builder</span> <span class="tags"><span class="tag">Games</span><span class="tag">Agent skill</span></span>
+          <span class="desc">Builds a spoiler-safe hint companion for a game, one that knows where you are and only answers what you ask.</span></span>
+          <img class="thumb" src="assets/thumbs/hintforge-builder.webp" alt="Screenshot of builder" width="720" height="561" loading="lazy"></a></li>
+      <li data-tags="games agent-skill"><a class="row" href="https://github.com/hintforge/reader">
+          <span class="text"><span class="title">reader</span> <span class="tags"><span class="tag">Games</span><span class="tag">Agent skill</span></span>
+          <span class="desc">The half you play with: point it at an installed guide and ask your question.</span></span>
+          <img class="thumb" src="assets/thumbs/hintforge-reader.webp" alt="Screenshot of reader" width="720" height="334" loading="lazy"></a></li>
+      <li data-tags="games"><a class="row" href="https://github.com/hintforge">
+          <span class="text"><span class="title">Game guides</span> <span class="tags"><span class="tag">Games</span></span>
+          <span class="desc">Eight finished guides built with the builder, from Portal to Rogue Trader.</span></span></a></li>
     </ul>
   </section>
 
-  <section class="legend">
-    <h2>What the labels mean</h2>
-    <dl>
-      <dt>daily use</dt><dd>I open it most days.</dd>
-      <dt>in use</dt><dd>I use it regularly, and it still changes when something annoys me.</dd>
-      <dt>stable</dt><dd>It works and rarely needs a change.</dd>
-      <dt>finished</dt><dd>Done, and kept for the record.</dd>
-      <dt>experiment</dt><dd>Running, but the jury is still out.</dd>
-      <dt>template</dt><dd>A starting point to copy, not a running system.</dd>
-    </dl>
-  </section>
 </main>
 
 <footer>
   <p>D.M. &middot; <a href="https://github.com/dtiger1889-ops">github.com/dtiger1889-ops</a> &middot; updated September 2026</p>
 </footer>
 <script>
+(function () {
+  const nav = document.querySelector(".nav");
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+})();
+(function () {
+  const buttons = document.querySelectorAll(".filters button");
+  buttons.forEach(b => b.addEventListener("click", () => {
+    const tag = b.dataset.tag;
+    buttons.forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    document.querySelectorAll(".projects").forEach(ul => {
+      let shown = 0;
+      ul.querySelectorAll("li").forEach(li => {
+        const hit = !tag || li.dataset.tags.split(" ").includes(tag);
+        li.hidden = !hit; if (hit) shown++;
+      });
+      ul.hidden = shown === 0;
+      const h2 = ul.previousElementSibling;
+      h2.hidden = shown === 0;
+      h2.querySelector(".count").textContent = String(shown).padStart(2, "0");
+    });
+  }));
+})();
 (function () {
   const url = "https://mackforge.dev/";
   const title = "mackforge: tools I built with coding agents for my own day";

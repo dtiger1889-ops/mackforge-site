@@ -52,6 +52,7 @@
   }
 
   dialog.addEventListener('close', () => {
+    if (dialog.open) return;
     token += 1;
     document.documentElement.classList.remove('lightbox-open');
     big.removeAttribute('src');

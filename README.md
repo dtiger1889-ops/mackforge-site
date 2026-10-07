@@ -20,6 +20,6 @@ It is plain HTML, CSS, and a small script, with no framework or build step, serv
 
 The project list is written in `index.html`. Each project has a description, descriptive tags, compatibility labels, and links to its published work. Hintforge is one entry with separate Builder, Reader, and Game guides links.
 
-When adding a project, update its article's filter data and the relevant topic/platform options. The script derives displayed counts from the articles. The agent-manager comparison is the featured entry above the filters, and Hintforge comes first in the list. A wide screenshot sits above its card's text; give an article the `portrait` class when its screenshot is a tall phone screen, so the image stays beside the text instead.
+When adding a project, update its article's filter data and the relevant topic/platform options. The script derives displayed counts from the articles. The agent-manager comparison is the first card in the list, followed by Hintforge; both respond to the filters like every other card. A wide screenshot sits above its card's text; give an article the `portrait` class when its screenshot is a tall phone screen, so the image stays beside the text instead.
 
 Open `index.html` in a browser to preview. There is nothing to install.

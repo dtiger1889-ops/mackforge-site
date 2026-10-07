@@ -1,18 +1,25 @@
-# mackforge-site
+# mackforge
 
-The source for mackforge.dev: one page listing my public repos, each with a plain label saying how much I still use it.
+![mackforge project catalogue, with Hintforge and the agent-manager comparison first](assets/preview.png)
 
-It is plain HTML and one CSS file, with no framework and no build step, served by GitHub Pages.
+Apps, skills, and practical systems I built with coding agents for my own use, collected at [mackforge.dev](https://mackforge.dev/).
+
+Browse by project type, filter by topic or platform, or search by name and what the project does. The small theme button switches between the dark workbench and a light green palette, and remembers your choice on this device.
+
+It is plain HTML, CSS, and a small script, with no framework or build step, served by GitHub Pages. The full project list remains readable with JavaScript disabled.
 
 ## Files
 
 - `index.html` is the whole site.
-- `style.css` is the only stylesheet. It follows the reader's light or dark setting.
+- `style.css` is the stylesheet for both themes.
+- `site.js` handles search, filters, theme choice, and sharing.
 - `CNAME` tells GitHub Pages which domain to serve.
 - `.nojekyll` tells GitHub Pages to serve the files as they are, without running Jekyll.
 
 ## Updating it
 
-The project list is written by hand in `index.html`. When a repo goes public, add a line for it in the matching section. When a repo stops getting used, change its label rather than deleting it.
+The project list is written in `index.html`. Each project has a description, descriptive tags, compatibility labels, and links to its published work. Hintforge is one entry with separate Builder, Reader, and Game guides links.
+
+When adding a project, update its article's filter data and the relevant topic/platform options. The script derives displayed counts from the articles. Keep Hintforge and the agent-manager comparison first in the default list.
 
 Open `index.html` in a browser to preview. There is nothing to install.

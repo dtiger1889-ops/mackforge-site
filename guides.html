@@ -11,9 +11,15 @@
 </head>
 <body class="workbench guides-page">
 <a class="skip" href="#guides">Skip to guides</a>
-<header class="nav"><a class="brand" href="./">mackforge<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="./#projects">Projects</a><a href="guides.html" aria-current="page">Game guides</a><a href="https://github.com/hintforge">GitHub ↗</a><button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" title="Switch to light theme" hidden><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></header>
+<header class="nav"><a class="brand" href="./">mackforge<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="./#projects">Projects</a><a href="guides.html" aria-current="page">Game guides</a><a href="https://github.com/hintforge">GitHub ↗</a><div class="share"><button type="button" id="share-btn" aria-expanded="false" aria-controls="share-menu">Share</button><div id="share-menu" hidden><a data-net="linkedin" target="_blank" rel="noopener">LinkedIn</a><a data-net="reddit" target="_blank" rel="noopener">Reddit</a><a data-net="x" target="_blank" rel="noopener">X</a><a data-net="bluesky" target="_blank" rel="noopener">Bluesky</a><button type="button" id="share-copy">Copy link</button><button type="button" id="share-native" hidden>More…</button></div></div><button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" title="Switch to light theme" hidden><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></header>
 <main>
 <section class="guides-intro" aria-labelledby="page-title"><p class="eyebrow">Hintforge game guides</p><h1 id="page-title">Game guides<span>.</span></h1><p class="intro">Every guide the Hintforge collection has published, one per game. Load one into the Hintforge reader and ask for help when you're stuck; it answers from the guide's own files, and only says as much as the spoiler level you set.</p><p class="back-link"><a href="./">← All projects</a></p></section>
+<section class="how-made" aria-labelledby="how-made-title"><h2 id="how-made-title">How these are made</h2><ul>
+<!-- framework:start -->
+<li><a href="https://github.com/hintforge/builder">Builder <span aria-hidden="true">↗</span></a><span>Turns researched material about a game into a Hintforge guide.</span></li>
+<li><a href="https://github.com/hintforge/reader">Reader <span aria-hidden="true">↗</span></a><span>Runs a guide inside your coding agent and answers at the spoiler level you set.</span></li>
+<!-- framework:end -->
+</ul></section>
 <section id="guides" aria-labelledby="guides-title"><div class="section-heading"><h2 id="guides-title">The guides</h2><p id="results" role="status" aria-live="polite"><!-- count:start -->8 guides<!-- count:end --></p></div>
 <div class="discovery guide-filter" hidden><div class="search-field"><label for="search">Search guides</label><input id="search" type="search" placeholder="Game name…" autocomplete="off"></div></div>
 <div class="project-grid guide-grid">
@@ -38,12 +44,6 @@
 </div>
 <div class="empty" hidden><h3>No guide matches that</h3><p>Try a shorter word, or clear the box to see every guide.</p><button type="button" id="empty-reset">Show all guides</button></div>
 </section>
-<section class="how-made" aria-labelledby="how-made-title"><h2 id="how-made-title">How these are made</h2><p>The builder turns researched material into a guide, and the reader is what answers your questions while you play.</p><ul>
-<!-- framework:start -->
-<li><a href="https://github.com/hintforge/builder">Builder <span aria-hidden="true">↗</span></a><span>Turns researched material about a game into a Hintforge guide.</span></li>
-<li><a href="https://github.com/hintforge/reader">Reader <span aria-hidden="true">↗</span></a><span>Runs a guide inside your coding agent and answers at the spoiler level you set.</span></li>
-<!-- framework:end -->
-</ul></section>
 </main>
 <footer><a class="brand" href="./">mackforge.</a><p>D.M. · <a href="https://github.com/hintforge">Hintforge on GitHub</a> · Guide list built from the public repositories</p></footer><script src="guides.js"></script>
 </body></html>

@@ -1,6 +1,6 @@
 # mackforge
 
-![mackforge project catalogue, with Hintforge and the agent-manager comparison first](assets/preview.png)
+![mackforge project catalogue, with the agent-manager comparison first and Hintforge beside it](assets/preview.png)
 
 Apps, skills, and practical systems I built with coding agents for my own use, collected at [mackforge.dev](https://mackforge.dev/).
 

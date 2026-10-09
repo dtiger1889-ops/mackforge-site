@@ -9,7 +9,7 @@ Markdown notes sits in the first column as the baseline.
 
 Live page: https://mackforge.dev/charts/memory-tools/
 
-Sister chart: [agent-manager comparison](https://dtiger1889-ops.github.io/agent-deck-comparison/).
+Sister chart: [agent-manager comparison](https://mackforge.dev/charts/agent-managers/).
 
 ## How the cells were filled
 

@@ -1,0 +1,75 @@
+{
+  "name": "Plain Markdown folder",
+  "url": "https://code.claude.com/docs/en/memory",
+  "category": "baseline",
+  "description": "Notes you save as ordinary .md files (CLAUDE.md, AGENTS.md, a notes folder) that the agent reads with its normal file tools. It does not capture or recall anything automatically on its own.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": true,
+  "features": {
+    "installs_as": {
+      "value": "Nothing to install: files in a folder",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes: just files; the agent itself still needs its own login",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "Yes: Markdown you open and edit yourself",
+      "mark": "yes"
+    },
+    "footprint": {
+      "value": "Tiny: plain files",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: CLAUDE.md is read at session start",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: AGENTS.md is read at session start",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Not in the pages read (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "windows": {
+      "value": "Native: it is just files",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Files on disk stay as last saved",
+      "mark": "n/a"
+    },
+    "survives_compaction": {
+      "value": "Project CLAUDE.md is re-read after compaction in Claude Code",
+      "mark": "yes"
+    },
+    "undo_delete": {
+      "value": "Whatever your editor or git gives you",
+      "mark": "n/a"
+    },
+    "service_failure": {
+      "value": "No background service",
+      "mark": "n/a"
+    },
+    "uninstall": {
+      "value": "Delete the files",
+      "mark": "n/a"
+    },
+    "license_cost": {
+      "value": "Free: no product to license",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "Not a GitHub project",
+      "mark": "n/a"
+    },
+    "last_release": {
+      "value": "Not a versioned product",
+      "mark": "n/a"
+    }
+  }
+}

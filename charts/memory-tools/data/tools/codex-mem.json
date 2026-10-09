@@ -1,0 +1,75 @@
+{
+  "name": "codex-mem",
+  "url": "https://github.com/2kDarki/codex-mem",
+  "category": "memory tool",
+  "description": "A Codex-focused copy of the claude-mem idea: it watches Codex session logs, summarizes them with an AI model, stores them in a local database and brings them back in later sessions.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "CLI watcher plus local worker and MCP search tools",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Not stated; summaries use an AI model, provider unclear",
+      "mark": "undocumented"
+    },
+    "plain_files": {
+      "value": "No: SQLite database plus a vector database",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Medium: Node, Bun, uv, SQLite and a vector database",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Supported as a \"compatibility host\", per the README",
+      "mark": "partial"
+    },
+    "codex": {
+      "value": "Yes: primary target, watches Codex session transcripts",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "windows": {
+      "value": "Native Windows setup notes appear (PowerShell npm tip)",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "undo_delete": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "service_failure": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "uninstall": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "license_cost": {
+      "value": "AGPL-3.0 per README; GitHub shows no detected license",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "13 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "No releases published (checked 2026-10-09)",
+      "mark": "info"
+    }
+  }
+}

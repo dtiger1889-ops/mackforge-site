@@ -1,0 +1,75 @@
+{
+  "name": "mem0",
+  "url": "https://github.com/mem0ai/mem0",
+  "category": "memory tool",
+  "description": "A memory layer for AI apps that pulls out facts from conversations and stores them for search; for coding agents it is offered as a plugin that talks to Mem0's hosted service.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "Plugin or MCP to a hosted service; also an SDK",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "No: plugin needs a Mem0 account and API key",
+      "mark": "no"
+    },
+    "plain_files": {
+      "value": "No: memories live in a vector store, hosted for the plugin",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Small locally (plugin); the memory runs on a hosted service",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: official plugin with MCP, hooks and a skill",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: Codex plugin or direct MCP to hosted server",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Yes: custom connector to the hosted MCP URL",
+      "mark": "yes"
+    },
+    "windows": {
+      "value": "Not documented (checked 2026-10-09)",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Yes: pending capture saved at compaction; search stays",
+      "mark": "yes"
+    },
+    "undo_delete": {
+      "value": "Delete one or all memories; no undo documented",
+      "mark": "partial"
+    },
+    "service_failure": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "uninstall": {
+      "value": "Plugin removal commands given; stored memories not discussed",
+      "mark": "partial"
+    },
+    "license_cost": {
+      "value": "Apache-2.0; hosted Platform is a paid-tier service",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "66,890 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v2.2.1 (2026-09-25)",
+      "mark": "info"
+    }
+  }
+}

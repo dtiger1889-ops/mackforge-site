@@ -1,0 +1,75 @@
+{
+  "name": "ai-memory (akitaonrails)",
+  "url": "https://github.com/akitaonrails/ai-memory",
+  "category": "memory tool",
+  "description": "A single program (a small server) that records what coding agents do, turns it into Markdown wiki pages kept in git, and hands context to the next agent, whether that is Claude Code, Codex or another.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "Local server (single binary) plus hooks and MCP config",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes: default path makes no LLM calls and needs no key",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "Yes: git-backed Markdown wiki is the source of truth",
+      "mark": "yes"
+    },
+    "footprint": {
+      "value": "Small: one binary plus SQLite, no model by default",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: MCP config plus lifecycle hooks (read and write)",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: MCP config plus lifecycle hooks",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "MCP only in Chat; Code tab sessions are captured",
+      "mark": "partial"
+    },
+    "windows": {
+      "value": "WSL2 supported; native Windows experimental",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Search via MCP any time; compaction not described",
+      "mark": "partial"
+    },
+    "undo_delete": {
+      "value": "Nothing hard-deleted; restore-page brings back old versions",
+      "mark": "yes"
+    },
+    "service_failure": {
+      "value": "Agent launch continues; capture spools locally",
+      "mark": "partial"
+    },
+    "uninstall": {
+      "value": "ai-memory uninstall --apply removes only what it installed",
+      "mark": "yes"
+    },
+    "license_cost": {
+      "value": "MIT; no paid tier (\"not a paid tier\" for auth)",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "9,080 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v2.6.2 (2026-10-08)",
+      "mark": "info"
+    }
+  }
+}

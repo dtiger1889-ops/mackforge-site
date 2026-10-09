@@ -1,0 +1,75 @@
+{
+  "name": "okf-agent-memory",
+  "url": "https://github.com/okf-memory/okf-agent-memory",
+  "category": "memory tool",
+  "description": "A small command-line tool and MCP server that keeps project knowledge as a folder of Markdown notes in the Open Knowledge Format, searches it locally, and sets up an AGENTS.md that tells agents to search before writing.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "CLI plus MCP server (single Go binary)",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes: local search, no database, no API key needed",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "Yes: Markdown notes in a knowledge/ folder, tracked by git",
+      "mark": "yes"
+    },
+    "footprint": {
+      "value": "Tiny: one small binary, no service or database",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: MCP server and AGENTS.md/CLAUDE.md setup",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: MCP server and AGENTS.md",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Yes: example claude_desktop_config.json block",
+      "mark": "yes"
+    },
+    "windows": {
+      "value": "Native: windows-amd64 and arm64 binaries released",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Notes stay searchable on demand; compaction not mentioned",
+      "mark": "partial"
+    },
+    "undo_delete": {
+      "value": "Git history; no separate undo command described",
+      "mark": "partial"
+    },
+    "service_failure": {
+      "value": "No background service; runs per command",
+      "mark": "n/a"
+    },
+    "uninstall": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "license_cost": {
+      "value": "MIT; sponsor link only",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "759 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v0.6.0 (2026-10-04)",
+      "mark": "info"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": "Mnemosyne (Nabzx)",
+  "url": "https://github.com/Nabzx/mnemosyne",
+  "category": "memory tool",
+  "description": "Git-style history for an AI agent's memory (commits, branches, blame, merge), as a command-line tool and Python library, with an MCP server in the repo.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "CLI (mnem) plus Python SDK; MCP server package",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes: README says local, no network, no model calls",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "No: one binary database file; JSON export available",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Tiny: one binary and one local database file",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Not named; an MCP server exists for MCP clients",
+      "mark": "undocumented"
+    },
+    "codex": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "claude_desktop": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "windows": {
+      "value": "Native: PowerShell installer script on releases",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Store engine described as crash-safe",
+      "mark": "yes"
+    },
+    "survives_compaction": {
+      "value": "No hook into agent sessions",
+      "mark": "n/a"
+    },
+    "undo_delete": {
+      "value": "Yes: commits keep history; show or checkout past states",
+      "mark": "yes"
+    },
+    "service_failure": {
+      "value": "No background service documented for the CLI",
+      "mark": "n/a"
+    },
+    "uninstall": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "license_cost": {
+      "value": "Apache-2.0; no paid tier mentioned",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "12 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v0.0.8 (2026-09-21)",
+      "mark": "info"
+    }
+  }
+}

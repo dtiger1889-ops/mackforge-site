@@ -1,0 +1,75 @@
+{
+  "name": "Intellex",
+  "url": "https://github.com/EugeneTrapeznikov/intellex",
+  "category": "memory tool",
+  "description": "A small command-line tool that hooks into Claude Code, Codex or Pi so that stored lessons are searched and shown at the start of a session or each prompt; it borrows mem0 or agentmemory for the actual storage.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "CLI that installs hooks (Claude) or a prompt hook (Codex)",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Partly: mem0 mode needs an LLM key; embeddings stay local",
+      "mark": "partial"
+    },
+    "plain_files": {
+      "value": "No: embedded vector store (mem0) or the agentmemory server",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Medium: Bun, Python and mem0 with local embeddings",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: SessionStart and UserPromptSubmit hooks",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Partial: prompt-time recall hook; no auto-capture",
+      "mark": "partial"
+    },
+    "claude_desktop": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "windows": {
+      "value": "Not documented (checked 2026-10-09)",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "undo_delete": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "service_failure": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "uninstall": {
+      "value": "ix setup <agent> --remove; backend data left alone",
+      "mark": "partial"
+    },
+    "license_cost": {
+      "value": "MIT; no paid tier mentioned",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "0 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v0.3.0 (2026-07-31)",
+      "mark": "info"
+    }
+  }
+}

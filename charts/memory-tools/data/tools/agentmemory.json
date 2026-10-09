@@ -1,0 +1,75 @@
+{
+  "name": "agentmemory",
+  "url": "https://github.com/rohitg00/agentmemory",
+  "category": "memory tool",
+  "description": "A local memory server that records what your coding agent does through hooks, compresses it, and serves it back by keyword or meaning search.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "Local server plus plugin, MCP server, hooks, skills",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes in keyless mode; meaning search needs an embedder",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "No: the engine's own store; JSON export available",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Large: Node plus a separate engine on four local ports",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: plugin with 6 hooks, skills and MCP",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: plugin hooks verified with Codex CLI 0.150.1",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Yes: MCP config block for Claude Desktop",
+      "mark": "yes"
+    },
+    "windows": {
+      "value": "Native with a manual engine install; WSL2 or Docker easier",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Partly: up to 5 s of writes can be lost; more on Redis",
+      "mark": "partial"
+    },
+    "survives_compaction": {
+      "value": "PreCompact hook re-injects memory before compaction",
+      "mark": "yes"
+    },
+    "undo_delete": {
+      "value": "Delete or forget one memory; edits keep a version chain",
+      "mark": "partial"
+    },
+    "service_failure": {
+      "value": "MCP shim falls back to a 7-tool local set if server is down",
+      "mark": "partial"
+    },
+    "uninstall": {
+      "value": "agentmemory remove undoes what setup created",
+      "mark": "yes"
+    },
+    "license_cost": {
+      "value": "Apache-2.0; no paid tier found in README",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "29,260 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v0.9.30 (2026-10-06)",
+      "mark": "info"
+    }
+  }
+}

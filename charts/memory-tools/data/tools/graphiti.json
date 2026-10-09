@@ -1,0 +1,75 @@
+{
+  "name": "Graphiti (Zep)",
+  "url": "https://github.com/getzep/graphiti",
+  "category": "memory tool",
+  "description": "A Python library that turns text and chat history into a graph of people, things and facts with dates, stored in a graph database, with an optional MCP server so assistants can use it.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "Library (Python) plus MCP server in the repo",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Partly: needs a graph DB and an LLM key (local LLM possible)",
+      "mark": "partial"
+    },
+    "plain_files": {
+      "value": "No: stored in a graph database",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Large: graph DB (often Docker) plus an LLM service",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Not named; generic MCP server, so a client config is needed",
+      "mark": "undocumented"
+    },
+    "codex": {
+      "value": "Not named in the docs read (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "claude_desktop": {
+      "value": "Yes: stdio MCP setup described for Claude Desktop",
+      "mark": "yes"
+    },
+    "windows": {
+      "value": "Not documented (checked 2026-10-09)",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "undo_delete": {
+      "value": "Delete episodes; changed facts are marked old, not erased",
+      "mark": "partial"
+    },
+    "service_failure": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "uninstall": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "license_cost": {
+      "value": "Apache-2.0; Zep sells a hosted version",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "31,589 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v0.30.2 (2026-09-08)",
+      "mark": "info"
+    }
+  }
+}

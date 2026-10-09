@@ -1,0 +1,75 @@
+{
+  "name": "MemPalace",
+  "url": "https://github.com/MemPalace/mempalace",
+  "category": "memory tool",
+  "description": "A local search layer that stores your past conversations word for word and finds them again by meaning, organized into wings and rooms.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "CLI plus MCP server (also agent skills, Docker)",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes after setup; first use downloads an embedding model",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "No: stored in a vector database (ChromaDB by default)",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Medium: local embedding model plus vector store",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: MCP server, auto-save hooks, mining of sessions",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: auto-save hooks for Codex CLI, bundled plugin",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Not named in the pages read (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "windows": {
+      "value": "Not documented (checked 2026-10-09)",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Hooks save before context compression; recall by search",
+      "mark": "yes"
+    },
+    "undo_delete": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "service_failure": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "uninstall": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "license_cost": {
+      "value": "MIT; a separate community-hosted service exists",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "59,485 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v3.10.0 (2026-09-16)",
+      "mark": "info"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": "claude-mem",
+  "url": "https://github.com/thedotmack/claude-mem",
+  "category": "memory tool",
+  "description": "A plugin that watches what Claude Code does, summarizes it with an AI model, and feeds the summaries into later sessions.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "Plugin (hooks, local worker, MCP search tools)",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Partly: no account needed; summaries use an online model",
+      "mark": "partial"
+    },
+    "plain_files": {
+      "value": "No: data is in SQLite plus a vector database",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Medium: Node, Bun, uv, SQLite and a vector DB",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes, built for Claude Code; hooks capture and inject",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes, Codex CLI listed as a supported host",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Partial: a Desktop skill to search memory is listed",
+      "mark": "partial"
+    },
+    "windows": {
+      "value": "Native Windows documented (Node, PowerShell notes)",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Search tools usable mid-session; compaction not mentioned",
+      "mark": "partial"
+    },
+    "undo_delete": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "service_failure": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "uninstall": {
+      "value": "No uninstall steps found on pages read",
+      "mark": "undocumented"
+    },
+    "license_cost": {
+      "value": "Apache-2.0; optional paid hosted tier (trial)",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "98,874 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v13.35.0 (2026-10-09)",
+      "mark": "info"
+    }
+  }
+}

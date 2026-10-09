@@ -1,0 +1,1026 @@
+{
+  "snapshot_date": "2026-10-09",
+  "snapshot_note": "Snapshot as of 2026-10-09. Every cell comes from the tool's own documentation on the date shown. Nothing here was installed or tested.",
+  "features": [
+    {
+      "key": "installs_as",
+      "label": "Installs as",
+      "description": "Plugin, MCP server (a tool server the assistant calls), hook (an automatic session action), skill (instructions the assistant loads), CLI, library or app.",
+      "group": "Setup & privacy",
+      "how_checked": "Install section of the README or docs."
+    },
+    {
+      "key": "offline_no_account",
+      "label": "Works offline, no account",
+      "description": "Everyday use needs no internet and no account. First setup downloads are noted separately.",
+      "group": "Setup & privacy",
+      "how_checked": "Install and configuration docs: required API keys, sign-up and network calls."
+    },
+    {
+      "key": "plain_files",
+      "label": "Memory you can open and edit",
+      "description": "Saved memory lives in ordinary files you can read and change. A database or search index alone does not count.",
+      "group": "Setup & privacy",
+      "how_checked": "Docs on where memory is stored and in what format."
+    },
+    {
+      "key": "footprint",
+      "label": "Footprint",
+      "description": "Tiny: a script or plain files. Small: one local process or SQLite. Medium: a local database server or embedding model. Large: several services or a Docker stack. From documented dependencies, not measured.",
+      "group": "Setup & privacy",
+      "how_checked": "Dependencies listed in the install docs."
+    },
+    {
+      "key": "claude_code",
+      "label": "Claude Code",
+      "description": "Documented support for Claude Code, and whether it can write memory or only read shared notes.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Claude Code."
+    },
+    {
+      "key": "codex",
+      "label": "Codex",
+      "description": "Documented support for OpenAI Codex (CLI or app).",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Codex."
+    },
+    {
+      "key": "claude_desktop",
+      "label": "Claude Desktop",
+      "description": "Documented support for the Claude Desktop app, usually through MCP.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Claude Desktop."
+    },
+    {
+      "key": "windows",
+      "label": "Windows",
+      "description": "Runs natively on Windows, only under WSL2 (Linux inside Windows), or not documented.",
+      "group": "Works with",
+      "how_checked": "Install docs and release assets for Windows."
+    },
+    {
+      "key": "survives_crash",
+      "label": "Kept after a crash",
+      "description": "The docs say saved memory survives the assistant or the tool being killed.",
+      "group": "Safety & recovery",
+      "how_checked": "Docs on when memory is written to disk."
+    },
+    {
+      "key": "survives_compaction",
+      "label": "Kept after compaction",
+      "description": "Memory stays reachable after the assistant shortens its conversation to save space.",
+      "group": "Safety & recovery",
+      "how_checked": "Docs on recall, session start and compaction hooks."
+    },
+    {
+      "key": "undo_delete",
+      "label": "Undo or delete one memory",
+      "description": "You can undo a change or delete a single memory; the cell names which.",
+      "group": "Safety & recovery",
+      "how_checked": "Command or API reference for edit, delete and history."
+    },
+    {
+      "key": "service_failure",
+      "label": "If its service stops",
+      "description": "What still works when its background service or database is down.",
+      "group": "Safety & recovery",
+      "how_checked": "Troubleshooting and architecture docs."
+    },
+    {
+      "key": "uninstall",
+      "label": "Uninstall steps",
+      "description": "Documented removal steps, and what is left behind.",
+      "group": "Safety & recovery",
+      "how_checked": "Uninstall section of the docs."
+    },
+    {
+      "key": "license_cost",
+      "label": "License / cost",
+      "description": "Open-source license, and whether a paid tier or cloud exists.",
+      "group": "Project",
+      "how_checked": "LICENSE file and pricing page."
+    },
+    {
+      "key": "stars",
+      "label": "GitHub stars",
+      "description": "Stars on the main repository on the date checked.",
+      "group": "Project",
+      "how_checked": "Repository page on the date shown."
+    },
+    {
+      "key": "last_release",
+      "label": "Latest release",
+      "description": "Most recent release or tag, with its date.",
+      "group": "Project",
+      "how_checked": "Releases page or tags."
+    }
+  ],
+  "group_order": [
+    "Setup & privacy",
+    "Works with",
+    "Safety & recovery",
+    "Project"
+  ],
+  "tools": [
+    {
+      "name": "Plain Markdown folder",
+      "url": "https://code.claude.com/docs/en/memory",
+      "category": "baseline",
+      "description": "Notes you save as ordinary .md files (CLAUDE.md, AGENTS.md, a notes folder) that the agent reads with its normal file tools. It does not capture or recall anything automatically on its own.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": true,
+      "features": {
+        "installs_as": {
+          "value": "Nothing to install: files in a folder",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes: just files; the agent itself still needs its own login",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "Yes: Markdown you open and edit yourself",
+          "mark": "yes"
+        },
+        "footprint": {
+          "value": "Tiny: plain files",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: CLAUDE.md is read at session start",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: AGENTS.md is read at session start",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Not in the pages read (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "windows": {
+          "value": "Native: it is just files",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Files on disk stay as last saved",
+          "mark": "n/a"
+        },
+        "survives_compaction": {
+          "value": "Project CLAUDE.md is re-read after compaction in Claude Code",
+          "mark": "yes"
+        },
+        "undo_delete": {
+          "value": "Whatever your editor or git gives you",
+          "mark": "n/a"
+        },
+        "service_failure": {
+          "value": "No background service",
+          "mark": "n/a"
+        },
+        "uninstall": {
+          "value": "Delete the files",
+          "mark": "n/a"
+        },
+        "license_cost": {
+          "value": "Free: no product to license",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "Not a GitHub project",
+          "mark": "n/a"
+        },
+        "last_release": {
+          "value": "Not a versioned product",
+          "mark": "n/a"
+        }
+      }
+    },
+    {
+      "name": "claude-mem",
+      "url": "https://github.com/thedotmack/claude-mem",
+      "category": "memory tool",
+      "description": "A plugin that watches what Claude Code does, summarizes it with an AI model, and feeds the summaries into later sessions.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "Plugin (hooks, local worker, MCP search tools)",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Partly: no account needed; summaries use an online model",
+          "mark": "partial"
+        },
+        "plain_files": {
+          "value": "No: data is in SQLite plus a vector database",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Medium: Node, Bun, uv, SQLite and a vector DB",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes, built for Claude Code; hooks capture and inject",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes, Codex CLI listed as a supported host",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Partial: a Desktop skill to search memory is listed",
+          "mark": "partial"
+        },
+        "windows": {
+          "value": "Native Windows documented (Node, PowerShell notes)",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Search tools usable mid-session; compaction not mentioned",
+          "mark": "partial"
+        },
+        "undo_delete": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "service_failure": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "uninstall": {
+          "value": "No uninstall steps found on pages read",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "Apache-2.0; optional paid hosted tier (trial)",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "98,874 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v13.35.0 (2026-10-09)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "mem0",
+      "url": "https://github.com/mem0ai/mem0",
+      "category": "memory tool",
+      "description": "A memory layer for AI apps that pulls out facts from conversations and stores them for search; for coding agents it is offered as a plugin that talks to Mem0's hosted service.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "Plugin or MCP to a hosted service; also an SDK",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "No: plugin needs a Mem0 account and API key",
+          "mark": "no"
+        },
+        "plain_files": {
+          "value": "No: memories live in a vector store, hosted for the plugin",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Small locally (plugin); the memory runs on a hosted service",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: official plugin with MCP, hooks and a skill",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: Codex plugin or direct MCP to hosted server",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Yes: custom connector to the hosted MCP URL",
+          "mark": "yes"
+        },
+        "windows": {
+          "value": "Not documented (checked 2026-10-09)",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Yes: pending capture saved at compaction; search stays",
+          "mark": "yes"
+        },
+        "undo_delete": {
+          "value": "Delete one or all memories; no undo documented",
+          "mark": "partial"
+        },
+        "service_failure": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "uninstall": {
+          "value": "Plugin removal commands given; stored memories not discussed",
+          "mark": "partial"
+        },
+        "license_cost": {
+          "value": "Apache-2.0; hosted Platform is a paid-tier service",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "66,890 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v2.2.1 (2026-09-25)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "MemPalace",
+      "url": "https://github.com/MemPalace/mempalace",
+      "category": "memory tool",
+      "description": "A local search layer that stores your past conversations word for word and finds them again by meaning, organized into wings and rooms.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "CLI plus MCP server (also agent skills, Docker)",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes after setup; first use downloads an embedding model",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "No: stored in a vector database (ChromaDB by default)",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Medium: local embedding model plus vector store",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: MCP server, auto-save hooks, mining of sessions",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: auto-save hooks for Codex CLI, bundled plugin",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Not named in the pages read (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "windows": {
+          "value": "Not documented (checked 2026-10-09)",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Hooks save before context compression; recall by search",
+          "mark": "yes"
+        },
+        "undo_delete": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "service_failure": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "uninstall": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "MIT; a separate community-hosted service exists",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "59,485 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v3.10.0 (2026-09-16)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "Graphiti (Zep)",
+      "url": "https://github.com/getzep/graphiti",
+      "category": "memory tool",
+      "description": "A Python library that turns text and chat history into a graph of people, things and facts with dates, stored in a graph database, with an optional MCP server so assistants can use it.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "Library (Python) plus MCP server in the repo",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Partly: needs a graph DB and an LLM key (local LLM possible)",
+          "mark": "partial"
+        },
+        "plain_files": {
+          "value": "No: stored in a graph database",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Large: graph DB (often Docker) plus an LLM service",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Not named; generic MCP server, so a client config is needed",
+          "mark": "undocumented"
+        },
+        "codex": {
+          "value": "Not named in the docs read (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "claude_desktop": {
+          "value": "Yes: stdio MCP setup described for Claude Desktop",
+          "mark": "yes"
+        },
+        "windows": {
+          "value": "Not documented (checked 2026-10-09)",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "undo_delete": {
+          "value": "Delete episodes; changed facts are marked old, not erased",
+          "mark": "partial"
+        },
+        "service_failure": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "uninstall": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "Apache-2.0; Zep sells a hosted version",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "31,589 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v0.30.2 (2026-09-08)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "agentmemory",
+      "url": "https://github.com/rohitg00/agentmemory",
+      "category": "memory tool",
+      "description": "A local memory server that records what your coding agent does through hooks, compresses it, and serves it back by keyword or meaning search.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "Local server plus plugin, MCP server, hooks, skills",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes in keyless mode; meaning search needs an embedder",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "No: the engine's own store; JSON export available",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Large: Node plus a separate engine on four local ports",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: plugin with 6 hooks, skills and MCP",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: plugin hooks verified with Codex CLI 0.150.1",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Yes: MCP config block for Claude Desktop",
+          "mark": "yes"
+        },
+        "windows": {
+          "value": "Native with a manual engine install; WSL2 or Docker easier",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Partly: up to 5 s of writes can be lost; more on Redis",
+          "mark": "partial"
+        },
+        "survives_compaction": {
+          "value": "PreCompact hook re-injects memory before compaction",
+          "mark": "yes"
+        },
+        "undo_delete": {
+          "value": "Delete or forget one memory; edits keep a version chain",
+          "mark": "partial"
+        },
+        "service_failure": {
+          "value": "MCP shim falls back to a 7-tool local set if server is down",
+          "mark": "partial"
+        },
+        "uninstall": {
+          "value": "agentmemory remove undoes what setup created",
+          "mark": "yes"
+        },
+        "license_cost": {
+          "value": "Apache-2.0; no paid tier found in README",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "29,260 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v0.9.30 (2026-10-06)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "Beads (bd)",
+      "url": "https://github.com/gastownhall/beads",
+      "category": "memory tool",
+      "description": "A command-line task tracker for AI agents that keeps tasks as a linked graph in a version-controlled local database, plus a small \"remember\" command for durable project facts.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "CLI (bd) that installs hooks, skills and AGENTS.md text",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes: embedded local database, no key or account",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "No: Dolt database; the JSONL file is only an export",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Small: one CLI with an embedded database",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: bd setup claude installs a SessionStart hook",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: bd setup codex installs skill, AGENTS.md text, hooks",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "windows": {
+          "value": "Native Windows supported (no MSYS needed)",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Power loss is named as a corruption risk; repair steps exist",
+          "mark": "partial"
+        },
+        "survives_compaction": {
+          "value": "Yes: SessionStart hook fires again after compaction",
+          "mark": "yes"
+        },
+        "undo_delete": {
+          "value": "Version-controlled database; no undo command documented",
+          "mark": "partial"
+        },
+        "service_failure": {
+          "value": "Embedded mode has no separate service",
+          "mark": "n/a"
+        },
+        "uninstall": {
+          "value": "bd setup claude --remove removes hooks; data folder separate",
+          "mark": "partial"
+        },
+        "license_cost": {
+          "value": "MIT; no paid tier mentioned",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "27,764 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v1.3.1 (2026-09-30)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "ai-memory (akitaonrails)",
+      "url": "https://github.com/akitaonrails/ai-memory",
+      "category": "memory tool",
+      "description": "A single program (a small server) that records what coding agents do, turns it into Markdown wiki pages kept in git, and hands context to the next agent, whether that is Claude Code, Codex or another.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "Local server (single binary) plus hooks and MCP config",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes: default path makes no LLM calls and needs no key",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "Yes: git-backed Markdown wiki is the source of truth",
+          "mark": "yes"
+        },
+        "footprint": {
+          "value": "Small: one binary plus SQLite, no model by default",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: MCP config plus lifecycle hooks (read and write)",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: MCP config plus lifecycle hooks",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "MCP only in Chat; Code tab sessions are captured",
+          "mark": "partial"
+        },
+        "windows": {
+          "value": "WSL2 supported; native Windows experimental",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Search via MCP any time; compaction not described",
+          "mark": "partial"
+        },
+        "undo_delete": {
+          "value": "Nothing hard-deleted; restore-page brings back old versions",
+          "mark": "yes"
+        },
+        "service_failure": {
+          "value": "Agent launch continues; capture spools locally",
+          "mark": "partial"
+        },
+        "uninstall": {
+          "value": "ai-memory uninstall --apply removes only what it installed",
+          "mark": "yes"
+        },
+        "license_cost": {
+          "value": "MIT; no paid tier (\"not a paid tier\" for auth)",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "9,080 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v2.6.2 (2026-10-08)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "okf-agent-memory",
+      "url": "https://github.com/okf-memory/okf-agent-memory",
+      "category": "memory tool",
+      "description": "A small command-line tool and MCP server that keeps project knowledge as a folder of Markdown notes in the Open Knowledge Format, searches it locally, and sets up an AGENTS.md that tells agents to search before writing.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "CLI plus MCP server (single Go binary)",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes: local search, no database, no API key needed",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "Yes: Markdown notes in a knowledge/ folder, tracked by git",
+          "mark": "yes"
+        },
+        "footprint": {
+          "value": "Tiny: one small binary, no service or database",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: MCP server and AGENTS.md/CLAUDE.md setup",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: MCP server and AGENTS.md",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Yes: example claude_desktop_config.json block",
+          "mark": "yes"
+        },
+        "windows": {
+          "value": "Native: windows-amd64 and arm64 binaries released",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Notes stay searchable on demand; compaction not mentioned",
+          "mark": "partial"
+        },
+        "undo_delete": {
+          "value": "Git history; no separate undo command described",
+          "mark": "partial"
+        },
+        "service_failure": {
+          "value": "No background service; runs per command",
+          "mark": "n/a"
+        },
+        "uninstall": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "MIT; sponsor link only",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "759 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v0.6.0 (2026-10-04)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "codex-mem",
+      "url": "https://github.com/2kDarki/codex-mem",
+      "category": "memory tool",
+      "description": "A Codex-focused copy of the claude-mem idea: it watches Codex session logs, summarizes them with an AI model, stores them in a local database and brings them back in later sessions.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "CLI watcher plus local worker and MCP search tools",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Not stated; summaries use an AI model, provider unclear",
+          "mark": "undocumented"
+        },
+        "plain_files": {
+          "value": "No: SQLite database plus a vector database",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Medium: Node, Bun, uv, SQLite and a vector database",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Supported as a \"compatibility host\", per the README",
+          "mark": "partial"
+        },
+        "codex": {
+          "value": "Yes: primary target, watches Codex session transcripts",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "windows": {
+          "value": "Native Windows setup notes appear (PowerShell npm tip)",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "undo_delete": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "service_failure": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "uninstall": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "AGPL-3.0 per README; GitHub shows no detected license",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "13 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "No releases published (checked 2026-10-09)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "Mnemosyne (Nabzx)",
+      "url": "https://github.com/Nabzx/mnemosyne",
+      "category": "memory tool",
+      "description": "Git-style history for an AI agent's memory (commits, branches, blame, merge), as a command-line tool and Python library, with an MCP server in the repo.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "CLI (mnem) plus Python SDK; MCP server package",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes: README says local, no network, no model calls",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "No: one binary database file; JSON export available",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Tiny: one binary and one local database file",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Not named; an MCP server exists for MCP clients",
+          "mark": "undocumented"
+        },
+        "codex": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "claude_desktop": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "windows": {
+          "value": "Native: PowerShell installer script on releases",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Store engine described as crash-safe",
+          "mark": "yes"
+        },
+        "survives_compaction": {
+          "value": "No hook into agent sessions",
+          "mark": "n/a"
+        },
+        "undo_delete": {
+          "value": "Yes: commits keep history; show or checkout past states",
+          "mark": "yes"
+        },
+        "service_failure": {
+          "value": "No background service documented for the CLI",
+          "mark": "n/a"
+        },
+        "uninstall": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "Apache-2.0; no paid tier mentioned",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "12 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v0.0.8 (2026-09-21)",
+          "mark": "info"
+        }
+      }
+    },
+    {
+      "name": "Intellex",
+      "url": "https://github.com/EugeneTrapeznikov/intellex",
+      "category": "memory tool",
+      "description": "A small command-line tool that hooks into Claude Code, Codex or Pi so that stored lessons are searched and shown at the start of a session or each prompt; it borrows mem0 or agentmemory for the actual storage.",
+      "checked_on": "2026-10-09 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested.",
+      "is_baseline": false,
+      "features": {
+        "installs_as": {
+          "value": "CLI that installs hooks (Claude) or a prompt hook (Codex)",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Partly: mem0 mode needs an LLM key; embeddings stay local",
+          "mark": "partial"
+        },
+        "plain_files": {
+          "value": "No: embedded vector store (mem0) or the agentmemory server",
+          "mark": "no"
+        },
+        "footprint": {
+          "value": "Medium: Bun, Python and mem0 with local embeddings",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes: SessionStart and UserPromptSubmit hooks",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Partial: prompt-time recall hook; no auto-capture",
+          "mark": "partial"
+        },
+        "claude_desktop": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "windows": {
+          "value": "Not documented (checked 2026-10-09)",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "survives_compaction": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "undo_delete": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "service_failure": {
+          "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "uninstall": {
+          "value": "ix setup <agent> --remove; backend data left alone",
+          "mark": "partial"
+        },
+        "license_cost": {
+          "value": "MIT; no paid tier mentioned",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "0 (2026-10-09)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "v0.3.0 (2026-07-31)",
+          "mark": "info"
+        }
+      }
+    }
+  ]
+}

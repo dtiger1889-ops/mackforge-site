@@ -1,0 +1,138 @@
+{
+  "snapshot_date": "2026-10-09",
+  "snapshot_note": "Snapshot as of 2026-10-09. Every cell comes from the tool's own documentation on the date shown. Nothing here was installed or tested.",
+  "features": [
+    {
+      "key": "installs_as",
+      "label": "Installs as",
+      "description": "Plugin, MCP server (a tool server the assistant calls), hook (an automatic session action), skill (instructions the assistant loads), CLI, library or app.",
+      "group": "Setup & privacy",
+      "how_checked": "Install section of the README or docs."
+    },
+    {
+      "key": "offline_no_account",
+      "label": "Works offline, no account",
+      "description": "Everyday use needs no internet and no account. First setup downloads are noted separately.",
+      "group": "Setup & privacy",
+      "how_checked": "Install and configuration docs: required API keys, sign-up and network calls."
+    },
+    {
+      "key": "plain_files",
+      "label": "Memory you can open and edit",
+      "description": "Saved memory lives in ordinary files you can read and change. A database or search index alone does not count.",
+      "group": "Setup & privacy",
+      "how_checked": "Docs on where memory is stored and in what format."
+    },
+    {
+      "key": "footprint",
+      "label": "Footprint",
+      "description": "Tiny: a script or plain files. Small: one local process or SQLite. Medium: a local database server or embedding model. Large: several services or a Docker stack. From documented dependencies, not measured.",
+      "group": "Setup & privacy",
+      "how_checked": "Dependencies listed in the install docs."
+    },
+    {
+      "key": "claude_code",
+      "label": "Claude Code",
+      "description": "Documented support for Claude Code, and whether it can write memory or only read shared notes.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Claude Code."
+    },
+    {
+      "key": "codex",
+      "label": "Codex",
+      "description": "Documented support for OpenAI Codex (CLI or app).",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Codex."
+    },
+    {
+      "key": "claude_desktop",
+      "label": "Claude Desktop",
+      "description": "Documented support for the Claude Desktop app, usually through MCP.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Claude Desktop."
+    },
+    {
+      "key": "windows",
+      "label": "Windows",
+      "description": "Runs natively on Windows, only under WSL2 (Linux inside Windows), or not documented.",
+      "group": "Works with",
+      "how_checked": "Install docs and release assets for Windows."
+    },
+    {
+      "key": "survives_crash",
+      "label": "Kept after a crash",
+      "description": "The docs say saved memory survives the assistant or the tool being killed.",
+      "group": "Safety & recovery",
+      "how_checked": "Docs on when memory is written to disk."
+    },
+    {
+      "key": "survives_compaction",
+      "label": "Kept after compaction",
+      "description": "Memory stays reachable after the assistant shortens its conversation to save space.",
+      "group": "Safety & recovery",
+      "how_checked": "Docs on recall, session start and compaction hooks."
+    },
+    {
+      "key": "undo_delete",
+      "label": "Undo or delete one memory",
+      "description": "You can undo a change or delete a single memory; the cell names which.",
+      "group": "Safety & recovery",
+      "how_checked": "Command or API reference for edit, delete and history."
+    },
+    {
+      "key": "service_failure",
+      "label": "If its service stops",
+      "description": "What still works when its background service or database is down.",
+      "group": "Safety & recovery",
+      "how_checked": "Troubleshooting and architecture docs."
+    },
+    {
+      "key": "uninstall",
+      "label": "Uninstall steps",
+      "description": "Documented removal steps, and what is left behind.",
+      "group": "Safety & recovery",
+      "how_checked": "Uninstall section of the docs."
+    },
+    {
+      "key": "license_cost",
+      "label": "License / cost",
+      "description": "Open-source license, and whether a paid tier or cloud exists.",
+      "group": "Project",
+      "how_checked": "LICENSE file and pricing page."
+    },
+    {
+      "key": "stars",
+      "label": "GitHub stars",
+      "description": "Stars on the main repository on the date checked.",
+      "group": "Project",
+      "how_checked": "Repository page on the date shown."
+    },
+    {
+      "key": "last_release",
+      "label": "Latest release",
+      "description": "Most recent release or tag, with its date.",
+      "group": "Project",
+      "how_checked": "Releases page or tags."
+    }
+  ],
+  "group_order": [
+    "Setup & privacy",
+    "Works with",
+    "Safety & recovery",
+    "Project"
+  ],
+  "tools": [
+    "plain-markdown",
+    "claude-mem",
+    "mem0",
+    "mempalace",
+    "graphiti",
+    "agentmemory",
+    "beads",
+    "ai-memory",
+    "okf-agent-memory",
+    "codex-mem",
+    "mnemosyne",
+    "intellex"
+  ]
+}

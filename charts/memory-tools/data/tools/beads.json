@@ -1,0 +1,75 @@
+{
+  "name": "Beads (bd)",
+  "url": "https://github.com/gastownhall/beads",
+  "category": "memory tool",
+  "description": "A command-line task tracker for AI agents that keeps tasks as a linked graph in a version-controlled local database, plus a small \"remember\" command for durable project facts.",
+  "checked_on": "2026-10-09 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "features": {
+    "installs_as": {
+      "value": "CLI (bd) that installs hooks, skills and AGENTS.md text",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes: embedded local database, no key or account",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "No: Dolt database; the JSONL file is only an export",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Small: one CLI with an embedded database",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: bd setup claude installs a SessionStart hook",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: bd setup codex installs skill, AGENTS.md text, hooks",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Not in its docs (checked 2026-10-09)",
+      "mark": "undocumented"
+    },
+    "windows": {
+      "value": "Native Windows supported (no MSYS needed)",
+      "mark": "info"
+    },
+    "survives_crash": {
+      "value": "Power loss is named as a corruption risk; repair steps exist",
+      "mark": "partial"
+    },
+    "survives_compaction": {
+      "value": "Yes: SessionStart hook fires again after compaction",
+      "mark": "yes"
+    },
+    "undo_delete": {
+      "value": "Version-controlled database; no undo command documented",
+      "mark": "partial"
+    },
+    "service_failure": {
+      "value": "Embedded mode has no separate service",
+      "mark": "n/a"
+    },
+    "uninstall": {
+      "value": "bd setup claude --remove removes hooks; data folder separate",
+      "mark": "partial"
+    },
+    "license_cost": {
+      "value": "MIT; no paid tier mentioned",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "27,764 (2026-10-09)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v1.3.1 (2026-09-30)",
+      "mark": "info"
+    }
+  }
+}

@@ -1,5 +1,5 @@
-// The wordmark's period is a button. On the home page the visitor's local date picks one of
-// three surprises (spark burst, whack-a-cube, a short message), the same for everyone that day.
+// The wordmark's period is a button. On the home page each page load picks one of three
+// surprises (spark burst, whack-a-cube, a short message).
 // On the guides page it flips into the Hintforge logo. Without JavaScript it stays a period.
 (() => {
   const dot = document.querySelector('.hero h1 span, .guides-intro h1 span');
@@ -15,10 +15,12 @@
     'Feel free to look around. You don’t have to adopt all my problems.'
   ];
 
-  // Same number all day for every visitor, different tomorrow.
-  const d = new Date();
-  let seed = 2166136261;
-  for (const ch of `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`) seed = Math.imul(seed ^ ch.charCodeAt(0), 16777619) >>> 0;
+  // A fresh pick on every page load, never the same surprise twice in a row on this device.
+  let last = -1;
+  try { last = +(localStorage.getItem('mackforge-egg') ?? -1); } catch {}
+  let seed = Math.floor(Math.random() * 3 * messages.length);
+  if (seed % 3 === last) seed += 1 + Math.floor(Math.random() * 2);
+  try { localStorage.setItem('mackforge-egg', seed % 3); } catch {}
 
   dot.classList.add('egg');
   dot.setAttribute('role', 'button');
@@ -107,7 +109,7 @@
       cubes.forEach(b => { b.classList.remove('lit'); b.disabled = true; });
       const end = panel.querySelector('.egg-end');
       end.hidden = false;
-      end.textContent = `${score} ${score === 1 ? 'cube' : 'cubes'}. Come back tomorrow.`;
+      end.textContent = `${score} ${score === 1 ? 'cube' : 'cubes'}. Refresh for something else.`;
     }, 1000);
     const stop = () => { clearInterval(light); clearInterval(tick); };
     panel.querySelector('.egg-close').addEventListener('click', () => { stop(); close(); dot.focus(); });

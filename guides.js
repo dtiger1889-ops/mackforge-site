@@ -16,7 +16,7 @@
   update();
 
   const themeButton = document.querySelector('#theme-toggle');
-  function labelTheme() { const light = document.documentElement.dataset.theme === 'light'; const label = `Switch to ${light ? 'dark' : 'light'} theme`; themeButton.setAttribute('aria-label', label); themeButton.title = label; document.querySelector('meta[name="theme-color"]').content = light ? '#f5f8f6' : '#111921'; }
+  function labelTheme() { const light = document.documentElement.dataset.theme === 'light'; const label = `Switch to ${light ? 'dark' : 'light'} theme`; themeButton.setAttribute('aria-label', label); themeButton.title = label; document.querySelector('meta[name="theme-color"]').content = light ? '#eef1f5' : '#0d1117'; }
   themeButton.hidden = false; labelTheme();
   themeButton.addEventListener('click', () => { const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'; document.documentElement.dataset.theme = next; try { localStorage.setItem('mackforge-theme', next); } catch {} labelTheme(); });
 

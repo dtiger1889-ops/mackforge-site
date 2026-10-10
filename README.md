@@ -2,9 +2,9 @@
 
 ![mackforge project catalogue, with the agent-manager comparison first and Hintforge beside it](assets/preview.png)
 
-Apps, skills, and practical systems I built with coding agents for my own use, collected at [mackforge.dev](https://mackforge.dev/).
+Apps, skills, and practical systems I built with coding agents, collected at [mackforge.dev](https://mackforge.dev/).
 
-Browse by project type, filter by topic or platform, or search by name and what the project does. The small theme button switches between the dark workbench and a light green palette, and remembers your choice on this device.
+Browse by project type, filter by topic or platform, or search by name and what the project does. The small theme button switches between the dark and light themes, and remembers your choice on this device.
 
 A separate page, `guides.html`, lists every game guide the [Hintforge](https://github.com/hintforge) organisation has published, alphabetical by game, with a search box.
 

@@ -15,12 +15,21 @@
     'Feel free to look around. You don’t have to adopt all my problems.'
   ];
 
-  // A fresh pick on every page load, never the same surprise twice in a row on this device.
-  let last = -1;
-  try { last = +(localStorage.getItem('mackforge-egg') ?? -1); } catch {}
-  let seed = Math.floor(Math.random() * 3 * messages.length);
-  if (seed % 3 === last) seed += 1 + Math.floor(Math.random() * 2);
-  try { localStorage.setItem('mackforge-egg', seed % 3); } catch {}
+  // Shuffle bag: every page load takes the next surprise from a shuffled set of all three, so
+  // each one shows once per three loads and none repeats back to back on this device.
+  let bag = [], last = -1;
+  try {
+    bag = JSON.parse(localStorage.getItem('mackforge-egg-bag') || '[]');
+    last = +(localStorage.getItem('mackforge-egg') ?? -1);
+  } catch {}
+  if (!Array.isArray(bag) || !bag.length || bag.some(m => ![0, 1, 2].includes(m))) {
+    bag = [0, 1, 2];
+    for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; }
+    if (bag[0] === last) [bag[0], bag[1]] = [bag[1], bag[0]];
+  }
+  const mode = bag.shift();
+  const message = messages[Math.floor(Math.random() * messages.length)];
+  try { localStorage.setItem('mackforge-egg-bag', JSON.stringify(bag)); localStorage.setItem('mackforge-egg', mode); } catch {}
 
   dot.classList.add('egg');
   dot.setAttribute('role', 'button');
@@ -30,7 +39,7 @@
   const fire = () => {
     if (open) { close(); return; }
     if (host.classList.contains('guides-intro')) logo();
-    else [burst, game, note][seed % 3]();
+    else [burst, game, note][mode]();
   };
   dot.addEventListener('click', fire);
   dot.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); } });
@@ -58,7 +67,18 @@
 
   function burst() {
     const { x, y } = origin();
-    if (calm) { dot.classList.add('egg-glow'); setTimeout(() => dot.classList.remove('egg-glow'), 2500); return; }
+    if (calm) {
+      // Reduced motion: the dot glows and a still ring of cubes fades in and out around it.
+      dot.classList.add('egg-glow');
+      for (let i = 0; i < 12; i++) {
+        const s = layer('egg-spark'), angle = (i / 12) * Math.PI * 2;
+        s.style.left = `${x + Math.cos(angle) * 70}px`; s.style.top = `${y + Math.sin(angle) * 70}px`;
+        s.style.transform = 'translate(-50%,-50%) rotate(45deg)';
+        s.animate([{ opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: 1, offset: .75 }, { opacity: 0 }], { duration: 2500 }).onfinish = () => s.remove();
+      }
+      setTimeout(() => dot.classList.remove('egg-glow'), 2500);
+      return;
+    }
     dot.animate([{ transform: 'scale(1)' }, { transform: 'scale(2.2)' }, { transform: 'scale(1)' }],
       { duration: 600, easing: 'cubic-bezier(.3,1.6,.5,1)' });
     sparks(x, y, 30, 170);
@@ -72,7 +92,7 @@
     const { x, y } = origin();
     const box = layer('egg-note');
     box.setAttribute('role', 'status');
-    box.textContent = messages[Math.floor(seed / 3) % messages.length];
+    box.textContent = message;
     box.style.top = `${y + dot.offsetHeight}px`;
     box.style.left = `${Math.max(16, Math.min(x - 140, host.clientWidth - 296))}px`;
     open = box;

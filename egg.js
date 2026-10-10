@@ -49,16 +49,19 @@
       const s = layer('egg-spark');
       s.style.left = `${x}px`; s.style.top = `${y}px`;
       const angle = (i / count) * Math.PI * 2 + Math.random() * 0.4, dist = reach * (0.6 + Math.random() * 0.6);
-      s.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
-        { transform: `translate(calc(-50% + ${Math.cos(angle) * dist}px), calc(-50% + ${Math.sin(angle) * dist}px)) scale(.3)`, opacity: 0 }],
-        { duration: 650 + Math.random() * 350, easing: 'cubic-bezier(.2,.7,.3,1)' }).onfinish = () => s.remove();
+      const spin = Math.round((Math.random() - .5) * 720);
+      s.animate([{ transform: 'translate(-50%,-50%) scale(1) rotate(0deg)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${Math.cos(angle) * dist}px), calc(-50% + ${Math.sin(angle) * dist}px)) scale(.4) rotate(${spin}deg)`, opacity: 0 }],
+        { duration: 900 + Math.random() * 500, easing: 'cubic-bezier(.2,.7,.3,1)' }).onfinish = () => s.remove();
     }
   }
 
   function burst() {
     const { x, y } = origin();
-    if (calm) { dot.classList.add('egg-glow'); setTimeout(() => dot.classList.remove('egg-glow'), 1500); return; }
-    sparks(x, y, 18, 90);
+    if (calm) { dot.classList.add('egg-glow'); setTimeout(() => dot.classList.remove('egg-glow'), 2500); return; }
+    dot.animate([{ transform: 'scale(1)' }, { transform: 'scale(2.2)' }, { transform: 'scale(1)' }],
+      { duration: 600, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+    sparks(x, y, 30, 170);
     const ring = layer('egg-ring');
     ring.style.left = `${x}px`; ring.style.top = `${y}px`;
     ring.animate([{ transform: 'translate(-50%,-50%) scale(.05)', opacity: .9 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 0 }],

@@ -95,12 +95,16 @@
       const r = b.getBoundingClientRect(), h = host.getBoundingClientRect();
       sparks(r.left - h.left + r.width / 2, r.top - h.top + r.height / 2, 6, 26);
     };
-    cubes.forEach(b => b.addEventListener('click', hit));
+    // pointerdown fires the moment a finger lands; click waits for the browser to rule out a double-tap zoom
+    cubes.forEach(b => {
+      b.addEventListener('pointerdown', e => { e.preventDefault(); hit(e); });
+      b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hit(e); } });
+    });
     const light = setInterval(() => {
       const idle = cubes.filter(b => !b.classList.contains('lit'));
       const b = idle[Math.floor(Math.random() * idle.length)];
       b.classList.add('lit');
-      setTimeout(() => b.classList.remove('lit'), 1100);
+      setTimeout(() => b.classList.remove('lit'), 1300);
     }, 520);
     const tick = setInterval(() => {
       timeEl.textContent = --left;

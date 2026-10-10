@@ -116,7 +116,8 @@ footer .brand{color:var(--cream)}
 .egg-time::after{content:"s";opacity:.7}
 .egg-close{width:34px;height:34px;border-radius:50%;border:1px solid var(--slate);background:var(--chip-bg);color:#f3efe8;font-size:20px;line-height:1;padding:0}
 .egg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.egg-cube{aspect-ratio:1;border:0;padding:0;border-radius:10px;background:linear-gradient(135deg,#f8b672,#e8862e 50%,#b9581a);opacity:.22;transition:opacity .12s,transform .12s;cursor:pointer}
+.egg-game,.egg{touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.egg-cube{touch-action:manipulation;-webkit-tap-highlight-color:transparent;aspect-ratio:1;border:0;padding:0;border-radius:10px;background:linear-gradient(135deg,#f8b672,#e8862e 50%,#b9581a);opacity:.22;transition:opacity .12s,transform .12s;cursor:pointer}
 .egg-cube.lit{opacity:1;transform:translateY(-3px);box-shadow:0 0 14px var(--tiger)}
 .egg-cube:disabled{cursor:default}
 .egg-end{margin:12px 0 0;font-weight:700;color:var(--cream)}

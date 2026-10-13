@@ -1,8 +1,6 @@
-# mackforge
+# Maintaining mackforge
 
-![mackforge project catalogue, with the agent-manager comparison first and Hintforge beside it](assets/preview.png)
-
-Apps, skills, and practical systems I built with coding agents, collected at [mackforge.dev](https://mackforge.dev/).
+How the [mackforge.dev](https://mackforge.dev/) site is built and updated.
 
 Browse by project type, filter by topic or platform, or search by name and what the project does. The small theme button switches between the dark and light themes, and remembers your choice on this device.
 

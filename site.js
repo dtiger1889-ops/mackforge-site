@@ -1,36 +1,45 @@
 (() => {
   const projects = [...document.querySelectorAll('.project')];
-  const buttons = [...document.querySelectorAll('[data-type]')];
-  const tags = [...document.querySelectorAll('[data-topic]')];
-  const search = document.querySelector('#search'), works = document.querySelector('#works'), topic = document.querySelector('#topic'), reset = document.querySelector('#reset');
+  const row = document.querySelector('.type-filters');
+  const buttons = [...row.querySelectorAll('[data-type]')];
+  const search = document.querySelector('#search'), reset = document.querySelector('#reset');
   let type = 'all';
-  const entries = projects.map(el => ({el,types:JSON.parse(el.dataset.types),works:JSON.parse(el.dataset.works),tags:JSON.parse(el.dataset.tags),search:el.dataset.search.toLocaleLowerCase()}));
+  const entries = projects.map(el => ({el,types:JSON.parse(el.dataset.types),search:el.dataset.search.toLocaleLowerCase()}));
   document.querySelector('.discovery').hidden = false;
-  document.querySelectorAll('.tag-controls').forEach(el => el.hidden = false);
-  document.querySelectorAll('.static-tags').forEach(el => el.hidden = true);
   const about = document.querySelector('.about'), smallScreen = matchMedia('(max-width:640px)');
   about.open = !smallScreen.matches;
   smallScreen.addEventListener('change', e => {about.open = !e.matches;});
+  // One pill behind the pressed category button; it glides between buttons instead of each button repainting.
+  const pill = document.createElement('span');
+  pill.className = 'pill'; pill.setAttribute('aria-hidden','true');
+  row.prepend(pill); row.classList.add('has-pill');
+  function movePill(animate) {
+    const b = buttons.find(x => x.dataset.type === type);
+    if (!animate) pill.style.transition = 'none';
+    pill.style.width = b.offsetWidth + 'px'; pill.style.height = b.offsetHeight + 'px';
+    pill.style.transform = `translate(${b.offsetLeft}px,${b.offsetTop}px)`;
+    if (!animate) { pill.offsetWidth; pill.style.transition = ''; }
+  }
+  new ResizeObserver(() => movePill(false)).observe(row);
+  buttons.forEach(b => new ResizeObserver(() => movePill(false)).observe(b));
   function matches(entry,testType=type) {
     const terms = search.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-    return (testType==='all'||entry.types.includes(Number(testType)))&&(!works.value||entry.works.includes(works.value))&&(!topic.value||entry.tags.includes(topic.value))&&terms.every(t=>entry.search.includes(t));
+    return (testType==='all'||entry.types.includes(Number(testType)))&&terms.every(t=>entry.search.includes(t));
   }
   function update(writeUrl=true) {
     let visible=0;
     entries.forEach(e=>{e.el.hidden=!matches(e);if(!e.el.hidden)visible++;});
     buttons.forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.type===type));b.querySelector('span').textContent=entries.filter(e=>matches(e,b.dataset.type)).length;});
-    tags.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.topic===topic.value)));
-    const filtered=type!=='all'||search.value.trim()||works.value||topic.value;
+    const filtered=type!=='all'||search.value.trim();
     reset.hidden=!filtered;
     document.querySelector('.empty').hidden=visible!==0;
     document.querySelector('#results').textContent=filtered?`${visible} of ${entries.length} projects`:`${entries.length} projects`;
-    if(writeUrl){const url=new URL(location.href);[['type',type==='all'?'':type],['q',search.value.trim()],['with',works.value],['topic',topic.value]].forEach(([k,v])=>v?url.searchParams.set(k,v):url.searchParams.delete(k));history.replaceState(null,'',url);}
+    if(writeUrl){const url=new URL(location.href);url.searchParams.delete('with');url.searchParams.delete('topic');[['type',type==='all'?'':type],['q',search.value.trim()]].forEach(([k,v])=>v?url.searchParams.set(k,v):url.searchParams.delete(k));history.replaceState(null,'',url);}
   }
-  function restore(){const p=new URLSearchParams(location.search);type=buttons.some(b=>b.dataset.type===p.get('type'))?p.get('type'):'all';search.value=p.get('q')||'';[works,topic].forEach((select,i)=>{const value=p.get(i?'topic':'with');select.value=[...select.options].some(o=>o.value===value)?value:'';});update(false);}
-  function clear(){type='all';search.value='';works.value='';topic.value='';update();}
-  buttons.forEach(b=>b.addEventListener('click',()=>{type=b.dataset.type;update();}));
-  tags.forEach(b=>b.addEventListener('click',()=>{topic.value=topic.value===b.dataset.topic?'':b.dataset.topic;update();}));
-  search.addEventListener('input',()=>update());works.addEventListener('change',()=>update());topic.addEventListener('change',()=>update());reset.addEventListener('click',clear);
+  function restore(){const p=new URLSearchParams(location.search);type=buttons.some(b=>b.dataset.type===p.get('type'))?p.get('type'):'all';search.value=p.get('q')||'';update(false);movePill(false);}
+  function clear(){type='all';search.value='';update();movePill(true);}
+  buttons.forEach(b=>b.addEventListener('click',()=>{type=b.dataset.type;update();movePill(true);b.scrollIntoView({block:'nearest',inline:'nearest'});}));
+  search.addEventListener('input',()=>update());reset.addEventListener('click',clear);
   document.querySelector('#empty-reset').addEventListener('click',()=>{clear();search.focus();});window.addEventListener('popstate',restore);restore();
 
   const themeButton=document.querySelector('#theme-toggle');

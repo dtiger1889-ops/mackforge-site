@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
 <style>
   :root {
-    color-scheme: light dark;
+    color-scheme: light;
     --bg: #f7f7f8;
     --panel: #ffffff;
     --text: #1b1c1f;
@@ -39,8 +39,9 @@
     --info-bg: #e1ecf7; --info-fg: #2c5f8a;
     --group-bg: #eef0f3; --group-fg: #1b1c1f;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
+  /* data-theme is set in <head>: the visitor's saved mackforge theme, else the OS setting. */
+  :root[data-theme="dark"] {
+      color-scheme: dark;
       --bg: #15161a;
       --panel: #1d1f24;
       --text: #e8e9ec;
@@ -57,7 +58,6 @@
       --na-bg: #222327; --na-fg: #7a7c82;
       --info-bg: #1c3a52; --info-fg: #8fc2ee;
       --group-bg: #23252b; --group-fg: #e8e9ec;
-    }
   }
   * { box-sizing: border-box; }
   body {
@@ -315,18 +315,26 @@
   }
   /* mackforge site bar: same look as the site's own header, so a direct visitor can get back to the site. */
   .mf-bar { max-width: 1600px; margin: 0 auto; padding: 16px 16px 0; display: flex; gap: 10px; align-items: stretch; }
-  .mf-bar .mf-brand { background: #f5e9d7; color: #0d1117; padding: 14px 24px; border-radius: 24px; display: flex; align-items: center;
-    font: 400 24px/1 "Anton", Impact, sans-serif; text-transform: uppercase; letter-spacing: .01em; text-decoration: none; }
+  .mf-bar .mf-brand { background: #f5e9d7; color: #0d1117; padding: 20px 30px; border-radius: 28px; display: flex; align-items: center;
+    font: 400 28px/1 "Anton", Impact, sans-serif; text-transform: uppercase; letter-spacing: .01em; text-decoration: none; }
   .mf-bar .mf-brand span { color: #e8862e; }
-  .mf-bar nav { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 24px; padding: 0 24px;
-    background: linear-gradient(160deg, #1f2a38 0%, #161d27 55%, #121822 100%); border: 1px solid #2b3947; border-radius: 24px;
+  .mf-bar nav { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 24px; padding: 0 18px 0 30px;
+    background: linear-gradient(160deg, #1f2a38 0%, #161d27 55%, #121822 100%); border: 1px solid #2b3947; border-radius: 28px;
     color: #f3efe8; font-weight: 600; font-size: 14px; white-space: nowrap; }
   .mf-bar nav a { color: inherit; text-decoration: none; padding: 12px 0; }
   .mf-bar nav a:hover { color: #f6a85a; }
+  .mf-theme { width: 44px; height: 44px; padding: 0; flex: none; display: grid; place-items: center; border: 0; border-radius: 50%; cursor: pointer;
+    color: #0d1117; background: linear-gradient(135deg, #f6a85a 0%, #e8862e 45%, #c8621c 100%); }
+  .mf-theme:hover { filter: brightness(1.08); }
+  .mf-theme svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .mf-theme .moon, :root[data-theme="light"] .mf-theme .sun { display: none; }
+  :root[data-theme="light"] .mf-theme .moon { display: block; }
   @media (max-width: 640px) {
     .mf-bar { flex-wrap: wrap; gap: 8px; }
-    .mf-bar .mf-brand { flex: 1 1 100%; justify-content: center; padding: 12px 16px; border-radius: 20px; }
-    .mf-bar nav { flex: 1 1 100%; justify-content: space-around; gap: 8px; padding: 0 12px; border-radius: 20px; font-size: 13px; }
+    .mf-bar .mf-brand { flex: 1 1 100%; justify-content: center; padding: 12px 16px; border-radius: 20px; font-size: 24px; }
+    .mf-bar nav { flex: 1 1 100%; justify-content: space-between; gap: 8px; padding: 6px 6px 6px 18px; border-radius: 22px; font-size: 13px; }
+    .mf-theme { width: 36px; height: 36px; }
+    .mf-theme svg { width: 18px; height: 18px; }
   }
   /* Embed mode (?embed=1): the chart alone, for pasting into another site. */
   html.embed .mf-bar,
@@ -337,11 +345,37 @@
   html.embed h1 a::after { content: " \2197"; color: var(--accent); }
 </style>
 <script>if (new URLSearchParams(location.search).has("embed")) document.documentElement.classList.add("embed");</script>
+<script>
+  // Saved mackforge theme if the visitor picked one on the site, else the OS setting.
+  (function () {
+    let saved = null;
+    try { saved = localStorage.getItem("mackforge-theme"); } catch (e) {}
+    document.documentElement.dataset.theme = saved === "light" || saved === "dark" ? saved
+      : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  })();
+</script>
 <script data-goatcounter="https://mackforge.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script src="../../track.js?v=20261012a" defer></script>
 </head>
 <body>
-<div class="mf-bar"><a class="mf-brand" href="../../">mackforge<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a><a href="../agent-managers/">Agent managers</a></nav></div>
+<div class="mf-bar"><a class="mf-brand" href="../../">mackforge<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a><a href="../agent-managers/">Agent managers</a><button type="button" class="mf-theme" id="mf-theme"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></div>
+<script>
+  // Theme toggle: same saved choice as the rest of mackforge.dev.
+  (function () {
+    const btn = document.getElementById("mf-theme");
+    function label() {
+      const text = "Switch to " + (document.documentElement.dataset.theme === "light" ? "dark" : "light") + " theme";
+      btn.setAttribute("aria-label", text); btn.title = text;
+    }
+    label();
+    btn.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem("mackforge-theme", next); } catch (e) {}
+      label();
+    });
+  })();
+</script>
 <header>
   <div class="title-row">
     <h1>Memory-tool comparison</h1>

@@ -18,6 +18,7 @@
      sticky header, grouping and sorting all come from the library. Pinned version. -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.3/dist/css/tabulator.min.css">
 <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.3/dist/js/tabulator.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
 <style>
   :root {
     color-scheme: light dark;
@@ -312,7 +313,23 @@
     #bytool-table td:first-child { font-size: 1rem; font-weight: 700; padding-bottom: 4px; }
     #bytool-table td:first-child::before { content: none; }
   }
+  /* mackforge site bar: same look as the site's own header, so a direct visitor can get back to the site. */
+  .mf-bar { max-width: 1600px; margin: 0 auto; padding: 16px 16px 0; display: flex; gap: 10px; align-items: stretch; }
+  .mf-bar .mf-brand { background: #f5e9d7; color: #0d1117; padding: 14px 24px; border-radius: 24px; display: flex; align-items: center;
+    font: 400 24px/1 "Anton", Impact, sans-serif; text-transform: uppercase; letter-spacing: .01em; text-decoration: none; }
+  .mf-bar .mf-brand span { color: #e8862e; }
+  .mf-bar nav { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 24px; padding: 0 24px;
+    background: linear-gradient(160deg, #1f2a38 0%, #161d27 55%, #121822 100%); border: 1px solid #2b3947; border-radius: 24px;
+    color: #f3efe8; font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .mf-bar nav a { color: inherit; text-decoration: none; padding: 12px 0; }
+  .mf-bar nav a:hover { color: #f6a85a; }
+  @media (max-width: 640px) {
+    .mf-bar { flex-wrap: wrap; gap: 8px; }
+    .mf-bar .mf-brand { flex: 1 1 100%; justify-content: center; padding: 12px 16px; border-radius: 20px; }
+    .mf-bar nav { flex: 1 1 100%; justify-content: space-around; gap: 8px; padding: 0 12px; border-radius: 20px; font-size: 13px; }
+  }
   /* Embed mode (?embed=1): the chart alone, for pasting into another site. */
+  html.embed .mf-bar,
   html.embed .title-actions, html.embed .about, html.embed footer { display: none; }
   html.embed header { padding-top: 8px; }
   html.embed h1 { font-size: 1.15rem; }
@@ -324,6 +341,7 @@
 <script src="../../track.js?v=20261012a" defer></script>
 </head>
 <body>
+<div class="mf-bar"><a class="mf-brand" href="../../">mackforge<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a><a href="../agent-managers/">Agent managers</a></nav></div>
 <header>
   <div class="title-row">
     <h1>Memory-tool comparison</h1>

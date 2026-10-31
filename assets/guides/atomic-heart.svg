@@ -88,7 +88,7 @@
   <!-- VERIFIED (active) -->
   <circle cx="96" cy="470" r="10" fill="var(--active)" stroke="#26473d"/>
   <text class="mono b rlbl" x="130" y="478">VERIFIED</text>
-  <text class="mono rval" x="352" y="478">vs game v1.16.3.0 (still current) &#8212; checked May 2026</text>
+  <text class="mono rval" x="352" y="478">May 2026 · last patch v1.16.3.0 (Apr 2026) · current · feed 2026-10-07</text>
   <line x1="78" y1="500" x2="1422" y2="500" stroke="var(--rule)" stroke-width="1"/>
   <!-- SPOILER CTRL (attention) -->
   <circle cx="96" cy="536" r="10" fill="var(--active)" stroke="#26473d"/>

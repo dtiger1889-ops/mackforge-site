@@ -88,7 +88,7 @@
   <circle cx="96" cy="470" r="10" fill="none" stroke="var(--primary-lt)" stroke-width="2"/>
   <path d="M96 460 A10 10 0 0 0 96 480 Z" fill="var(--primary-lt)"/>
   <text class="mono b rlbl" x="130" y="478">VERIFIED</text>
-  <text class="mono rval" x="352" y="478">checked May 2026 (Build 21262645) &#8212; behind Patch 1.6 + Museion DLC</text>
+  <text class="mono rval" x="352" y="478">May 2026 · last patch v1.6.1.514 (Jul 2026) · newer than guide · feed 2026-10-07</text>
   <line x1="78" y1="500" x2="1422" y2="500" stroke="var(--rule)" stroke-width="1"/>
   <!-- SPOILER CTRL -->
   <circle cx="96" cy="536" r="10" fill="var(--active)" stroke="#3f5030"/>

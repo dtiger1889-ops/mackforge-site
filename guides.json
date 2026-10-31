@@ -9,8 +9,18 @@
    "url": "https://github.com/hintforge/atomic-heart",
    "image": "assets/guides/atomic-heart.svg",
    "imageAlt": "Atomic Heart companion status: coverage, live-game verification, spoiler control, and save reader",
-   "updated": "2026-09-17T05:04:44Z",
-   "updatedText": "17 September 2026"
+   "updated": "2026-10-17T16:47:37Z",
+   "updatedText": "17 October 2026"
+  },
+  {
+   "repo": "balatro",
+   "game": "Balatro",
+   "description": "LocalThunk's poker roguelike where you build a scoring engine out of Jokers, Planet cards, Tarots and Vouchers and push it through eight antes of blinds.",
+   "url": "https://github.com/hintforge/balatro",
+   "image": "assets/guides/balatro.svg",
+   "imageAlt": "Balatro companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-10-20T13:47:55Z",
+   "updatedText": "20 October 2026"
   },
   {
    "repo": "frostpunk",
@@ -19,8 +29,8 @@
    "url": "https://github.com/hintforge/frostpunk",
    "image": "assets/guides/frostpunk.svg",
    "imageAlt": "Frostpunk companion status: coverage, how current it is, and spoiler control",
-   "updated": "2026-09-17T02:15:30Z",
-   "updatedText": "17 September 2026"
+   "updated": "2026-10-17T16:47:26Z",
+   "updatedText": "17 October 2026"
   },
   {
    "repo": "ftl-faster-than-light",
@@ -29,8 +39,18 @@
    "url": "https://github.com/hintforge/ftl-faster-than-light",
    "image": "assets/guides/ftl-faster-than-light.svg",
    "imageAlt": "FTL companion status: coverage, how current it is, and spoiler control",
-   "updated": "2026-09-17T18:49:38Z",
-   "updatedText": "17 September 2026"
+   "updated": "2026-10-17T16:46:56Z",
+   "updatedText": "17 October 2026"
+  },
+  {
+   "repo": "halo-infinite",
+   "game": "Halo Infinite",
+   "description": "A spoiler-controlled hint companion for Halo Infinite's campaign on Zeta Halo.",
+   "url": "https://github.com/hintforge/halo-infinite",
+   "image": "assets/guides/halo-infinite.svg",
+   "imageAlt": "Halo Infinite companion status: coverage, verification, spoiler control, save reader, and tools",
+   "updated": "2026-10-24T06:39:28Z",
+   "updatedText": "24 October 2026"
   },
   {
    "repo": "into-the-breach",
@@ -39,8 +59,8 @@
    "url": "https://github.com/hintforge/into-the-breach",
    "image": "assets/guides/into-the-breach.svg",
    "imageAlt": "Into the Breach companion status: coverage, how current it is, and spoiler control",
-   "updated": "2026-09-17T02:15:37Z",
-   "updatedText": "17 September 2026"
+   "updated": "2026-10-17T16:46:46Z",
+   "updatedText": "17 October 2026"
   },
   {
    "repo": "planet-zoo",
@@ -49,8 +69,18 @@
    "url": "https://github.com/hintforge/planet-zoo",
    "image": "assets/guides/planet-zoo.svg",
    "imageAlt": "Planet Zoo companion status: coverage, how current it is, and spoiler control",
-   "updated": "2026-09-17T13:06:46Z",
-   "updatedText": "17 September 2026"
+   "updated": "2026-10-17T18:31:46Z",
+   "updatedText": "17 October 2026"
+  },
+  {
+   "repo": "planet-zoo-2",
+   "game": "Planet Zoo 2",
+   "description": "Frontier's zoo and conservation sim where you build zoos, breed animals and release them into Wildlife Reserves across Career, Franchise and Sandbox.",
+   "url": "https://github.com/hintforge/planet-zoo-2",
+   "image": "assets/guides/planet-zoo-2.svg",
+   "imageAlt": "Planet Zoo 2 companion status: coverage, how current it is, and spoiler control",
+   "updated": "2026-10-20T02:05:07Z",
+   "updatedText": "20 October 2026"
   },
   {
    "repo": "portal",
@@ -59,8 +89,18 @@
    "url": "https://github.com/hintforge/portal",
    "image": "assets/guides/portal.svg",
    "imageAlt": "Portal companion status: coverage, how current it is, and spoiler control",
-   "updated": "2026-09-17T20:04:26Z",
-   "updatedText": "17 September 2026"
+   "updated": "2026-10-17T16:46:34Z",
+   "updatedText": "17 October 2026"
+  },
+  {
+   "repo": "red-dead-redemption-2",
+   "game": "Red Dead Redemption 2",
+   "description": "Built for the long ride: collectibles, challenges, missables, and what each chapter quietly closes behind you.",
+   "url": "https://github.com/hintforge/red-dead-redemption-2",
+   "image": "assets/guides/red-dead-redemption-2.svg",
+   "imageAlt": "Red Dead Redemption 2 companion status: coverage, verification, spoiler control, save reader, and tools",
+   "updated": "2026-10-30T20:37:44Z",
+   "updatedText": "30 October 2026"
   },
   {
    "repo": "the-stanley-parable",
@@ -69,8 +109,8 @@
    "url": "https://github.com/hintforge/the-stanley-parable",
    "image": "assets/guides/the-stanley-parable.svg",
    "imageAlt": "The Stanley Parable companion status: coverage, how current it is, and spoiler control",
-   "updated": "2026-08-23T17:43:44Z",
-   "updatedText": "23 August 2026"
+   "updated": "2026-10-17T16:46:22Z",
+   "updatedText": "17 October 2026"
   },
   {
    "repo": "warhammer-40-000-rogue-trader",
@@ -79,8 +119,8 @@
    "url": "https://github.com/hintforge/warhammer-40-000-rogue-trader",
    "image": "assets/guides/warhammer-40-000-rogue-trader.svg",
    "imageAlt": "Rogue Trader companion status: coverage, how current it is, spoiler control, and save reader",
-   "updated": "2026-09-17T18:48:27Z",
-   "updatedText": "17 September 2026"
+   "updated": "2026-10-17T16:47:55Z",
+   "updatedText": "17 October 2026"
   }
  ],
  "framework": [

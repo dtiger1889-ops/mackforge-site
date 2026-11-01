@@ -5,8 +5,8 @@
   {
    "repo": "atomic-heart",
    "game": "Atomic Heart",
-   "description": "The first-person action-RPG set in an alternate 1955 USSR.",
-   "introFull": "A spoiler-controlled hint companion for Atomic Heart, the first-person action-RPG set in an alternate 1955 USSR. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set, and that tracks where you are so you can step away and pick back up.",
+   "description": "A free hint guide for Atomic Heart, with spoiler levels you control.",
+   "introFull": "A free hint guide for Atomic Heart, with spoiler levels you control. Get help with this first-person action-RPG set in an alternate 1955 USSR. Your AI agent answers only from the guide files and tracks where you are so you can pick back up.",
    "url": "https://github.com/hintforge/atomic-heart",
    "image": "assets/guides/atomic-heart.svg",
    "imageAlt": "Atomic Heart companion status: coverage, live-game verification, spoiler control, and save reader",
@@ -18,14 +18,14 @@
     "Puzzles",
     "Achievements"
    ],
-   "updated": "2026-10-17T16:47:37Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:31Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "balatro",
    "game": "Balatro",
-   "description": "LocalThunk's poker roguelike where you build a scoring engine out of Jokers, Planet cards, Tarots and Vouchers and push it through eight antes of blinds.",
-   "introFull": "A spoiler-controlled hint companion for Balatro, LocalThunk's poker roguelike where you build a scoring engine out of Jokers, Planet cards, Tarots and Vouchers and push it through eight antes of blinds. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free hint guide for Balatro that keeps undiscovered cards and unlocks hidden until you ask.",
+   "introFull": "A free hint guide for Balatro that keeps undiscovered cards and unlocks hidden until you ask. In LocalThunk's poker roguelike, build a scoring engine from Jokers, Planet cards, Tarots and Vouchers through eight antes of blinds. Your AI agent answers only from the guide files.",
    "url": "https://github.com/hintforge/balatro",
    "image": "assets/guides/balatro.svg",
    "imageAlt": "Balatro companion status: coverage, how current it is, and spoiler control",
@@ -35,8 +35,8 @@
     "Items",
     "Achievements"
    ],
-   "updated": "2026-10-20T13:47:55Z",
-   "updatedText": "20 October 2026"
+   "updated": "2026-11-01T19:29:02Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "blue-prince",
@@ -59,8 +59,8 @@
   {
    "repo": "frostpunk",
    "game": "Frostpunk",
-   "description": "11 bit studios' frostbitten survival city-builder where you keep the last city on Earth alive around a coal generator.",
-   "introFull": "A spoiler-controlled hint companion for Frostpunk, 11 bit studios' frostbitten survival city-builder where you keep the last city on Earth alive around a coal generator — and decide what a society will do to survive. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free, spoiler-controlled hint guide for Frostpunk.",
+   "introFull": "A free, spoiler-controlled hint guide for Frostpunk. In this survival city-builder, keep the last city on Earth alive around a coal generator. Your AI agent answers only from the guide files.",
    "url": "https://github.com/hintforge/frostpunk",
    "image": "assets/guides/frostpunk.svg",
    "imageAlt": "Frostpunk companion status: coverage, how current it is, and spoiler control",
@@ -71,14 +71,14 @@
     "Endings",
     "Achievements"
    ],
-   "updated": "2026-10-17T16:47:26Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:51Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "ftl-faster-than-light",
    "game": "FTL: Faster Than Light",
-   "description": "The spaceship-management roguelike where you run one ship ahead of a pursuing fleet, one jump at a time.",
-   "introFull": "A spoiler-controlled hint companion for FTL: Faster Than Light, the spaceship-management roguelike where you run one ship ahead of a pursuing fleet, one jump at a time. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free hint guide for FTL: Faster Than Light, with spoilers kept at the level you choose.",
+   "introFull": "A free hint guide for FTL: Faster Than Light, with spoilers kept at the level you choose. Get help with this spaceship-management roguelike as you stay ahead of a pursuing fleet, one jump at a time. Your AI agent answers only from the guide files.",
    "url": "https://github.com/hintforge/ftl-faster-than-light",
    "image": "assets/guides/ftl-faster-than-light.svg",
    "imageAlt": "FTL companion status: coverage, how current it is, and spoiler control",
@@ -89,14 +89,14 @@
     "Factions",
     "Achievements"
    ],
-   "updated": "2026-10-17T16:46:56Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:48Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "halo-infinite",
    "game": "Halo Infinite",
-   "description": "A spoiler-controlled hint companion for Halo Infinite's campaign on Zeta Halo.",
-   "introFull": "A spoiler-controlled hint companion for Halo Infinite's campaign on Zeta Halo. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set, and that tracks where you are so you can step away and pick back up.",
+   "description": "A free hint guide for Halo Infinite's campaign, with spoiler levels you control.",
+   "introFull": "A free hint guide for Halo Infinite's campaign, with spoiler levels you control. Get help with Zeta Halo's open world and missions. Your AI agent answers only from the guide files and tracks your place so you can pick back up.",
    "url": "https://github.com/hintforge/halo-infinite",
    "image": "assets/guides/halo-infinite.svg",
    "imageAlt": "Halo Infinite companion status: coverage, verification, spoiler control, save reader, and tools",
@@ -110,14 +110,14 @@
     "Optional zones",
     "Achievements"
    ],
-   "updated": "2026-10-24T06:39:28Z",
-   "updatedText": "24 October 2026"
+   "updated": "2026-11-01T19:29:06Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "into-the-breach",
    "game": "Into the Breach",
-   "description": "Subset Games' turn-based mech tactics roguelike where you defend islands from the Vek.",
-   "introFull": "A spoiler-controlled hint companion for Into the Breach, Subset Games' turn-based mech tactics roguelike where you defend islands from the Vek — and reset the timeline when a run goes wrong. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free, spoiler-controlled hint guide for Into the Breach.",
+   "introFull": "A free, spoiler-controlled hint guide for Into the Breach. In Subset Games' turn-based mech tactics roguelike, defend islands from the Vek and reset the timeline when a run goes wrong. Your AI agent answers only from the guide files.",
    "url": "https://github.com/hintforge/into-the-breach",
    "image": "assets/guides/into-the-breach.svg",
    "imageAlt": "Into the Breach companion status: coverage, how current it is, and spoiler control",
@@ -127,14 +127,14 @@
     "Weapons",
     "Achievements"
    ],
-   "updated": "2026-10-17T16:46:46Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:44Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "planet-zoo",
    "game": "Planet Zoo",
-   "description": "Frontier's wildlife management sim where you design habitats, breed species, and build the zoo of your dreams across career scenarios and sandbox.",
-   "introFull": "A spoiler-controlled hint companion for Planet Zoo, Frontier's wildlife management sim where you design habitats, breed species, and build the zoo of your dreams across career scenarios and sandbox. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free hint guide for Planet Zoo, with spoiler settings you control.",
+   "introFull": "A free hint guide for Planet Zoo, with spoiler settings you control. Get help with Frontier's wildlife management sim, from habitats and breeding to career scenarios and sandbox. Your AI agent answers only from the guide files.",
    "url": "https://github.com/hintforge/planet-zoo",
    "image": "assets/guides/planet-zoo.svg",
    "imageAlt": "Planet Zoo companion status: coverage, how current it is, and spoiler control",
@@ -145,14 +145,14 @@
     "Settings",
     "Achievements"
    ],
-   "updated": "2026-10-17T18:31:46Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:56Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "planet-zoo-2",
    "game": "Planet Zoo 2",
-   "description": "Frontier's zoo and conservation sim where you build zoos, breed animals and release them into Wildlife Reserves across Career, Franchise and Sandbox.",
-   "introFull": "A spoiler-controlled hint companion for Planet Zoo 2, Frontier's zoo and conservation sim where you build zoos, breed animals and release them into Wildlife Reserves across Career, Franchise and Sandbox. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free, spoiler-controlled hint guide for Planet Zoo 2.",
+   "introFull": "A free, spoiler-controlled hint guide for Planet Zoo 2. Get help with Frontier's zoo and conservation sim across Career, Franchise and Sandbox. Your AI agent answers only from guide files.",
    "url": "https://github.com/hintforge/planet-zoo-2",
    "image": "assets/guides/planet-zoo-2.svg",
    "imageAlt": "Planet Zoo 2 companion status: coverage, how current it is, and spoiler control",
@@ -163,14 +163,14 @@
     "Animals",
     "Achievements"
    ],
-   "updated": "2026-10-20T02:05:07Z",
-   "updatedText": "20 October 2026"
+   "updated": "2026-11-01T19:28:59Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "portal",
    "game": "Portal",
-   "description": "Aperture Science's first-person puzzler about a portal gun, a series of test chambers, and a passive-aggressive AI.",
-   "introFull": "A spoiler-controlled hint companion for Portal, Aperture Science's first-person puzzler about a portal gun, a series of test chambers, and a passive-aggressive AI. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free hint guide for Portal that lets you choose how much to reveal.",
+   "introFull": "A free hint guide for Portal that lets you choose how much to reveal. Ask for help with this first-person puzzle game about a portal gun, test chambers and a passive-aggressive AI. Your AI agent answers only from the guide files.",
    "url": "https://github.com/hintforge/portal",
    "image": "assets/guides/portal.svg",
    "imageAlt": "Portal companion status: coverage, how current it is, and spoiler control",
@@ -180,14 +180,14 @@
     "Puzzles",
     "Achievements"
    ],
-   "updated": "2026-10-17T16:46:34Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:41Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "red-dead-redemption-2",
    "game": "Red Dead Redemption 2",
-   "description": "Built for the long ride: collectibles, challenges, missables, and what each chapter quietly closes behind you.",
-   "introFull": "A spoiler-controlled hint companion for Red Dead Redemption 2's story mode, built for the long ride: collectibles, challenges, missables, and what each chapter quietly closes behind you. Built in the Hintforge format: a sidekick that answers only from these guide files, at the spoiler level you set, and that keeps track of where you are so you can step away and pick back up.",
+   "description": "A free, spoiler-controlled hint guide for Red Dead Redemption 2's story mode.",
+   "introFull": "A free, spoiler-controlled hint guide for Red Dead Redemption 2's story mode. Get help with collectibles, challenges and what each chapter closes behind you. Your AI agent answers only from the guide files and keeps your place so you can pick back up.",
    "url": "https://github.com/hintforge/red-dead-redemption-2",
    "image": "assets/guides/red-dead-redemption-2.svg",
    "imageAlt": "Red Dead Redemption 2 companion status: coverage, verification, spoiler control, save reader, and tools",
@@ -200,14 +200,14 @@
     "Reputation",
     "Achievements"
    ],
-   "updated": "2026-10-30T20:37:44Z",
-   "updatedText": "30 October 2026"
+   "updated": "2026-11-01T19:29:09Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "the-stanley-parable",
    "game": "The Stanley Parable",
-   "description": "The narrative game about choice and an increasingly exasperated Narrator.",
-   "introFull": "A spoiler-controlled hint companion for The Stanley Parable, the narrative game about choice and an increasingly exasperated Narrator. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free, spoiler-controlled hint guide for The Stanley Parable.",
+   "introFull": "A free, spoiler-controlled hint guide for The Stanley Parable. In this narrative game about choice and an increasingly exasperated Narrator, ask for help without giving away every path. Your AI agent answers only from the guide files.",
    "url": "https://github.com/hintforge/the-stanley-parable",
    "image": "assets/guides/the-stanley-parable.svg",
    "imageAlt": "The Stanley Parable companion status: coverage, how current it is, and spoiler control",
@@ -217,14 +217,14 @@
     "Endings",
     "Achievements"
    ],
-   "updated": "2026-10-17T16:46:22Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:34Z",
+   "updatedText": "1 November 2026"
   },
   {
    "repo": "warhammer-40-000-rogue-trader",
    "game": "Warhammer 40,000: Rogue Trader",
-   "description": "Owlcat's grimdark CRPG in the Koronus Expanse.",
-   "introFull": "A spoiler-controlled hint companion for Warhammer 40,000: Rogue Trader, Owlcat's grimdark CRPG in the Koronus Expanse. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set, and that tracks where you are so you can step away for months and pick right back up.",
+   "description": "A free hint guide for Warhammer 40,000: Rogue Trader, with spoiler levels you control.",
+   "introFull": "A free hint guide for Warhammer 40,000: Rogue Trader, with spoiler levels you control. Get help with Owlcat's grimdark CRPG in the Koronus Expanse. Your AI agent answers only from the guide files and tracks your place between sessions.",
    "url": "https://github.com/hintforge/warhammer-40-000-rogue-trader",
    "image": "assets/guides/warhammer-40-000-rogue-trader.svg",
    "imageAlt": "Rogue Trader companion status: coverage, how current it is, spoiler control, and save reader",
@@ -236,8 +236,8 @@
     "Puzzles",
     "Achievements"
    ],
-   "updated": "2026-10-17T16:47:55Z",
-   "updatedText": "17 October 2026"
+   "updated": "2026-11-01T19:28:37Z",
+   "updatedText": "1 November 2026"
   }
  ],
  "framework": [

@@ -63,11 +63,11 @@
 
   <!-- title -->
   <text class="mono b title" x="78" y="200">ROGUE TRADER</text>
-  <text class="mono sub" x="80" y="250">Warhammer 40,000 &#8212; a grimdark Owlcat CRPG (Russian studio)</text>
+  <text class="mono sub" x="80" y="250">Warhammer 40,000: a grimdark Owlcat CRPG (Russian studio)</text>
 
   <!-- coverage -->
   <text class="mono b seclbl" x="78" y="340">COVERAGE</text>
-  <text class="mono cap" x="288" y="340">deep campaign &#8212; mechanics, crew, factions, items, achievements</text>
+  <text class="mono cap" x="288" y="340">deep campaign: mechanics, crew, factions, items, achievements</text>
   <g>
     <rect x="78"   y="366" width="212" height="52" rx="6" fill="var(--seg)" stroke="var(--seg-dk)"/>
     <text class="mono b seg" x="184"  y="399" text-anchor="middle">MECHANICS</text>
@@ -93,17 +93,17 @@
   <!-- SPOILER CTRL -->
   <circle cx="96" cy="536" r="10" fill="var(--active)" stroke="#3f5030"/>
   <text class="mono b rlbl" x="130" y="544">SPOILER CTRL</text>
-  <text class="mono rval" x="352" y="544">you set two dials &#8212; enemy (0-5) &amp; puzzle (0-3), both start silent</text>
+  <text class="mono rval" x="352" y="544">you set two dials: enemy (0-5) &amp; puzzle (0-3), both start silent</text>
   <line x1="78" y1="566" x2="1422" y2="566" stroke="var(--rule)" stroke-width="1"/>
   <!-- SAVE READER (full) -->
   <circle cx="96" cy="602" r="10" fill="var(--active)" stroke="#3f5030"/>
   <text class="mono b rlbl" x="130" y="610">SAVE READER</text>
-  <text class="mono rval" x="352" y="610">ACTIVE &#8212; reads your saves &amp; resolved party/game state</text>
+  <text class="mono rval" x="352" y="610">ACTIVE: reads your saves &amp; resolved party/game state</text>
   <line x1="78" y1="632" x2="1422" y2="632" stroke="var(--rule)" stroke-width="1"/>
   <!-- TOOLS (not yet) -->
   <circle cx="96" cy="668" r="10" fill="var(--active)" stroke="#3f5030"/>
   <text class="mono b rlbl" x="130" y="676" fill="var(--ink-soft)">TOOLS</text>
-  <text class="mono rval-mute" x="352" y="676">build planner built &#8212; rank ladder, 900 talents, save import; party planner next</text>
+  <text class="mono rval-mute" x="352" y="676">build planner built: rank ladder, 900 talents, save import; party planner next</text>
 
   <!-- fine print: save-reader spoiler caveat -->
   <path d="M90 700 l11 19 h-22 z" fill="none" stroke="var(--primary-lt)" stroke-width="1.5"/>

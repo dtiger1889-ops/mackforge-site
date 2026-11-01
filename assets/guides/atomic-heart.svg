@@ -63,11 +63,11 @@
 
   <!-- title -->
   <text class="mono b title" x="78" y="200">ATOMIC HEART</text>
-  <text class="mono sub" x="80" y="250">First-person action-RPG &#8212; alternate-1955 USSR</text>
+  <text class="mono sub" x="80" y="250">First-person action-RPG: alternate-1955 USSR</text>
 
   <!-- coverage -->
   <text class="mono b seclbl" x="78" y="340">COVERAGE</text>
-  <text class="mono cap" x="288" y="340">base game mapped &#8212; DLC &amp; Testing Grounds run thinner</text>
+  <text class="mono cap" x="288" y="340">base game mapped; DLC &amp; Testing Grounds run thinner</text>
   <g>
     <rect x="78"   y="366" width="212" height="52" rx="6" fill="var(--seg)" stroke="var(--seg-dk)"/>
     <text class="mono b seg" x="184"  y="399" text-anchor="middle">MECHANICS</text>
@@ -93,19 +93,19 @@
   <!-- SPOILER CTRL (attention) -->
   <circle cx="96" cy="536" r="10" fill="var(--active)" stroke="#26473d"/>
   <text class="mono b rlbl" x="130" y="544">SPOILER CTRL</text>
-  <text class="mono rval" x="352" y="544">you set two dials &#8212; enemy (0-5) &amp; puzzle (0-3), both start silent</text>
+  <text class="mono rval" x="352" y="544">you set two dials: enemy (0-5) &amp; puzzle (0-3), both start silent</text>
   <line x1="78" y1="566" x2="1422" y2="566" stroke="var(--rule)" stroke-width="1"/>
   <!-- SAVE READER (partial) -->
   <circle cx="96" cy="602" r="10" fill="none" stroke="var(--seg)" stroke-width="2"/>
   <path d="M96 592 A10 10 0 0 0 96 612 Z" fill="var(--seg)"/>
   <text class="mono b rlbl" x="130" y="610">SAVE READER</text>
-  <text class="mono rval" x="352" y="610">LIMITED &#8212; reads your zone &amp; glove skills; deep save is encrypted</text>
+  <text class="mono rval" x="352" y="610">LIMITED: reads your zone &amp; glove skills; deep save is encrypted</text>
   <line x1="78" y1="632" x2="1422" y2="632" stroke="var(--rule)" stroke-width="1"/>
   <!-- TOOLS (partial) -->
   <circle cx="96" cy="668" r="10" fill="none" stroke="var(--seg)" stroke-width="2"/>
   <path d="M96 658 A10 10 0 0 0 96 678 Z" fill="var(--seg)"/>
   <text class="mono b rlbl" x="130" y="676">TOOLS</text>
-  <text class="mono rval" x="352" y="676">PARTIAL &#8212; skill-tree planner built; weapon-upgrade planner planned</text>
+  <text class="mono rval" x="352" y="676">PARTIAL: skill-tree planner built; weapon-upgrade planner planned</text>
 
   <!-- fine print: save-reader spoiler caveat -->
   <path d="M90 700 l11 19 h-22 z" fill="none" stroke="var(--primary)" stroke-width="1.5"/>

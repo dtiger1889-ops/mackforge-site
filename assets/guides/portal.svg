@@ -66,21 +66,21 @@
 
   <circle cx="96" cy="536" r="10" fill="var(--active)" stroke="#8a4c1b"/>
   <text class="mono b rlbl" x="130" y="544">SPOILER CTRL</text>
-  <text class="mono rval" x="352" y="544">you set two dials &#8212; enemy (0-5) &amp; puzzle (0-3), both start silent</text>
+  <text class="mono rval" x="352" y="544">you set two dials: enemy (0-5) &amp; puzzle (0-3), both start silent</text>
   <line x1="78" y1="566" x2="1422" y2="566" stroke="var(--rule)" stroke-width="1"/>
 
   <circle cx="96" cy="602" r="10" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 3"/>
   <text class="mono b rlbl" x="130" y="610" fill="var(--ink-soft)">SAVE READER</text>
-  <text class="mono rval-mute" x="352" y="610">none &#8212; a corpus-fed guide (Portal saves aren't read)</text>
+  <text class="mono rval-mute" x="352" y="610">none: a corpus-fed guide (Portal saves aren't read)</text>
   <line x1="78" y1="632" x2="1422" y2="632" stroke="var(--rule)" stroke-width="1"/>
 
   <circle cx="96" cy="668" r="10" fill="none" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 3"/>
   <text class="mono b rlbl" x="130" y="676" fill="var(--ink-soft)">TOOLS</text>
-  <text class="mono rval-mute" x="352" y="676">none yet &#8212; a per-chamber technique tracker is the natural fit</text>
+  <text class="mono rval-mute" x="352" y="676">none yet: a per-chamber technique tracker is the natural fit</text>
 
   <circle cx="90" cy="712" r="9" fill="none" stroke="var(--primary)" stroke-width="1.5"/>
   <text class="mono b" x="90" y="718" font-size="13px" text-anchor="middle" fill="var(--primary)">i</text>
-  <text class="mono foot" x="118" y="720" font-style="italic">Answers come only from this guide's files &#8212; never guesswork or training data.</text>
+  <text class="mono foot" x="118" y="720" font-style="italic">Answers come only from this guide's files, never guesswork or training data.</text>
 
   <text class="mono foot" x="78" y="762">github.com/hintforge/portal</text>
   <text class="mono foot" x="1422" y="762" text-anchor="end">reads only the files you control</text>

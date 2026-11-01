@@ -131,3 +131,14 @@ footer .brand{color:var(--cream)}
 .type-filters.has-pill button[aria-pressed=true]{background:transparent!important;box-shadow:none;border-color:transparent}
 #projects .search-filters{display:flex;align-items:end;gap:12px}
 #projects .search-filters .search-field{flex:1 1 auto;width:auto;min-width:0}
+.guide-detail{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:32px}
+.guide-card{margin:0;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--soft)}
+.guide-card img{display:block;width:100%;height:auto}
+.guide-text h2{font-size:22px;margin:0 0 12px}
+.guide-covers ul{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.guide-covers li{font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink)}
+.guide-use p{color:var(--muted);margin:0 0 12px;max-width:60ch}
+.guide-use a:not(.action){color:var(--accent)}
+.guide-use .load-line{font:500 14px/1.5 ui-monospace,Consolas,monospace;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:10px 12px;overflow-wrap:anywhere}
+.guide-updated{font:500 12px/1.5 ui-monospace,Consolas,monospace;color:var(--muted);margin:20px 0 0}
+@media(max-width:800px){.guide-detail{grid-template-columns:1fr;gap:22px;margin-top:20px}}

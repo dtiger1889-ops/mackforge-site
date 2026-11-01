@@ -39,6 +39,24 @@
    "updatedText": "20 October 2026"
   },
   {
+   "repo": "blue-prince",
+   "game": "Blue Prince",
+   "description": "Dogubomb's puzzle adventure where you draft the rooms of a changing manor one door at a time and try to reach a room no one can find.",
+   "introFull": "A spoiler-controlled hint companion for Blue Prince, Dogubomb's puzzle adventure where you draft the rooms of a changing manor one door at a time and try to reach a room no one can find. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "url": "https://github.com/hintforge/blue-prince",
+   "image": "assets/guides/blue-prince.svg",
+   "imageAlt": "Blue Prince companion status: coverage, how current it is, and spoiler control",
+   "coverage": [
+    "Mechanics",
+    "Scenarios",
+    "Items",
+    "Puzzles",
+    "Achievements"
+   ],
+   "updated": "2026-11-01T09:05:38Z",
+   "updatedText": "1 November 2026"
+  },
+  {
    "repo": "frostpunk",
    "game": "Frostpunk",
    "description": "11 bit studios' frostbitten survival city-builder where you keep the last city on Earth alive around a coal generator.",

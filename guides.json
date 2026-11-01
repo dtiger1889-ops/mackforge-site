@@ -41,8 +41,8 @@
   {
    "repo": "blue-prince",
    "game": "Blue Prince",
-   "description": "Dogubomb's puzzle adventure where you draft the rooms of a changing manor one door at a time and try to reach a room no one can find.",
-   "introFull": "A spoiler-controlled hint companion for Blue Prince, Dogubomb's puzzle adventure where you draft the rooms of a changing manor one door at a time and try to reach a room no one can find. Built in the Hintforge format: a loyal sidekick that answers only from these guide files — never from guesswork — at the spoiler level you set.",
+   "description": "A free hint guide for Blue Prince, with spoiler levels you control.",
+   "introFull": "A free hint guide for Blue Prince, with spoiler levels you control. As you draft rooms in a manor that changes every day, ask for help in plain words. Your AI agent answers only from the guide files, never its own memory.",
    "url": "https://github.com/hintforge/blue-prince",
    "image": "assets/guides/blue-prince.svg",
    "imageAlt": "Blue Prince companion status: coverage, how current it is, and spoiler control",
@@ -53,7 +53,7 @@
     "Puzzles",
     "Achievements"
    ],
-   "updated": "2026-11-01T09:05:38Z",
+   "updated": "2026-11-01T17:20:26Z",
    "updatedText": "1 November 2026"
   },
   {

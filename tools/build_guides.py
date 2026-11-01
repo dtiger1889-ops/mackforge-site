@@ -231,7 +231,7 @@ def guide_page(guide):
 <div class="guide-text">
 {covers}
 <section class="guide-use" aria-labelledby="use-title"><h2 id="use-title">Use it</h2>
-<p>You need a Hintforge reader running in Claude Code, Codex, or OpenClaw: <a href="{READER_URL}" target="_blank" rel="noopener noreferrer">get the reader ↗</a>. Then point it at this guide:</p>
+<p>You need the Hintforge reader in any AI agent that can read files on your computer: <a href="{READER_URL}" target="_blank" rel="noopener noreferrer">get the reader ↗</a>. Then point it at this guide:</p>
 <p class="load-line">Load the {e(guide["game"])} guide from github.com/{ORG}/{e(guide["repo"])}</p>
 <div class="actions"><a class="action" href="{e(guide["url"])}" target="_blank" rel="noopener noreferrer">Open the guide <span aria-hidden="true">↗</span></a></div>
 </section>

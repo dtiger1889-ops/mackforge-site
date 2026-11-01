@@ -196,6 +196,13 @@ def guide_page(guide):
     if guide["coverage"]:
         covers = ('<section class="guide-covers" aria-labelledby="covers-title"><h2 id="covers-title">What it covers</h2><ul>'
                   + "".join(f"<li>{e(c)}</li>" for c in guide["coverage"]) + "</ul></section>")
+    # Each guide's own preview image (made by tools/build_previews.py), else the shared one.
+    if (ROOT / "assets" / "guides" / "previews" / f'{guide["repo"]}.png').is_file():
+        preview = f'{SITE}/assets/guides/previews/{guide["repo"]}.png?v={ASSET_VERSION}'
+        preview_alt = f'Status card for the {guide["game"]} Hintforge guide'
+    else:
+        preview = f"{SITE}/assets/guides-preview.png"
+        preview_alt = "The mackforge game guides page: a grid of Hintforge guide cards, each with its status card image"
     ld = json_ld({
         "@context": "https://schema.org", "@type": "WebPage", "name": title, "url": page_url, "description": description,
         "about": {"@type": "VideoGame", "name": guide["game"]},
@@ -207,8 +214,8 @@ def guide_page(guide):
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)}</title><meta name="description" content="{e(description)}">
 <meta name="color-scheme" content="dark light"><meta name="theme-color" content="#0d1117">
-<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="{e(page_url)}"><meta property="og:image" content="{SITE}/assets/guides-preview.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="The mackforge game guides page: a grid of Hintforge guide cards, each with its status card image">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/guides-preview.png">
+<meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="{e(page_url)}"><meta property="og:image" content="{e(preview)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{e(preview_alt)}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{e(preview)}">
 <link rel="canonical" href="{e(page_url)}"><link rel="icon" href="{FAVICON}">
 <script>try{{document.documentElement.dataset.theme=localStorage.getItem('mackforge-theme')==='light'?'light':'dark'}}catch{{}}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../../style.css?v={ASSET_VERSION}">
 <script data-goatcounter="https://mackforge.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script><script src="../../track.js?v=20261012a" defer></script>

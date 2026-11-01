@@ -256,9 +256,10 @@ def collection_ld(guides):
 
 
 def sitemap(guides):
+    # Only guide pages carry lastmod: a repo's push date says when that page's content changed.
+    # The other pages have no reliable date, so they get none.
     rows = [f"  <url><loc>{SITE}{p}</loc></url>" for p in OTHER_PAGES]
-    rows.append(f"  <url><loc>{SITE}/guides.html</loc><lastmod>{max(g['updated'][:10] for g in guides)}</lastmod></url>" if guides
-                else f"  <url><loc>{SITE}/guides.html</loc></url>")
+    rows.append(f"  <url><loc>{SITE}/guides.html</loc></url>")
     rows += [f"  <url><loc>{SITE}/guides/{g['repo']}/</loc><lastmod>{g['updated'][:10]}</lastmod></url>" for g in guides]
     return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(rows) + "\n</urlset>\n"
 

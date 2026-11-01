@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" width="1500" height="820" role="img" aria-label="Phantom Doctrine Hintforge companion status dossier">
+  <!-- ============================================================
+       PHANTOM DOCTRINE - Hintforge status card ("field dossier")
+       To retheme: edit the CSS variables in the <style> block below.
+       To edit content: search for the visible text strings further down.
+       ============================================================ -->
+  <style>
+    :root{
+      --paper:#e9e1ca; --paper-edge:#cec4a8; --ink:#2b2a22; --ink-soft:#5c5846;
+      --olive:#565c3f; --olive-lt:#808665; --cream:#eee7d2;
+      --stamp:#aa3a2e; --green:#4e7042; --rule:#c6bda1; --redact:#1a1a16;
+    }
+    .mono{font-family:'Courier New',Consolas,'DejaVu Sans Mono',monospace;}
+    .b{font-weight:700;}
+    text{fill:var(--ink);}
+    .tag{font-size:20px;letter-spacing:1px;}
+    .tag-o{fill:var(--olive);}
+    .soft{fill:var(--ink-soft);}
+    .title{font-size:82px;letter-spacing:2px;fill:var(--ink);}
+    .sub{font-size:27px;fill:var(--ink-soft);}
+    .seclbl{font-size:25px;letter-spacing:1px;fill:var(--olive);}
+    .cap{font-size:21px;fill:var(--ink-soft);}
+    .seg{font-size:20px;letter-spacing:1px;fill:var(--cream);}
+    .rlbl{font-size:23px;letter-spacing:1px;fill:var(--olive);}
+    .rval{font-size:22px;fill:var(--ink);}
+    .foot{font-size:21px;fill:var(--ink-soft);}
+    .stamp-t{font-size:46px;letter-spacing:3px;fill:var(--stamp);}
+    .stamp-s{font-size:23px;letter-spacing:2px;fill:var(--stamp);}
+  </style>
+
+  <defs>
+    <radialGradient id="vig" cx="50%" cy="42%" r="78%">
+      <stop offset="55%" stop-color="var(--paper)"/>
+      <stop offset="100%" stop-color="var(--paper-edge)"/>
+    </radialGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0"/></filter>
+    <filter id="worn"><feTurbulence type="fractalNoise" baseFrequency="0.04 0.06" numOctaves="3" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="6"/></filter>
+  </defs>
+
+  <!-- paper -->
+  <rect x="0" y="0" width="1500" height="820" fill="url(#vig)"/>
+  <rect x="0" y="0" width="1500" height="820" filter="url(#grain)" opacity="0.5"/>
+
+  <!-- double frame -->
+  <rect x="38" y="38" width="1424" height="744" fill="none" stroke="var(--olive)" stroke-width="3"/>
+  <rect x="47" y="47" width="1406" height="726" fill="none" stroke="var(--olive-lt)" stroke-width="1"/>
+  <!-- corner crop ticks -->
+  <g stroke="var(--olive)" stroke-width="3">
+    <path d="M47 47 h26 M47 47 v26"/>
+    <path d="M1453 47 h-26 M1453 47 v26"/>
+    <path d="M47 773 h26 M47 773 v-26"/>
+    <path d="M1453 773 h-26 M1453 773 v-26"/>
+  </g>
+
+  <!-- top tag row -->
+  <text class="mono b tag tag-o" x="78" y="82">BEHOLDER INITIATIVE</text>
+  <text class="mono tag soft" x="330" y="82">//  FIELD DOSSIER</text>
+  <text class="mono tag soft" x="1422" y="82" text-anchor="end">FILE No. HF-PD-001</text>
+  <line x1="78" y1="100" x2="1422" y2="100" stroke="var(--olive-lt)" stroke-width="1"/>
+
+  <!-- title -->
+  <text class="mono b title" x="78" y="200">PHANTOM DOCTRINE</text>
+  <text class="mono sub" x="80" y="250">Turn-based Cold War espionage tactics</text>
+
+  <!-- coverage -->
+  <text class="mono b seclbl" x="78" y="340">COVERAGE</text>
+  <text class="mono cap" x="288" y="340">comprehensive: full campaign, every core system mapped</text>
+  <g>
+    <!-- 6 equal segments, ~222 wide + 12 gap, from x=78 to x=1422 -->
+    <g>
+      <rect x="78"   y="366" width="212" height="52" rx="6" fill="var(--olive)" stroke="#40462e"/>
+      <text class="mono b seg" x="184"  y="399" text-anchor="middle">MECHANICS</text>
+    </g>
+    <g>
+      <rect x="302"  y="366" width="212" height="52" rx="6" fill="var(--olive)" stroke="#40462e"/>
+      <text class="mono b seg" x="408"  y="399" text-anchor="middle">FACTIONS</text>
+    </g>
+    <g>
+      <rect x="526"  y="366" width="212" height="52" rx="6" fill="var(--olive)" stroke="#40462e"/>
+      <text class="mono b seg" x="632"  y="399" text-anchor="middle">AGENTS</text>
+    </g>
+    <g>
+      <rect x="750"  y="366" width="212" height="52" rx="6" fill="var(--olive)" stroke="#40462e"/>
+      <text class="mono b seg" x="856"  y="399" text-anchor="middle">ITEMS</text>
+    </g>
+    <g>
+      <rect x="974"  y="366" width="212" height="52" rx="6" fill="var(--olive)" stroke="#40462e"/>
+      <text class="mono b seg" x="1080" y="399" text-anchor="middle">PATHS</text>
+    </g>
+    <g>
+      <rect x="1198" y="366" width="224" height="52" rx="6" fill="var(--olive)" stroke="#40462e"/>
+      <text class="mono b seg" x="1310" y="399" text-anchor="middle">ACHIEVEMENTS</text>
+    </g>
+  </g>
+
+  <!-- status rows -->
+  <!-- row 1 VERIFIED -->
+  <circle cx="96" cy="470" r="10" fill="var(--green)" stroke="#32361f"/>
+  <text class="mono b rlbl" x="130" y="478">VERIFIED</text>
+  <text class="mono rval" x="352" y="478">Aug 2026 · last patch v1.1 (Feb 2019) · feed 2026-10-17</text>
+  <line x1="78" y1="500" x2="1422" y2="500" stroke="var(--rule)" stroke-width="1"/>
+  <!-- row 2 SPOILER -->
+  <circle cx="96" cy="536" r="10" fill="var(--green)" stroke="#32361f"/>
+  <text class="mono b rlbl" x="130" y="544">SPOILER CTRL</text>
+  <text class="mono rval" x="352" y="544">you set two dials: enemy (0-5) &amp; puzzle (0-3), both start silent</text>
+  <line x1="78" y1="566" x2="1422" y2="566" stroke="var(--rule)" stroke-width="1"/>
+  <!-- row 3 SAVE READER -->
+  <circle cx="96" cy="602" r="10" fill="var(--green)" stroke="#32361f"/>
+  <text class="mono b rlbl" x="130" y="610">SAVE READER</text>
+  <text class="mono rval" x="352" y="610">ACTIVE: recaps where you left off, reads your agents' real stats</text>
+  <line x1="78" y1="632" x2="1422" y2="632" stroke="var(--rule)" stroke-width="1"/>
+  <!-- row 4 TOOLS -->
+  <circle cx="96" cy="668" r="10" fill="var(--green)" stroke="#32361f"/>
+  <text class="mono b rlbl" x="130" y="676">TOOLS</text>
+  <text class="mono rval" x="352" y="676">interactive agent dossier cards your AI agent fills from your save</text>
+
+  <!-- fine print: save-reader spoiler caveat (honest, confined) -->
+  <path d="M90 700 l11 19 h-22 z" fill="none" stroke="var(--stamp)" stroke-width="1.5"/>
+  <circle cx="90" cy="714" r="1.4" fill="var(--stamp)"/>
+  <text class="mono foot" x="118" y="720" font-style="italic">Save-file reads are inherently hard to spoiler-gate; any leak surfaces there, not in guide answers.</text>
+
+  <!-- footer -->
+  <text class="mono foot" x="78" y="762">github.com/hintforge/phantom-doctrine</text>
+  <text class="mono foot" x="1422" y="762" text-anchor="end">reads only the files you control</text>
+
+  <!-- worn 'VERIFIED' rubber stamp -->
+  <g transform="translate(1235 92) rotate(7)" opacity="0.82" filter="url(#worn)">
+    <rect x="0" y="0" width="210" height="104" rx="12" fill="none" stroke="var(--stamp)" stroke-width="6"/>
+    <rect x="12" y="12" width="186" height="80" rx="8" fill="none" stroke="var(--stamp)" stroke-width="2"/>
+    <text class="mono b stamp-t" x="105" y="52" text-anchor="middle">VERIFIED</text>
+    <text class="mono b stamp-s" x="105" y="80" text-anchor="middle">AUG 2026</text>
+  </g>
+</svg>

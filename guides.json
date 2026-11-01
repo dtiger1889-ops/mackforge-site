@@ -131,6 +131,44 @@
    "updatedText": "1 November 2026"
   },
   {
+   "repo": "pokemon-snap",
+   "game": "New Pokémon Snap",
+   "description": "A free New Pokémon Snap hint guide with spoiler levels you control.",
+   "introFull": "A free New Pokémon Snap hint guide with spoiler levels you control. It covers Nintendo Switch version 2.0.0, including the free update courses. Your AI agent answers only from the guide files, at the level you set.",
+   "url": "https://github.com/hintforge/pokemon-snap",
+   "image": "assets/guides/pokemon-snap.svg",
+   "imageAlt": "New Pokémon Snap companion status: coverage, how current it is, and spoiler control",
+   "coverage": [
+    "Mechanics",
+    "Zones",
+    "Items",
+    "Puzzles",
+    "Pokemon",
+    "Achievements"
+   ],
+   "updated": "2026-11-01T20:02:01Z",
+   "updatedText": "1 November 2026"
+  },
+  {
+   "repo": "phantom-doctrine",
+   "game": "Phantom Doctrine",
+   "description": "A free hint guide for Phantom Doctrine, a turn-based Cold War espionage tactics game, with spoilers you control.",
+   "introFull": "A free hint guide for Phantom Doctrine, a turn-based Cold War espionage tactics game, with spoilers you control. Ask for help in plain words. Your AI agent answers only from the guide files, never its own memory.",
+   "url": "https://github.com/hintforge/phantom-doctrine",
+   "image": "assets/guides/phantom-doctrine.svg",
+   "imageAlt": "Phantom Doctrine companion status: coverage, live-game verification, spoiler control, save reader, and interactive tools",
+   "coverage": [
+    "Mechanics",
+    "Factions",
+    "Agents",
+    "Items",
+    "Paths",
+    "Achievements"
+   ],
+   "updated": "2026-11-01T20:00:54Z",
+   "updatedText": "1 November 2026"
+  },
+  {
    "repo": "planet-zoo",
    "game": "Planet Zoo",
    "description": "A free hint guide for Planet Zoo, with spoiler settings you control.",

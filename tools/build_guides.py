@@ -39,8 +39,8 @@ from pathlib import Path
 SITE = "https://mackforge.dev"
 # Pages outside the guides that the sitemap lists. They carry no lastmod, because
 # this script cannot know when they last changed.
-OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/"]
-ASSET_VERSION = "20261101a"
+OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/", "/sites.html"]
+ASSET_VERSION = "20261104a"
 
 ORG = "hintforge"
 FRAMEWORK = {
@@ -164,7 +164,7 @@ def card(guide):
 
 NAV = (
     '<header class="nav"><a class="brand" href="../../">mackforge<span aria-hidden="true">.</span></a>'
-    '<nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a>'
+    '<nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a><a href="../../sites.html">Sites I like</a>'
     '<a href="https://github.com/hintforge" target="_blank" rel="noopener noreferrer">GitHub ↗</a>'
     '<div class="share"><button type="button" id="share-btn" aria-expanded="false" aria-controls="share-menu">Share</button>'
     '<div id="share-menu" hidden><a data-net="linkedin" target="_blank" rel="noopener">LinkedIn</a><a data-net="reddit" target="_blank" rel="noopener">Reddit</a>'

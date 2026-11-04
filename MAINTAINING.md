@@ -12,6 +12,7 @@ It is plain HTML, CSS, and small scripts, with no framework, served by GitHub Pa
 
 - `index.html` is the project catalogue.
 - `guides.html` is the game guides page.
+- `sites.html` lists websites and projects by other people. To add one, copy an `<article>` there, put a 1400x875 screenshot of the site in `assets/sites/` as WebP, and update the count. It reuses `guides.js` for the theme and share menu. Its link preview is `assets/sites-preview.png`.
 - `style.css` is the stylesheet for both pages and both themes.
 - `site.js` handles search, filters, theme choice, and sharing on the catalogue.
 - `guides.js` handles the search box and theme choice on the guides page.

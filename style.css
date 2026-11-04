@@ -97,7 +97,7 @@ footer .brand{color:var(--cream)}
 .section-heading h2{font-size:38px}
 .project h3{font-size:28px}
 }
-@media(max-width:379px){.nav nav{padding-left:12px;gap:6px}
+@media(max-width:429px){.nav nav{padding-left:12px;gap:6px}
 .nav nav>a,.nav .share button{font-size:11px}
 }
 

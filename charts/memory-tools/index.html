@@ -336,6 +336,9 @@
     .mf-theme { width: 36px; height: 36px; }
     .mf-theme svg { width: 18px; height: 18px; }
   }
+  @media (max-width: 429px) {
+    .mf-bar nav { padding-left: 12px; gap: 6px; font-size: 11px; }
+  }
   /* Embed mode (?embed=1): the chart alone, for pasting into another site. */
   html.embed .mf-bar,
   html.embed .title-actions, html.embed .about, html.embed footer { display: none; }
@@ -358,7 +361,7 @@
 <script src="../../track.js?v=20261012a" defer></script>
 </head>
 <body>
-<div class="mf-bar"><a class="mf-brand" href="../../">mackforge<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a><a href="../agent-managers/">Agent managers</a><button type="button" class="mf-theme" id="mf-theme"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></div>
+<div class="mf-bar"><a class="mf-brand" href="../../">mackforge<span aria-hidden="true">.</span></a><nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a><a href="../../sites.html">Sites I like</a><a href="../agent-managers/">Agent managers</a><button type="button" class="mf-theme" id="mf-theme"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></div>
 <script>
   // Theme toggle: same saved choice as the rest of mackforge.dev.
   (function () {

@@ -6,6 +6,7 @@
   "checked_on": "2026-10-09 (documentation only)",
   "source_note": "From its own documentation; nothing installed or tested.",
   "is_baseline": false,
+  "is_authors_own": false,
   "features": {
     "installs_as": {
       "value": "CLI plus MCP server (also agent skills, Docker)",

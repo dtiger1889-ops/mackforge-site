@@ -1,6 +1,6 @@
 {
-  "snapshot_date": "2026-10-09",
-  "snapshot_note": "Snapshot as of 2026-10-09. Every cell comes from the tool's own documentation on the date shown. Nothing here was installed or tested.",
+  "snapshot_date": "2026-11-07",
+  "snapshot_note": "Every cell comes from the tool's own documentation on the date shown for that tool. Nothing here was installed or tested.",
   "features": [
     {
       "key": "installs_as",
@@ -130,6 +130,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": true,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "Nothing to install: files in a folder",
@@ -205,6 +206,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "Plugin (hooks, local worker, MCP search tools)",
@@ -280,6 +282,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "Plugin or MCP to a hosted service; also an SDK",
@@ -355,6 +358,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "CLI plus MCP server (also agent skills, Docker)",
@@ -430,6 +434,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "Library (Python) plus MCP server in the repo",
@@ -505,6 +510,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "Local server plus plugin, MCP server, hooks, skills",
@@ -580,6 +586,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "CLI (bd) that installs hooks, skills and AGENTS.md text",
@@ -655,6 +662,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "Local server (single binary) plus hooks and MCP config",
@@ -730,6 +738,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "CLI plus MCP server (single Go binary)",
@@ -798,6 +807,82 @@
       }
     },
     {
+      "name": "Harness Toolbox (CHECKPOINT.md)",
+      "url": "https://github.com/dtiger1889-ops/claude-harness-toolbox",
+      "category": "memory tool",
+      "description": "A CLAUDE.md file for stable rules and a CHECKPOINT.md file for where the work stands, kept current by a /checkpoint skill, plus hooks that make each session read the checkpoint before it changes anything.",
+      "checked_on": "2026-11-07 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested for this chart.",
+      "is_baseline": false,
+      "is_authors_own": true,
+      "features": {
+        "installs_as": {
+          "value": "Plugin (skills and hooks), or files copied by hand",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes: files and local scripts; the agent still needs its own login",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "Yes: CLAUDE.md and CHECKPOINT.md, plain Markdown",
+          "mark": "yes"
+        },
+        "footprint": {
+          "value": "Tiny: Markdown files plus PowerShell scripts",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes, built for it: hooks make each session read the checkpoint",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Partial: Windows hooks only; skills install for Claude Code",
+          "mark": "partial"
+        },
+        "claude_desktop": {
+          "value": "Partial: only Desktop's Code tab, which is Claude Code",
+          "mark": "partial"
+        },
+        "windows": {
+          "value": "Native: Windows is its tested platform",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Yes: saved file stays; /necromancy recovers unsaved work",
+          "mark": "yes"
+        },
+        "survives_compaction": {
+          "value": "Yes: a hook asks for a checkpoint update before compaction",
+          "mark": "yes"
+        },
+        "undo_delete": {
+          "value": "Whatever your editor or git gives you",
+          "mark": "n/a"
+        },
+        "service_failure": {
+          "value": "No background service",
+          "mark": "n/a"
+        },
+        "uninstall": {
+          "value": "No uninstall steps found on pages read",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "MIT; no paid tier",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "32 (2026-11-07)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "No releases published (checked 2026-11-07)",
+          "mark": "info"
+        }
+      }
+    },
+    {
       "name": "codex-mem",
       "url": "https://github.com/2kDarki/codex-mem",
       "category": "memory tool",
@@ -805,6 +890,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "CLI watcher plus local worker and MCP search tools",
@@ -880,6 +966,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "CLI (mnem) plus Python SDK; MCP server package",
@@ -955,6 +1042,7 @@
       "checked_on": "2026-10-09 (documentation only)",
       "source_note": "From its own documentation; nothing installed or tested.",
       "is_baseline": false,
+      "is_authors_own": false,
       "features": {
         "installs_as": {
           "value": "CLI that installs hooks (Claude) or a prompt hook (Codex)",

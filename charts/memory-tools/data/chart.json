@@ -1,6 +1,6 @@
 {
-  "snapshot_date": "2026-10-09",
-  "snapshot_note": "Snapshot as of 2026-10-09. Every cell comes from the tool's own documentation on the date shown. Nothing here was installed or tested.",
+  "snapshot_date": "2026-11-07",
+  "snapshot_note": "Every cell comes from the tool's own documentation on the date shown for that tool. Nothing here was installed or tested.",
   "features": [
     {
       "key": "installs_as",
@@ -131,6 +131,7 @@
     "beads",
     "ai-memory",
     "okf-agent-memory",
+    "claude-harness-toolbox",
     "codex-mem",
     "mnemosyne",
     "intellex"

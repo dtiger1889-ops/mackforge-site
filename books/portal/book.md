@@ -2203,7 +2203,7 @@ The original Portal does NOT contain Aerial Faith Plates, Thermal Discouragement
 **Two linked portals.** The ASHPD fires two linked portals, blue and orange. Only one of each color exists at a time, and firing a new blue portal moves the existing blue one. You and objects pass through one aperture and exit the other instantaneously.[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f03 -->
 
 **Which surfaces take a portal.** Portals attach only to flat, light-colored, concrete-type surfaces. Dark metallic brown or black panels are non-portalable, and glass and moving surfaces reject portals.[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f04 -->
-The developer commentary is said to explain the dark colour as a deliberate choice, so non-portalable surfaces are easy to spot from a distance. No walkthrough checked for this book (2026-11-06) confirms it.[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f05 -->
+The developer commentary reportedly explains the dark colour as a deliberate choice, so non-portalable surfaces are easy to spot from a distance; the major walkthroughs do not mention it.[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f05 -->
 
 **Crosshair feedback.** The crosshair indicator changes colour when it is over a valid portal-placement surface. It is the primary read for spotting portalable surfaces and edge placements.[†](#note-app-mechanics-medium-confidence){.shaky title="Sources rate this as medium confidence: likely right, not fully confirmed."} <!-- f:app-mechanics-f06 -->
 
@@ -2237,7 +2237,7 @@ The developer commentary is said to explain the dark colour as a deliberate choi
 
 **Names.** StrategyWiki calls it the "Material Emancipation Grid", also "emancipation grills".[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f20 -->
 GLaDOS says "Grill" in-game.[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f21 -->
-The subtitles and the Prima guide are both said to use "Grid"; neither has been checked for this book (2026-11-06).[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f22 -->
+The subtitles and the Prima guide reportedly both use "Grid"; this is not confirmed.[†](#note-app-mechanics-one-source){.shaky title="Only one source reports this."} <!-- f:app-mechanics-f22 -->
 
 ### Hazards
 

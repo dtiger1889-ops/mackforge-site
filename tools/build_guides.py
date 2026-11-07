@@ -14,8 +14,11 @@ variable, and only reads public data. It writes:
   their start / end markers, so the page works as plain HTML. Everything outside
   the markers is left as it is;
 - guides/<repo>/index.html: one page per guide, so each game has its own address
-  and title in search results;
-- sitemap.xml and robots.txt: the site's pages, for search engines.
+  and title in search results. A guide whose book is in books/<repo>/ also gets a
+  "Full walkthrough" section linking its walkthrough pages (tools/build_books.py,
+  which runs first);
+- sitemap.xml and robots.txt: the site's pages, walkthrough pages included, for
+  search engines.
 
 A repo counts as a framework repo when its name is in FRAMEWORK; every other
 public, non-archived, non-fork repo in the organisation is treated as a guide.
@@ -36,7 +39,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-SITE = "https://mackforge.dev"
+sys.dont_write_bytecode = True  # importing tools/build_books.py must not leave a __pycache__ in tools/
+
+SITE ="https://mackforge.dev"
 # Pages outside the guides that the sitemap lists. They carry no lastmod, because
 # this script cannot know when they last changed.
 OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/", "/sites.html"]
@@ -162,18 +167,40 @@ def card(guide):
     )
 
 
-NAV = (
-    '<header class="nav"><a class="brand" href="../../">mackforge<span aria-hidden="true">.</span></a>'
-    '<nav aria-label="Main navigation"><a href="../../#projects">Projects</a><a href="../../guides.html">Game guides</a><a href="../../sites.html">Sites I like</a>'
-    '<a href="https://github.com/hintforge" target="_blank" rel="noopener noreferrer">GitHub ↗</a>'
-    '<div class="share"><button type="button" id="share-btn" aria-expanded="false" aria-controls="share-menu">Share</button>'
-    '<div id="share-menu" hidden><a data-net="linkedin" target="_blank" rel="noopener">LinkedIn</a><a data-net="reddit" target="_blank" rel="noopener">Reddit</a>'
-    '<a data-net="x" target="_blank" rel="noopener">X</a><a data-net="bluesky" target="_blank" rel="noopener">Bluesky</a>'
-    '<button type="button" id="share-copy">Copy link</button><button type="button" id="share-native" hidden>More…</button></div></div>'
-    '<button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" title="Switch to light theme" hidden>'
-    '<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>'
-    '<svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></header>'
-)
+# The page shell shared by the guide pages and the walkthrough pages (tools/build_books.py).
+# root is the relative path back to the site root: "../../" from guides/<repo>/.
+def nav(root):
+    return (
+        f'<header class="nav"><a class="brand" href="{root}">mackforge<span aria-hidden="true">.</span></a>'
+        f'<nav aria-label="Main navigation"><a href="{root}#projects">Projects</a><a href="{root}guides.html">Game guides</a><a href="{root}sites.html">Sites I like</a>'
+        '<a href="https://github.com/hintforge" target="_blank" rel="noopener noreferrer">GitHub ↗</a>'
+        '<div class="share"><button type="button" id="share-btn" aria-expanded="false" aria-controls="share-menu">Share</button>'
+        '<div id="share-menu" hidden><a data-net="linkedin" target="_blank" rel="noopener">LinkedIn</a><a data-net="reddit" target="_blank" rel="noopener">Reddit</a>'
+        '<a data-net="x" target="_blank" rel="noopener">X</a><a data-net="bluesky" target="_blank" rel="noopener">Bluesky</a>'
+        '<button type="button" id="share-copy">Copy link</button><button type="button" id="share-native" hidden>More…</button></div></div>'
+        '<button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" title="Switch to light theme" hidden>'
+        '<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>'
+        '<svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></header>'
+    )
+
+
+def footer(root):
+    return (f'<footer><a class="brand" href="{root}">mackforge.</a><p>D.M. · <a href="mailto:hello@mackforge.dev">hello@mackforge.dev</a> · '
+            f'<a href="https://github.com/hintforge" target="_blank" rel="noopener noreferrer">Hintforge on GitHub</a></p></footer>'
+            f'<script src="{root}guides.js?v={ASSET_VERSION}"></script><script src="{root}egg.js?v=20261010e" defer></script>')
+
+
+def head_assets(root):
+    """The fonts, stylesheet, analytics and click-tracking tags every guide-area page loads."""
+    return ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+            '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap">'
+            f'<link rel="stylesheet" href="{root}style.css?v={ASSET_VERSION}">\n'
+            f'<script data-goatcounter="https://mackforge.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script><script src="{root}track.js?v=20261012a" defer></script>')
+
+
+THEME_SCRIPT = "<script>try{document.documentElement.dataset.theme=localStorage.getItem('mackforge-theme')==='light'?'light':'dark'}catch{}</script>"
+SPOILER_NOTICE = "This chapter shows everything in it, puzzle solutions included, and sometimes points ahead to later chambers."
+SPOILER_NOTICE_ALL = "Each chapter shows everything in it, puzzle solutions included, and sometimes points ahead to later chambers."
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23e8862e'/%3E"
            "%3Ctext x='16' y='23' text-anchor='middle' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='%23111921'%3Em%3C/text%3E%3C/svg%3E")
 
@@ -185,6 +212,7 @@ def json_ld(data):
 
 def guide_page(guide):
     e = html.escape
+    root = "../../"
     page_url = f'{SITE}/guides/{guide["repo"]}/'
     title = f'{guide["game"]} spoiler-free hint guide · Hintforge'
     description = meta_description(guide["game"], guide["introFull"])
@@ -217,13 +245,12 @@ def guide_page(guide):
 <meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="{e(page_url)}"><meta property="og:image" content="{e(preview)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{e(preview_alt)}">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{e(preview)}">
 <link rel="canonical" href="{e(page_url)}"><link rel="icon" href="{FAVICON}">
-<script>try{{document.documentElement.dataset.theme=localStorage.getItem('mackforge-theme')==='light'?'light':'dark'}}catch{{}}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="../../style.css?v={ASSET_VERSION}">
-<script data-goatcounter="https://mackforge.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script><script src="../../track.js?v=20261012a" defer></script>
+{THEME_SCRIPT}{head_assets(root)}
 {ld}
 </head>
 <body class="workbench guides-page guide-single" data-share-title="{e(guide["game"])} spoiler-free hint guide">
 <a class="skip" href="#guide">Skip to the guide</a>
-{NAV}
+{nav(root)}
 <main id="guide">
 <section class="guides-intro" aria-labelledby="page-title"><p class="eyebrow">Hintforge guide</p><h1 id="page-title">{e(guide["game"])}<span>.</span></h1><p class="intro">{e(guide["introFull"] or guide["description"])}</p><p class="back-link"><a href="../../guides.html">← All game guides</a></p></section>
 <div class="guide-detail">
@@ -235,13 +262,27 @@ def guide_page(guide):
 <p class="load-line">Load the {e(guide["game"])} guide from github.com/{ORG}/{e(guide["repo"])}</p>
 <div class="actions"><a class="action" href="{e(guide["url"])}" target="_blank" rel="noopener noreferrer">Open the guide <span aria-hidden="true">↗</span></a></div>
 </section>
-<p class="guide-updated">Updated {e(guide["updatedText"])}</p>
+{walkthrough_section(guide)}<p class="guide-updated">Updated {e(guide["updatedText"])}</p>
 </div>
 </div>
 </main>
-<footer><a class="brand" href="../../">mackforge.</a><p>D.M. · <a href="mailto:hello@mackforge.dev">hello@mackforge.dev</a> · <a href="https://github.com/hintforge" target="_blank" rel="noopener noreferrer">Hintforge on GitHub</a></p></footer><script src="../../guides.js?v={ASSET_VERSION}"></script><script src="../../egg.js?v=20261010e" defer></script>
+{footer(root)}
 </body></html>
 """
+
+
+def walkthrough_section(guide):
+    """The link to a guide's walkthrough pages, when the site carries its book (tools/build_books.py)."""
+    if not (ROOT / "books" / guide["repo"] / "book.md").is_file():
+        return ""
+    import build_books
+    count = build_books.page_counts(guide["repo"])
+    return ('<section class="guide-use guide-walkthrough" aria-labelledby="walkthrough-title" style="margin-top:28px">'
+            '<h2 id="walkthrough-title">Full walkthrough</h2>'
+            f'<p>{html.escape(SPOILER_NOTICE_ALL)}</p>'
+            f'<p>{html.escape(count)}, one page each.</p>'
+            '<div class="actions"><a class="action" href="walkthrough/">Read the walkthrough</a></div>'
+            "</section>\n")
 
 
 def list_description_tags(guides):
@@ -268,6 +309,12 @@ def sitemap(guides):
     rows = [f"  <url><loc>{SITE}{p}</loc></url>" for p in OTHER_PAGES]
     rows.append(f"  <url><loc>{SITE}/guides.html</loc></url>")
     rows += [f"  <url><loc>{SITE}/guides/{g['repo']}/</loc><lastmod>{g['updated'][:10]}</lastmod></url>" for g in guides]
+    # Walkthrough pages (tools/build_books.py): lastmod is the date the book's copy was last committed.
+    for g in guides:
+        if (ROOT / "books" / g["repo"] / "book.md").is_file():
+            import build_books
+            day = build_books.book_date(g["repo"])
+            rows += [f"  <url><loc>{SITE}{path}</loc><lastmod>{day}</lastmod></url>" for path in build_books.page_paths(g["repo"])]
     return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(rows) + "\n</urlset>\n"
 
 

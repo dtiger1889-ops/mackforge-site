@@ -1,0 +1,160 @@
+/* Walkthrough pages (guides/<repo>/walkthrough/), made by tools/build_books.py.
+   Loaded after style.css and only by those pages. Two layouts: body.wt-a (one reading
+   column under a dark title panel) and body.wt-b (a chapter rail beside a text sheet). */
+
+:root{--wt-text:#dde3ea;--wt-tip-bg:rgba(232,134,46,.11);--wt-tip-line:#e8862e;--wt-col-bg:rgba(127,167,214,.11);--wt-col-line:#7fa7d6;--wt-map-bg:#10161e;--wt-map-node:#1b2431;--wt-num-ink:#1a0d02;--wt-notice-bg:rgba(232,134,46,.09);--wt-notice-line:rgba(232,134,46,.55);--c-nav:#7fb0ff;--c-puzzle:#4fd1b0;--c-hazard:#ff9a5c;--c-story:#b79bff;--c-collectible:#f2c14e;--c-exit:#7bd37f;--c-boss:#ff8a80}
+[data-theme=light]{--wt-text:#1f2732;--wt-tip-bg:#fbeee1;--wt-tip-line:#b85a14;--wt-col-bg:#e6eef8;--wt-col-line:#3b6ea8;--wt-map-bg:#f7f9fc;--wt-map-node:#fff;--wt-num-ink:#fff;--wt-notice-bg:#fbeee1;--wt-notice-line:#d9a274;--c-nav:#1f5fbf;--c-puzzle:#12806a;--c-hazard:#c2410c;--c-story:#7c3aed;--c-collectible:#9a6416;--c-exit:#2f7d32;--c-boss:#b3261e}
+
+/* Breadcrumb */
+.wt-crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin:14px 0 12px;font-size:13px;color:var(--muted)}
+.wt-crumbs a{color:var(--accent);display:inline-flex;align-items:center;min-height:40px}
+.wt-crumbs a:hover{text-decoration:underline;text-underline-offset:4px}
+.wt-crumbs [aria-current]{color:var(--ink)}
+
+/* Title block */
+.wt-head .eyebrow{font:700 12px/1.4 "Inter",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+.wt-head .eyebrow::before{content:">_ ";color:var(--muted)}
+.wt-head h1{font-family:"Anton",Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:0;font-size:clamp(40px,6.4vw,78px);line-height:.95;margin:0 0 18px;overflow-wrap:anywhere}
+.wt-lede{font-size:17px;line-height:1.6;margin:0 0 14px;max-width:62ch}
+.spoiler-notice{margin:0;max-width:70ch;padding:11px 16px;border:1px solid var(--wt-notice-line);background:var(--wt-notice-bg);border-radius:14px;font-size:14px;line-height:1.55}
+.spoiler-notice strong{color:var(--accent);margin-right:2px}
+
+/* Chapter text */
+.wt-body{font-size:17px;line-height:1.72;color:var(--wt-text)}
+.wt-body p,.wt-body li{max-width:70ch}
+.wt-body p{margin:0 0 16px}
+.wt-body a{color:var(--accent);text-underline-offset:3px}
+.wt-body h2{font:800 13px/1.3 "Inter",sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:38px 0 14px}
+.wt-body h3{font:700 17px/1.35 "Inter",sans-serif;color:var(--ink);margin:26px 0 8px}
+.wt-body ol,.wt-body ul{padding-left:1.6em;margin:0 0 16px}
+.wt-body ol>li{margin:12px 0;padding-left:4px}
+.wt-body ol>li::marker{font-weight:800;color:var(--accent)}
+.wt-body ul>li{margin:6px 0}
+.wt-body strong{color:var(--ink)}
+.wt-body code{font:500 .86em/1.4 ui-monospace,Consolas,monospace;background:var(--soft);border:1px solid var(--line);padding:.05em .35em;border-radius:6px;overflow-wrap:anywhere}
+
+/* Tip and Collectibles boxes (book.lua) */
+.wt-body .box{border-left:4px solid var(--wt-tip-line);background:var(--wt-tip-bg);border-radius:0 16px 16px 0;padding:12px 18px;margin:22px 0;font-size:15.5px;line-height:1.6}
+.wt-body .box.collectibles{border-left-color:var(--wt-col-line);background:var(--wt-col-bg)}
+.wt-body .box p{margin:6px 0}
+.wt-body .box ul{margin:6px 0;padding-left:1.2em}
+.wt-body .box>p:first-child>strong:first-child{color:var(--wt-tip-line)}
+.wt-body .box.collectibles>p:first-child>strong:first-child{color:var(--wt-col-line)}
+.wt-body .unchecked{border:2px solid var(--c-boss);border-radius:14px;padding:12px 16px;margin:18px 0}
+
+/* Dagger marks and the notes they point to */
+.wt-body a.shaky{text-decoration:none;font-size:.8em;vertical-align:super;line-height:0;padding:0 .15em;font-weight:700}
+.wt-body .notes{margin-top:30px;padding:12px 0 0;border-top:1px dashed var(--line);font-size:14px;line-height:1.55;color:var(--muted)}
+.wt-body .notes p{margin:6px 0}
+.wt-body .notes strong{color:var(--accent);margin-right:4px}
+.wt-body :target{scroll-margin-top:110px}
+
+/* Tables scroll inside themselves on a phone */
+.wt-body .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0;border:1px solid var(--line);border-radius:14px}
+.wt-body table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.45}
+.wt-body th,.wt-body td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.wt-body tr:last-child td{border-bottom:0}
+.wt-body th{background:var(--soft);color:var(--ink);font-weight:700}
+
+/* Part intro and the map SVGs embedded in the book */
+.wt-part{margin:6px 0 30px;padding:16px 18px 6px;border:1px solid var(--line);border-radius:22px;background:var(--wt-map-bg)}
+.wt-part>h2{margin:0 0 4px}
+.wt-body .wt-part figure.map{border:0;padding:0;margin:8px 0 10px;background:none}
+.wt-body figure.map{margin:24px 0;padding:14px;background:var(--wt-map-bg);border:1px solid var(--line);border-radius:20px}
+.wt-body figure.map figcaption{font-size:12.5px;line-height:1.45;color:var(--muted);margin-top:8px;text-align:center}
+.wt-body svg.book-map{display:block;width:100%;max-width:460px;height:auto;margin:0 auto}
+.map-node{fill:var(--wt-map-node);stroke:var(--slate);stroke-width:1.5}
+[data-theme=light] .map-node{stroke:#9aa7b5}
+.map-node-next{fill:none;stroke-dasharray:4 3}
+.map-node-end{fill:color-mix(in srgb,var(--accent) 18%,var(--wt-map-node))}
+.map-edge{stroke:var(--muted);stroke-width:1.6}
+.map-edge-ponr{stroke:var(--c-hazard);stroke-dasharray:5 4}
+.map-arrowhead{fill:var(--muted)}
+.map-label{fill:var(--ink);font:500 11px "Inter",system-ui,sans-serif}
+.map-label-left{font-size:12px}
+.map-label-small{fill:var(--muted);font:italic 10px "Inter",system-ui,sans-serif}
+.map-legend{fill:var(--muted);font:10px "Inter",system-ui,sans-serif}
+.map-spine{stroke:var(--line);stroke-width:2}
+.map-num-bg{fill:var(--accent)}
+.map-num{fill:var(--wt-num-ink);font:700 11px "Inter",system-ui,sans-serif}
+.map-icon{stroke:none}
+.map-icon-nav{fill:var(--c-nav)}.map-icon-puzzle{fill:var(--c-puzzle)}.map-icon-hazard{fill:var(--c-hazard)}.map-icon-story{fill:var(--c-story)}.map-icon-collectible{fill:var(--c-collectible)}.map-icon-exit{fill:var(--c-exit)}.map-icon-boss{fill:var(--c-boss)}
+
+/* Previous / All chapters / Next */
+.wt-pager{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch;margin:44px 0 0}
+.wt-pager a{display:flex;flex-direction:column;justify-content:center;gap:3px;min-height:64px;padding:12px 18px;border:1px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);font-weight:700;font-size:15px;line-height:1.3;text-decoration:none}
+.wt-pager a span{font:700 11px/1.2 "Inter",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.wt-pager .wt-next{text-align:right;align-items:flex-end}
+.wt-pager .wt-all{align-items:center;justify-content:center;border-radius:999px;padding:12px 20px;font-size:14px}
+.wt-pager a:hover{border-color:var(--accent)}
+.wt-pager a:focus-visible,.wt-rail a:focus-visible,.wt-groups a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Contents page */
+.wt-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:26px;align-items:start}
+.wt-group{border:1px solid var(--line);background:var(--card);border-radius:26px;padding:20px 24px 14px}
+.wt-group h2{font-family:"Anton",Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:26px;line-height:1.05;margin:0 0 10px;color:var(--card-ink)}
+.wt-group ol,.wt-group ul{margin:0;padding-left:1.7em}
+.wt-group ul{list-style:none;padding-left:0}
+.wt-group li{border-top:1px solid var(--line)}
+.wt-group li:first-child{border-top:0}
+.wt-group li::marker{color:var(--muted);font-weight:700;font-size:13px}
+.wt-group a{display:flex;align-items:center;min-height:44px;color:var(--card-ink);font-weight:600;text-decoration:none}
+.wt-group a:hover{color:var(--accent)}
+
+/* ---- Layout A: one reading column under a dark title panel ---- */
+.wt-a .wt-crumbs,.wt-a .wt-sheet{max-width:780px;margin-left:auto;margin-right:auto}
+.wt-a .wt-head{position:relative;overflow:hidden;isolation:isolate;background:var(--grad-panel);border:1px solid var(--stroke);border-radius:32px;padding:30px 36px 32px;color:#f3efe8;margin-bottom:30px}
+.wt-a .wt-head::before{content:"";position:absolute;top:0;right:0;width:min(330px,48%);height:230px;z-index:-1;opacity:.55;background:url("assets/hero-cubes.svg") no-repeat top right/contain}
+.wt-a .wt-head .eyebrow{color:var(--tiger-hi)}
+.wt-a .wt-head .eyebrow::before{color:var(--cream)}
+.wt-a .wt-head h1{background:linear-gradient(180deg,#fffaf2 0%,var(--cream) 55%,#d9c7ad 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wt-a .wt-head .spoiler-notice{background:rgba(232,134,46,.12);border-color:rgba(246,168,90,.5);color:#e6ebf0}
+.wt-a .wt-head .spoiler-notice strong{color:var(--tiger-hi)}
+.wt-a .wt-head .wt-lede{color:#d7dee6}
+.wt-a.walkthrough-contents .wt-crumbs{max-width:none}
+.wt-a.walkthrough-contents .wt-head{margin-bottom:0}
+
+/* ---- Layout B: chapter rail beside a text sheet ---- */
+.wt-b .wt-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:26px;align-items:start}
+.wt-b .wt-rail{position:sticky;top:100px;max-height:calc(100vh - 120px);overflow-y:auto;border:1px solid var(--line);background:var(--card);border-radius:24px;padding:14px 12px;font-size:14px;scrollbar-width:thin}
+.wt-b .wt-rail ul,.wt-b .wt-rail ol{list-style:none;margin:0;padding:0}
+.wt-b .wt-rail-all{display:flex;align-items:center;min-height:40px;padding:0 10px;font-weight:700;color:var(--accent);text-decoration:none}
+.wt-b .wt-rail-group>span{display:block;padding:14px 10px 6px;font:700 11px/1.3 "Inter",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.wt-b .wt-rail-group a{display:flex;align-items:center;min-height:34px;padding:4px 12px;border-radius:999px;color:var(--card-ink);text-decoration:none}
+.wt-b .wt-rail-group a:hover{color:var(--accent)}
+.wt-b .wt-rail-group a[aria-current]{background:var(--grad-tiger);color:var(--night);font-weight:700}
+.wt-b .wt-sheet{border:1px solid var(--line);background:var(--surface);border-radius:32px;padding:34px 46px 40px;min-width:0}
+.wt-b .wt-head{padding-bottom:26px;margin-bottom:26px;border-bottom:1px solid var(--line)}
+.wt-b .wt-head h1{color:var(--ink)}
+.wt-b.walkthrough-contents .wt-head{border:1px solid var(--line);background:var(--surface);border-radius:32px;padding:30px 36px;margin:0}
+
+@media(max-width:900px){
+  .wt-b .wt-layout{grid-template-columns:minmax(0,1fr);gap:14px}
+  .wt-b .wt-rail{position:static;max-height:none;overflow:visible;display:flex;align-items:center;gap:6px;padding:6px;border-radius:999px;min-width:0}
+  .wt-b .wt-rail>ul{display:contents}
+  .wt-b .wt-rail-all{flex:0 0 auto;padding:0 12px;border-right:1px solid var(--line)}
+  .wt-b .wt-rail-group{display:none}
+  .wt-b .wt-rail-group.current{display:block;flex:1 1 auto;min-width:0}
+  .wt-b .wt-rail-group>span{display:none}
+  .wt-b .wt-rail-group.current ol{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .wt-b .wt-rail-group.current ol::-webkit-scrollbar{display:none}
+  .wt-b .wt-rail-group li{flex:0 0 auto}
+  .wt-b .wt-rail-group a{white-space:nowrap;min-height:40px}
+}
+@media(max-width:800px){.wt-groups{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){
+  .wt-head h1{font-size:clamp(34px,10.5vw,48px)}
+  .wt-head .eyebrow{font-size:11px;letter-spacing:.12em}
+  .wt-body{font-size:16.5px;line-height:1.68}
+  .wt-a .wt-head{padding:22px 20px 22px;border-radius:26px;margin-bottom:22px}
+  .wt-a .wt-head::before{width:60%;height:150px;opacity:.4}
+  .wt-b .wt-sheet{padding:22px 18px 26px;border-radius:24px}
+  .wt-b.walkthrough-contents .wt-head{padding:22px 20px;border-radius:26px}
+  .wt-pager{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .wt-pager .wt-all{grid-column:1/-1;grid-row:1}
+  .wt-pager a{padding:12px 14px;font-size:14px}
+  .wt-pager .wt-empty{display:none}
+  .wt-group{padding:16px 18px 10px;border-radius:22px}
+  .wt-part{padding:14px 12px 4px}
+  .wt-body figure.map{padding:10px}
+}

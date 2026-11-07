@@ -274,7 +274,7 @@ Test Chamber 02 is where you get your portal gun, though for now it only fires b
 4. Fire a blue portal onto a wall you can reach and walk through to get back to the entry ledge. <!-- f:chamber_02-f06 f:chamber_02-f11 --> The chamberlock door is open now; it opened by itself. <!-- f:chamber_02-f06 f:chamber_02-f11 -->
 5. **Exit.** Test Chamber 02 ends at the chamberlock elevator, and the ride to [Test Chamber 03](#ch-04) is one-way. <!-- f:chamber_02-f02 f:chamber_02-f03 f:chamber_02-f13 -->
 
-> **Tip:** Picking up this blue-only gun does not unlock the Lab Rat achievement. <!-- f:chamber_02-f05 f:chamber_02-f14 --> That comes in [Test Chamber 11](#ch-12), when you get the fully powered two-portal device. <!-- f:chamber_02-f05 f:chamber_02-f14 -->
+> **Tip:** Picking up this blue-only gun does not unlock the Lab Rat achievement; that comes later. <!-- f:chamber_02-f05 f:chamber_02-f14 -->
 
 ```{=html}
 <nav class="chapter-nav"><a href="#ch-02">← Test Chamber 01</a><a class="up" href="#contents">Contents</a><a href="#ch-04">Test Chamber 03 →</a></nav>
@@ -1190,7 +1190,7 @@ Test Chamber 14 is a fling-and-momentum challenge that mixes cubes, pellets, ver
 
 The only way on from [Test Chamber 14](#ch-15) is [Test Chamber 15](#ch-16), through the elevator and the grill, once you route the pellet into the receiver. <!-- f:chamber_14-f03 -->
 
-Chamber 15 is the more common venue for the Terminal Velocity achievement, the infinite fall; see [Achievements](#app-achievements). <!-- f:chamber_14-f20 -->
+The Terminal Velocity achievement, the infinite fall, works in any chamber with portal surfaces on both the ceiling and the floor; see [Achievements](#app-achievements). <!-- f:chamber_14-f20 -->
 
 ::: {.notes}
 []{#note-ch-15-one-source}**†** Only one source reports this.
@@ -1538,7 +1538,7 @@ You arrive from [Test Chamber 17](#ch-18) by chamberlock elevator, and the map l
 2. Look for the side room after the first gap. Radio 18A is in it. <!-- f:chamber_18-f08 -->
 3. Crouch to get in. The room holds miscellaneous objects and radio 18A, and there is not much to read there. [†](#note-ch-19-one-source){.shaky title="Only one source reports this."} <!-- f:chamber_18-f11 -->
 
-> **Tip:** The chamber start is a vertical ceiling and floor surface. It is a common spot for the "Terminal Velocity" achievement, using an infinite portal fall. The chamber also autosaves on entry. <!-- f:chamber_18-f15 -->
+> **Tip:** The chamber autosaves on entry. <!-- f:chamber_18-f15 -->
 
 4. Press the pedestal button, then crouch under the door piston. That lets you enter the turret room without immediate fire. <!-- f:chamber_18-f09 -->
 5. Cross the turret room. This is Part 2. Watch for turrets and energy pellets. Retrieve a cube and place it on a button. Then ride the moving platform across, or fling across the angled door panel. <!-- f:chamber_18-f10 -->
@@ -2092,9 +2092,9 @@ A cumulative count, without a finite-set ceiling. <!-- f:app-achievements-f62 --
 
 #### Terminal Velocity
 
-ID `terminal_velocity`; not hidden; type: threshold. <!-- f:app-achievements-f63 -->
+ID `terminal_velocity`; not hidden; type: threshold.[†](#note-app-achievements-one-source){.shaky title="Only one source reports this."} <!-- f:app-achievements-f63 -->
 
-Trigger: fall **30,000 feet in one continuous fall**. Place a floor portal directly under a ceiling portal and fall in an infinite loop; this is commonly set up in [Test Chamber 15](#ch-16). Hitting the ground resets the counter. <!-- f:app-achievements-f64 -->
+Trigger: fall **30,000 feet**. In any test chamber where you can put portals on both the ceiling and the floor, place one above and one below you, jump in and wait about 5 minutes.[†](#note-app-achievements-one-source){.shaky title="Only one source reports this."} <!-- f:app-achievements-f64 -->
 
 Not missable: it is doable in any chamber with facing portalable ceiling and floor. There is no point-of-no-return window. The prerequisite is the dual-portal gun from [Test Chamber 11](#ch-12). <!-- f:app-achievements-f65 -->
 

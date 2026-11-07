@@ -341,7 +341,7 @@
   }
   /* Embed mode (?embed=1): the chart alone, for pasting into another site. */
   html.embed .mf-bar,
-  html.embed .title-actions, html.embed .about, html.embed footer { display: none; }
+  html.embed .title-actions, html.embed .about, html.embed footer, html.embed footer .byline { display: none; }
   html.embed header { padding-top: 8px; }
   html.embed h1 { font-size: 1.15rem; }
   html.embed h1 a { color: inherit; text-decoration: none; }
@@ -452,7 +452,7 @@
 <footer>
   <p id="own-note">* The Harness Toolbox is my own project. Its cells come from its own documentation,
   the same as every other column.</p>
-  Compiled by dtiger1889-ops.
+  <p class="byline">Compiled by dtiger1889-ops.</p>
 </footer>
 
 <script>
@@ -740,6 +740,7 @@ function nonEmptySections() {
 function applyMatrix(opts = {}) {
   if (!table) return;
   VIS = visibleTools();
+  updateOwnNote(VIS);
   table.blockRedraw();
   let sortedHidden = false, colsChanged = false;
   DATA.tools.forEach((t, i) => {
@@ -768,8 +769,18 @@ function countYes(tool) {
   return Object.values(tool.features).filter(c => c.mark === "yes").length;
 }
 
+// The own-project note shows only while an own-project column is shown; in embed mode the
+// footer is hidden except for that note.
+function updateOwnNote(tools) {
+  const show = tools.some(t => t.is_authors_own);
+  document.getElementById("own-note").hidden = !show;
+  if (document.documentElement.classList.contains("embed"))
+    document.querySelector("footer").style.display = show ? "block" : "none";
+}
+
 function renderByTool() {
   const tools = visibleTools();
+  updateOwnNote(tools);
   const cols = [
     { key: "name", label: "Tool" },
     { key: "category", label: "Category" },
@@ -784,7 +795,7 @@ function renderByTool() {
     name: t.name, category: t.category, description: t.description,
     license: t.features.license_cost.value, checked_on: t.checked_on, source_note: t.source_note,
     yes_count: countYes(t), url: t.url,
-    stars: starCount(t),
+    stars: starCount(t), own: !!t.is_authors_own,
   }));
   rows.sort((a, b) => {
     const va = a[bytoolSortKey], vb = b[bytoolSortKey];
@@ -820,6 +831,12 @@ function renderByTool() {
         a.href = r.url; a.target = "_blank"; a.rel = "noopener";
         a.textContent = r.name;
         td.appendChild(a);
+        if (r.own) {
+          const star = document.createElement("a");
+          star.href = "#own-note"; star.className = "own-star"; star.textContent = "*";
+          star.title = "The author's own project: see the note at the bottom";
+          td.appendChild(star);
+        }
       } else if (col.key === "stars") {
         td.textContent = r.stars < 0 ? "No single repo" : r.stars.toLocaleString("en-US");
       } else {

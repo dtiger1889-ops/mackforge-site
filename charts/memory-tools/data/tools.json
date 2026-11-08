@@ -769,8 +769,8 @@
           "mark": "undocumented"
         },
         "windows": {
-          "value": "Yes: x64 installer (needs admin; not code-signed yet)",
-          "mark": "yes"
+          "value": "Native: x64 installer (needs admin; not code-signed yet)",
+          "mark": "info"
         },
         "survives_crash": {
           "value": "Not in its docs (checked 2026-11-08)",
@@ -781,8 +781,8 @@
           "mark": "partial"
         },
         "undo_delete": {
-          "value": "Reject or replace a lesson before approval; deleting not documented",
-          "mark": "partial"
+          "value": "Not documented for saved memory (checked 2026-11-08)",
+          "mark": "undocumented"
         },
         "service_failure": {
           "value": "Not in its docs (checked 2026-11-08)",

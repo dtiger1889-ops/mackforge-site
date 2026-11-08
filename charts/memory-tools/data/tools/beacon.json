@@ -1,0 +1,76 @@
+{
+  "name": "Beacon",
+  "url": "https://github.com/Asymptote-Labs/agent-beacon",
+  "category": "memory tool",
+  "description": "Records sessions from Claude Code, Codex and 20+ other agents in the background, then turns the sessions you pick into project memory, but only lessons you approve, which any of those agents can look up.",
+  "checked_on": "2026-11-08 (documentation only)",
+  "source_note": "From its own documentation; nothing installed or tested.",
+  "is_baseline": false,
+  "is_authors_own": false,
+  "features": {
+    "installs_as": {
+      "value": "CLI with a background recorder, hooks, MCP server and skills",
+      "mark": "info"
+    },
+    "offline_no_account": {
+      "value": "Yes with the Local option; the setup wizard preselects its cloud",
+      "mark": "yes"
+    },
+    "plain_files": {
+      "value": "No: a memory.db store; a memory can be written out as a skill file",
+      "mark": "no"
+    },
+    "footprint": {
+      "value": "Small: one Go program plus a local recorder service",
+      "mark": "info"
+    },
+    "claude_code": {
+      "value": "Yes: records sessions; plugin skills save and recall memory",
+      "mark": "yes"
+    },
+    "codex": {
+      "value": "Yes: records Codex CLI and app; same skills plugin",
+      "mark": "yes"
+    },
+    "claude_desktop": {
+      "value": "Not named for memory; a generic desktop MCP config is shown",
+      "mark": "undocumented"
+    },
+    "windows": {
+      "value": "Yes: x64 installer (needs admin; not code-signed yet)",
+      "mark": "yes"
+    },
+    "survives_crash": {
+      "value": "Not in its docs (checked 2026-11-08)",
+      "mark": "undocumented"
+    },
+    "survives_compaction": {
+      "value": "Recall tools usable mid-session; no reload after compaction",
+      "mark": "partial"
+    },
+    "undo_delete": {
+      "value": "Reject or replace a lesson before approval; deleting not documented",
+      "mark": "partial"
+    },
+    "service_failure": {
+      "value": "Not in its docs (checked 2026-11-08)",
+      "mark": "undocumented"
+    },
+    "uninstall": {
+      "value": "beacon endpoint uninstall removes what it installed",
+      "mark": "yes"
+    },
+    "license_cost": {
+      "value": "MIT; free locally; cloud memory is $20 a month (Pro)",
+      "mark": "info"
+    },
+    "stars": {
+      "value": "3,389 (2026-11-08)",
+      "mark": "info"
+    },
+    "last_release": {
+      "value": "v1.3.59 (2026-11-08)",
+      "mark": "info"
+    }
+  }
+}

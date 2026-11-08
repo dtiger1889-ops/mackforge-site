@@ -1,5 +1,5 @@
 {
-  "snapshot_date": "2026-11-07",
+  "snapshot_date": "2026-11-08",
   "snapshot_note": "Every cell comes from the tool's own documentation on the date shown for that tool. Nothing here was installed or tested.",
   "features": [
     {
@@ -130,6 +130,7 @@
     "agentmemory",
     "beads",
     "ai-memory",
+    "beacon",
     "okf-agent-memory",
     "claude-harness-toolbox",
     "codex-mem",

@@ -33,12 +33,12 @@
       "mark": "yes"
     },
     "claude_chat": {
-      "value": "Desktop app only: memory search via a local MCP server",
+      "value": "Partial: hosted cmem.ai connector searches it, web or app",
       "mark": "partial"
     },
     "claude_cowork": {
-      "value": "Yes: CMEM Pro plugin, memory hosted on cmem.ai",
-      "mark": "yes"
+      "value": "Partial: CMEM Pro plugin searches it; capture not live yet",
+      "mark": "partial"
     },
     "chatgpt_chat": {
       "value": "Not in its docs (checked 2026-11-09)",

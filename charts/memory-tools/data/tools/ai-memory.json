@@ -33,12 +33,12 @@
       "mark": "yes"
     },
     "claude_chat": {
-      "value": "Desktop app only: local MCP search, no capture",
+      "value": "Desktop app only: local MCP; no automatic capture",
       "mark": "partial"
     },
     "claude_cowork": {
-      "value": "No: Cowork support is listed as later work",
-      "mark": "no"
+      "value": "Partial: memory tools work in Cowork; capture is later work",
+      "mark": "partial"
     },
     "chatgpt_chat": {
       "value": "No: its notes say hosted ChatGPT can't reach it",

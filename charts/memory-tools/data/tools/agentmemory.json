@@ -33,7 +33,7 @@
       "mark": "yes"
     },
     "claude_chat": {
-      "value": "Desktop app only: local MCP server, search but no capture",
+      "value": "Desktop app only: local MCP; no automatic capture",
       "mark": "partial"
     },
     "claude_cowork": {

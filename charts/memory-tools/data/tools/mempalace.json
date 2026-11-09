@@ -37,7 +37,7 @@
       "mark": "undocumented"
     },
     "os": {
-      "value": "Not documented: Python package or Docker, no system named",
+      "value": "Docker on Linux, macOS, Windows; also a Python package",
       "mark": "info"
     },
     "survives_crash": {

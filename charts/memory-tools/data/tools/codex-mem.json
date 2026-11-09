@@ -37,7 +37,7 @@
       "mark": "undocumented"
     },
     "os": {
-      "value": "Windows setup notes only; other systems not documented",
+      "value": "Not documented: one npm setup tip is for Windows",
       "mark": "info"
     },
     "survives_crash": {

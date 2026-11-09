@@ -513,7 +513,7 @@ function passes(tool, key, opt) {
   if (opt === "no") return cell.mark === "no";
   if (opt === "unknown") return cell.mark === "unknown";
   if (opt === "undocumented") return cell.mark === "undocumented";
-  if (opt.startsWith("os:")) return cell.mark !== "unknown" && (cell.value || "").toLowerCase().includes(opt.slice(3).toLowerCase());
+  if (opt.startsWith("os:")) { const v = (cell.value || "").toLowerCase(); return cell.mark !== "unknown" && !v.startsWith("not documented") && v.includes(opt.slice(3).toLowerCase()); }
   if (opt.startsWith("cat:")) return category(key, cell) === opt.slice(4);
   return true;
 }

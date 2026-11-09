@@ -408,7 +408,7 @@
           "mark": "undocumented"
         },
         "os": {
-          "value": "Not documented: Python package or Docker, no system named",
+          "value": "Docker on Linux, macOS, Windows; also a Python package",
           "mark": "info"
         },
         "survives_crash": {
@@ -984,8 +984,8 @@
           "mark": "n/a"
         },
         "outdated_memory": {
-          "value": "No: old lines are rewritten in place",
-          "mark": "no"
+          "value": "By hand: its guide has steps to find and fix clashing rules",
+          "mark": "partial"
         },
         "service_failure": {
           "value": "No background service",
@@ -1048,7 +1048,7 @@
           "mark": "undocumented"
         },
         "os": {
-          "value": "Windows setup notes only; other systems not documented",
+          "value": "Not documented: one npm setup tip is for Windows",
           "mark": "info"
         },
         "survives_crash": {

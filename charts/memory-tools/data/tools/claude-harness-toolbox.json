@@ -53,8 +53,8 @@
       "mark": "n/a"
     },
     "outdated_memory": {
-      "value": "No: old lines are rewritten in place",
-      "mark": "no"
+      "value": "By hand: its guide has steps to find and fix clashing rules",
+      "mark": "partial"
     },
     "service_failure": {
       "value": "No background service",

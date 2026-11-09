@@ -52,6 +52,10 @@
       "value": "Nothing hard-deleted; restore-page brings back old versions",
       "mark": "yes"
     },
+    "outdated_memory": {
+      "value": "Flags likely clashes without AI; AI rewrite is opt-in",
+      "mark": "partial"
+    },
     "service_failure": {
       "value": "Agent launch continues; capture spools locally",
       "mark": "partial"

@@ -52,6 +52,10 @@
       "value": "Whatever your editor or git gives you",
       "mark": "n/a"
     },
+    "outdated_memory": {
+      "value": "Flags clashing notes when you ask (/doctor prompt-audit)",
+      "mark": "partial"
+    },
     "service_failure": {
       "value": "No background service",
       "mark": "n/a"

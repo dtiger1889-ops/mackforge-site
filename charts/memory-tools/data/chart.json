@@ -1,5 +1,5 @@
 {
-  "snapshot_date": "2026-11-08",
+  "snapshot_date": "2026-11-09",
   "snapshot_note": "Every cell comes from the tool's own documentation on the date shown for that tool. Nothing here was installed or tested.",
   "features": [
     {
@@ -78,6 +78,13 @@
       "description": "You can undo a change or delete a single memory; the cell names which.",
       "group": "Safety & recovery",
       "how_checked": "Command or API reference for edit, delete and history."
+    },
+    {
+      "key": "outdated_memory",
+      "label": "Replaces outdated memories",
+      "description": "When a newer memory contradicts or replaces an older one, the old one is marked as replaced instead of left to clash. The cell says who decides: an AI model, fixed rules, or you.",
+      "group": "Safety & recovery",
+      "how_checked": "Docs on updates, versions, contradictions and conflicts."
     },
     {
       "key": "service_failure",

@@ -52,6 +52,10 @@
       "value": "Whatever your editor or git gives you",
       "mark": "n/a"
     },
+    "outdated_memory": {
+      "value": "No: old lines are rewritten in place",
+      "mark": "no"
+    },
     "service_failure": {
       "value": "No background service",
       "mark": "n/a"

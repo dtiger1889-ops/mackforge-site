@@ -1,5 +1,5 @@
 {
-  "snapshot_date": "2026-11-08",
+  "snapshot_date": "2026-11-09",
   "snapshot_note": "Every cell comes from the tool's own documentation on the date shown for that tool. Nothing here was installed or tested.",
   "features": [
     {
@@ -78,6 +78,13 @@
       "description": "You can undo a change or delete a single memory; the cell names which.",
       "group": "Safety & recovery",
       "how_checked": "Command or API reference for edit, delete and history."
+    },
+    {
+      "key": "outdated_memory",
+      "label": "Replaces outdated memories",
+      "description": "When a newer memory contradicts or replaces an older one, the old one is marked as replaced instead of left to clash. The cell says who decides: an AI model, fixed rules, or you.",
+      "group": "Safety & recovery",
+      "how_checked": "Docs on updates, versions, contradictions and conflicts."
     },
     {
       "key": "service_failure",
@@ -176,6 +183,10 @@
           "value": "Whatever your editor or git gives you",
           "mark": "n/a"
         },
+        "outdated_memory": {
+          "value": "Flags clashing notes when you ask (/doctor prompt-audit)",
+          "mark": "partial"
+        },
         "service_failure": {
           "value": "No background service",
           "mark": "n/a"
@@ -250,6 +261,10 @@
         },
         "undo_delete": {
           "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "outdated_memory": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "service_failure": {
@@ -328,6 +343,10 @@
           "value": "Delete one or all memories; no undo documented",
           "mark": "partial"
         },
+        "outdated_memory": {
+          "value": "Yes: a new memory links to the one it replaces; AI decides",
+          "mark": "yes"
+        },
         "service_failure": {
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
@@ -403,6 +422,10 @@
         "undo_delete": {
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
+        },
+        "outdated_memory": {
+          "value": "On request: a fact can be marked no longer true",
+          "mark": "partial"
         },
         "service_failure": {
           "value": "Not in its docs (checked 2026-10-09)",
@@ -480,6 +503,10 @@
           "value": "Delete episodes; changed facts are marked old, not erased",
           "mark": "partial"
         },
+        "outdated_memory": {
+          "value": "Yes: old fact gets an end date, kept in history; AI decides",
+          "mark": "yes"
+        },
         "service_failure": {
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
@@ -556,6 +583,10 @@
           "value": "Delete or forget one memory; edits keep a version chain",
           "mark": "partial"
         },
+        "outdated_memory": {
+          "value": "Yes: replaced versions leave search; history kept",
+          "mark": "yes"
+        },
         "service_failure": {
           "value": "MCP shim falls back to a 7-tool local set if server is down",
           "mark": "partial"
@@ -630,6 +661,10 @@
         },
         "undo_delete": {
           "value": "Version-controlled database; no undo command documented",
+          "mark": "partial"
+        },
+        "outdated_memory": {
+          "value": "By hand: bd supersede closes the old item, links the new",
           "mark": "partial"
         },
         "service_failure": {
@@ -708,6 +743,10 @@
           "value": "Nothing hard-deleted; restore-page brings back old versions",
           "mark": "yes"
         },
+        "outdated_memory": {
+          "value": "Flags likely clashes without AI; AI rewrite is opt-in",
+          "mark": "partial"
+        },
         "service_failure": {
           "value": "Agent launch continues; capture spools locally",
           "mark": "partial"
@@ -782,6 +821,10 @@
         },
         "undo_delete": {
           "value": "Not documented for saved memory (checked 2026-11-08)",
+          "mark": "undocumented"
+        },
+        "outdated_memory": {
+          "value": "Not documented for saved memory (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "service_failure": {
@@ -860,6 +903,10 @@
           "value": "Git history; no separate undo command described",
           "mark": "partial"
         },
+        "outdated_memory": {
+          "value": "Its rules tell the agent to mark old facts stale, not delete",
+          "mark": "partial"
+        },
         "service_failure": {
           "value": "No background service; runs per command",
           "mark": "n/a"
@@ -936,6 +983,10 @@
           "value": "Whatever your editor or git gives you",
           "mark": "n/a"
         },
+        "outdated_memory": {
+          "value": "No: old lines are rewritten in place",
+          "mark": "no"
+        },
         "service_failure": {
           "value": "No background service",
           "mark": "n/a"
@@ -1010,6 +1061,10 @@
         },
         "undo_delete": {
           "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "outdated_memory": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "service_failure": {
@@ -1088,6 +1143,10 @@
           "value": "Yes: commits keep history; show or checkout past states",
           "mark": "yes"
         },
+        "outdated_memory": {
+          "value": "Merges stop on clashing edits for you to settle",
+          "mark": "partial"
+        },
         "service_failure": {
           "value": "No background service documented for the CLI",
           "mark": "n/a"
@@ -1162,6 +1221,10 @@
         },
         "undo_delete": {
           "value": "Not in its docs (checked 2026-10-09)",
+          "mark": "undocumented"
+        },
+        "outdated_memory": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "service_failure": {

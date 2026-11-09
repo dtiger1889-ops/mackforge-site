@@ -52,6 +52,10 @@
       "value": "Git history; no separate undo command described",
       "mark": "partial"
     },
+    "outdated_memory": {
+      "value": "Its rules tell the agent to mark old facts stale, not delete",
+      "mark": "partial"
+    },
     "service_failure": {
       "value": "No background service; runs per command",
       "mark": "n/a"

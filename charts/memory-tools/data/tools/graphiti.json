@@ -52,6 +52,10 @@
       "value": "Delete episodes; changed facts are marked old, not erased",
       "mark": "partial"
     },
+    "outdated_memory": {
+      "value": "Yes: old fact gets an end date, kept in history; AI decides",
+      "mark": "yes"
+    },
     "service_failure": {
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"

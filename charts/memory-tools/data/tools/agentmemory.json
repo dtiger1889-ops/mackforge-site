@@ -52,6 +52,10 @@
       "value": "Delete or forget one memory; edits keep a version chain",
       "mark": "partial"
     },
+    "outdated_memory": {
+      "value": "Yes: replaced versions leave search; history kept",
+      "mark": "yes"
+    },
     "service_failure": {
       "value": "MCP shim falls back to a 7-tool local set if server is down",
       "mark": "partial"

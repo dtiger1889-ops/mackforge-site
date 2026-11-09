@@ -52,6 +52,10 @@
       "value": "Version-controlled database; no undo command documented",
       "mark": "partial"
     },
+    "outdated_memory": {
+      "value": "By hand: bd supersede closes the old item, links the new",
+      "mark": "partial"
+    },
     "service_failure": {
       "value": "Embedded mode has no separate service",
       "mark": "n/a"

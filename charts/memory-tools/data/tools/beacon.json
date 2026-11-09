@@ -52,6 +52,10 @@
       "value": "Not documented for saved memory (checked 2026-11-08)",
       "mark": "undocumented"
     },
+    "outdated_memory": {
+      "value": "Not documented for saved memory (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
     "service_failure": {
       "value": "Not in its docs (checked 2026-11-08)",
       "mark": "undocumented"

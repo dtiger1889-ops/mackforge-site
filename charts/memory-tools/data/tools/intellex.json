@@ -52,6 +52,10 @@
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"
     },
+    "outdated_memory": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
     "service_failure": {
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"

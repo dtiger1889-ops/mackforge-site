@@ -52,6 +52,10 @@
       "value": "Delete one or all memories; no undo documented",
       "mark": "partial"
     },
+    "outdated_memory": {
+      "value": "Yes: a new memory links to the one it replaces; AI decides",
+      "mark": "yes"
+    },
     "service_failure": {
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"

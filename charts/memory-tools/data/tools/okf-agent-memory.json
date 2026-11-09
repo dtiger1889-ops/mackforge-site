@@ -32,9 +32,21 @@
       "value": "Yes: MCP server and AGENTS.md",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Yes: example claude_desktop_config.json block",
-      "mark": "yes"
+    "claude_chat": {
+      "value": "Desktop app only: local MCP server config shown",
+      "mark": "partial"
+    },
+    "claude_cowork": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_chat": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
     },
     "os": {
       "value": "Windows, macOS, Linux (x64 and ARM builds)",

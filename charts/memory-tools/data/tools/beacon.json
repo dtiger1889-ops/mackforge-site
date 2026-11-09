@@ -32,8 +32,20 @@
       "value": "Yes: records Codex CLI and app; same skills plugin",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Not named for memory; a generic desktop MCP config is shown",
+    "claude_chat": {
+      "value": "Partial: records claude.ai chats; recall not documented",
+      "mark": "partial"
+    },
+    "claude_cowork": {
+      "value": "Yes: Cowork plugin from its marketplace",
+      "mark": "yes"
+    },
+    "chatgpt_chat": {
+      "value": "Partial: records ChatGPT chats; recall not documented",
+      "mark": "partial"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
       "mark": "undocumented"
     },
     "os": {

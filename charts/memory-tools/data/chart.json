@@ -45,11 +45,32 @@
       "how_checked": "Integration docs naming Codex."
     },
     {
-      "key": "claude_desktop",
-      "label": "Claude Desktop",
-      "description": "Documented support for the Claude Desktop app, usually through MCP.",
+      "key": "claude_chat",
+      "label": "Claude chat",
+      "description": "Documented support for Claude's normal chat, in the browser or the desktop app. A tool server on your own computer (local MCP) reaches only the desktop app's chat; an online connector works in both.",
       "group": "Works with",
-      "how_checked": "Integration docs naming Claude Desktop."
+      "how_checked": "Integration docs naming Claude.ai, Claude Desktop or its chat."
+    },
+    {
+      "key": "claude_cowork",
+      "label": "Claude Cowork",
+      "description": "Documented support for Cowork, the agent workspace in the Claude desktop app.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Cowork."
+    },
+    {
+      "key": "chatgpt_chat",
+      "label": "ChatGPT chat",
+      "description": "Documented support for ChatGPT's normal chat, in the browser or the app.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming ChatGPT."
+    },
+    {
+      "key": "chatgpt_work",
+      "label": "ChatGPT Work",
+      "description": "Documented support for ChatGPT Work, the agent mode in ChatGPT for longer tasks.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming ChatGPT Work."
     },
     {
       "key": "os",

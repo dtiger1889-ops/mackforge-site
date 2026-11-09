@@ -32,8 +32,20 @@
       "value": "Yes: AGENTS.md is read at session start",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Not in the pages read (checked 2026-10-09)",
+    "claude_chat": {
+      "value": "No: chat doesn't read files on your computer",
+      "mark": "no"
+    },
+    "claude_cowork": {
+      "value": "Yes: Cowork sessions load CLAUDE.md files",
+      "mark": "yes"
+    },
+    "chatgpt_chat": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
       "mark": "undocumented"
     },
     "os": {

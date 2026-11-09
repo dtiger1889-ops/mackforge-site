@@ -32,9 +32,21 @@
       "value": "Yes: plugin hooks verified with Codex CLI 0.150.1",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Yes: MCP config block for Claude Desktop",
-      "mark": "yes"
+    "claude_chat": {
+      "value": "Desktop app only: local MCP server, search but no capture",
+      "mark": "partial"
+    },
+    "claude_cowork": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_chat": {
+      "value": "Not documented: its OpenAI listing is Codex skills only",
+      "mark": "undocumented"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
     },
     "os": {
       "value": "Windows 10/11, macOS, Linux; WSL2 also works",

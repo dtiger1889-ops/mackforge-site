@@ -32,8 +32,20 @@
       "value": "Yes: primary target, watches Codex session transcripts",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Not in its docs (checked 2026-10-09)",
+    "claude_chat": {
+      "value": "Desktop app only: memory search via a local MCP server",
+      "mark": "partial"
+    },
+    "claude_cowork": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_chat": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
       "mark": "undocumented"
     },
     "os": {

@@ -32,9 +32,21 @@
       "value": "Yes: Codex hooks make it read the checkpoint (Windows)",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Partial: Code tab and Cowork; not regular chat",
-      "mark": "partial"
+    "claude_chat": {
+      "value": "No: no MCP server or connector, so chat can't read it",
+      "mark": "no"
+    },
+    "claude_cowork": {
+      "value": "Yes: a Cowork folder with its own CLAUDE.md is documented",
+      "mark": "yes"
+    },
+    "chatgpt_chat": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
     },
     "os": {
       "value": "Windows tested; macOS and Linux versions untested",

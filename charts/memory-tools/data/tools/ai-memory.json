@@ -32,9 +32,21 @@
       "value": "Yes: MCP config plus lifecycle hooks",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "MCP only in Chat; Code tab sessions are captured",
+    "claude_chat": {
+      "value": "Desktop app only: local MCP search, no capture",
       "mark": "partial"
+    },
+    "claude_cowork": {
+      "value": "No: Cowork support is listed as later work",
+      "mark": "no"
+    },
+    "chatgpt_chat": {
+      "value": "No: its notes say hosted ChatGPT can't reach it",
+      "mark": "no"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
     },
     "os": {
       "value": "macOS, Linux; Windows via WSL2 (native is experimental)",

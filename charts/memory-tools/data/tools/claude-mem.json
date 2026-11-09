@@ -32,9 +32,21 @@
       "value": "Yes, Codex CLI listed as a supported host",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Partial: a Desktop skill to search memory is listed",
+    "claude_chat": {
+      "value": "Desktop app only: memory search via a local MCP server",
       "mark": "partial"
+    },
+    "claude_cowork": {
+      "value": "Yes: CMEM Pro plugin, memory hosted on cmem.ai",
+      "mark": "yes"
+    },
+    "chatgpt_chat": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
     },
     "os": {
       "value": "Windows, macOS, Linux",

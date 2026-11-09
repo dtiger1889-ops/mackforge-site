@@ -32,9 +32,21 @@
       "value": "Yes: Codex plugin or direct MCP to hosted server",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Yes: custom connector to the hosted MCP URL",
+    "claude_chat": {
+      "value": "Yes: custom connector to its hosted server, web or app",
       "mark": "yes"
+    },
+    "claude_cowork": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_chat": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
     },
     "os": {
       "value": "Not documented: Python and npm packages, no system named",

@@ -45,11 +45,32 @@
       "how_checked": "Integration docs naming Codex."
     },
     {
-      "key": "claude_desktop",
-      "label": "Claude Desktop",
-      "description": "Documented support for the Claude Desktop app, usually through MCP.",
+      "key": "claude_chat",
+      "label": "Claude chat",
+      "description": "Documented support for Claude's normal chat, in the browser or the desktop app. A tool server on your own computer (local MCP) reaches only the desktop app's chat; an online connector works in both.",
       "group": "Works with",
-      "how_checked": "Integration docs naming Claude Desktop."
+      "how_checked": "Integration docs naming Claude.ai, Claude Desktop or its chat."
+    },
+    {
+      "key": "claude_cowork",
+      "label": "Claude Cowork",
+      "description": "Documented support for Cowork, the agent workspace in the Claude desktop app.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming Cowork."
+    },
+    {
+      "key": "chatgpt_chat",
+      "label": "ChatGPT chat",
+      "description": "Documented support for ChatGPT's normal chat, in the browser or the app.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming ChatGPT."
+    },
+    {
+      "key": "chatgpt_work",
+      "label": "ChatGPT Work",
+      "description": "Documented support for ChatGPT Work, the agent mode in ChatGPT for longer tasks.",
+      "group": "Works with",
+      "how_checked": "Integration docs naming ChatGPT Work."
     },
     {
       "key": "os",
@@ -163,9 +184,21 @@
           "value": "Yes: Codex hooks make it read the checkpoint (Windows)",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Partial: Code tab and Cowork; not regular chat",
-          "mark": "partial"
+        "claude_chat": {
+          "value": "No: no MCP server or connector, so chat can't read it",
+          "mark": "no"
+        },
+        "claude_cowork": {
+          "value": "Yes: a Cowork folder with its own CLAUDE.md is documented",
+          "mark": "yes"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
         },
         "os": {
           "value": "Windows tested; macOS and Linux versions untested",
@@ -243,8 +276,20 @@
           "value": "Yes: AGENTS.md is read at session start",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Not in the pages read (checked 2026-10-09)",
+        "claude_chat": {
+          "value": "No: chat doesn't read files on your computer",
+          "mark": "no"
+        },
+        "claude_cowork": {
+          "value": "Yes: Cowork sessions load CLAUDE.md files",
+          "mark": "yes"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "os": {
@@ -323,9 +368,21 @@
           "value": "Yes, Codex CLI listed as a supported host",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Partial: a Desktop skill to search memory is listed",
+        "claude_chat": {
+          "value": "Desktop app only: memory search via a local MCP server",
           "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Yes: CMEM Pro plugin, memory hosted on cmem.ai",
+          "mark": "yes"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
         },
         "os": {
           "value": "Windows, macOS, Linux",
@@ -403,9 +460,21 @@
           "value": "Yes: Codex plugin or direct MCP to hosted server",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Yes: custom connector to the hosted MCP URL",
+        "claude_chat": {
+          "value": "Yes: custom connector to its hosted server, web or app",
           "mark": "yes"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
         },
         "os": {
           "value": "Not documented: Python and npm packages, no system named",
@@ -483,8 +552,20 @@
           "value": "Yes: auto-save hooks for Codex CLI, bundled plugin",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Not named in the pages read (checked 2026-10-09)",
+        "claude_chat": {
+          "value": "Imports exported Claude.ai chats; no chat setup shown",
+          "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Imports exported ChatGPT chats; no chat setup shown",
+          "mark": "partial"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "os": {
@@ -563,9 +644,21 @@
           "value": "Not named in the docs read (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "claude_desktop": {
-          "value": "Yes: stdio MCP setup described for Claude Desktop",
-          "mark": "yes"
+        "claude_chat": {
+          "value": "Desktop app only: local MCP server",
+          "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
         },
         "os": {
           "value": "Not documented: a Python library (3.10+), no system named",
@@ -643,9 +736,21 @@
           "value": "Yes: plugin hooks verified with Codex CLI 0.150.1",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Yes: MCP config block for Claude Desktop",
-          "mark": "yes"
+        "claude_chat": {
+          "value": "Desktop app only: local MCP server, search but no capture",
+          "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not documented: its OpenAI listing is Codex skills only",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
         },
         "os": {
           "value": "Windows 10/11, macOS, Linux; WSL2 also works",
@@ -723,8 +828,20 @@
           "value": "Yes: bd setup codex installs skill, AGENTS.md text, hooks",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Not in its docs (checked 2026-10-09)",
+        "claude_chat": {
+          "value": "Desktop app only: its local MCP server (beads-mcp)",
+          "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "os": {
@@ -803,9 +920,21 @@
           "value": "Yes: MCP config plus lifecycle hooks",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "MCP only in Chat; Code tab sessions are captured",
+        "claude_chat": {
+          "value": "Desktop app only: local MCP search, no capture",
           "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "No: Cowork support is listed as later work",
+          "mark": "no"
+        },
+        "chatgpt_chat": {
+          "value": "No: its notes say hosted ChatGPT can't reach it",
+          "mark": "no"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
         },
         "os": {
           "value": "macOS, Linux; Windows via WSL2 (native is experimental)",
@@ -883,8 +1012,20 @@
           "value": "Yes: records Codex CLI and app; same skills plugin",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Not named for memory; a generic desktop MCP config is shown",
+        "claude_chat": {
+          "value": "Partial: records claude.ai chats; recall not documented",
+          "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Yes: Cowork plugin from its marketplace",
+          "mark": "yes"
+        },
+        "chatgpt_chat": {
+          "value": "Partial: records ChatGPT chats; recall not documented",
+          "mark": "partial"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "os": {
@@ -963,9 +1104,21 @@
           "value": "Yes: MCP server and AGENTS.md",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Yes: example claude_desktop_config.json block",
-          "mark": "yes"
+        "claude_chat": {
+          "value": "Desktop app only: local MCP server config shown",
+          "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
         },
         "os": {
           "value": "Windows, macOS, Linux (x64 and ARM builds)",
@@ -1043,8 +1196,20 @@
           "value": "Yes: primary target, watches Codex session transcripts",
           "mark": "yes"
         },
-        "claude_desktop": {
-          "value": "Not in its docs (checked 2026-10-09)",
+        "claude_chat": {
+          "value": "Desktop app only: memory search via a local MCP server",
+          "mark": "partial"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "os": {
@@ -1123,8 +1288,20 @@
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "claude_desktop": {
-          "value": "Not in its docs (checked 2026-10-09)",
+        "claude_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "os": {
@@ -1203,8 +1380,20 @@
           "value": "Partial: prompt-time recall hook; no auto-capture",
           "mark": "partial"
         },
-        "claude_desktop": {
-          "value": "Not in its docs (checked 2026-10-09)",
+        "claude_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "claude_cowork": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_chat": {
+          "value": "Not in its docs (checked 2026-11-09)",
+          "mark": "undocumented"
+        },
+        "chatgpt_work": {
+          "value": "Not in its docs (checked 2026-11-09)",
           "mark": "undocumented"
         },
         "os": {

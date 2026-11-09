@@ -32,8 +32,20 @@
       "value": "Yes: auto-save hooks for Codex CLI, bundled plugin",
       "mark": "yes"
     },
-    "claude_desktop": {
-      "value": "Not named in the pages read (checked 2026-10-09)",
+    "claude_chat": {
+      "value": "Imports exported Claude.ai chats; no chat setup shown",
+      "mark": "partial"
+    },
+    "claude_cowork": {
+      "value": "Not in its docs (checked 2026-11-09)",
+      "mark": "undocumented"
+    },
+    "chatgpt_chat": {
+      "value": "Imports exported ChatGPT chats; no chat setup shown",
+      "mark": "partial"
+    },
+    "chatgpt_work": {
+      "value": "Not in its docs (checked 2026-11-09)",
       "mark": "undocumented"
     },
     "os": {

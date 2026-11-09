@@ -960,11 +960,11 @@
           "mark": "yes"
         },
         "codex": {
-          "value": "Partial: Windows hooks only; skills install for Claude Code",
-          "mark": "partial"
+          "value": "Yes: Codex hooks make it read the checkpoint (Windows)",
+          "mark": "yes"
         },
         "claude_desktop": {
-          "value": "Partial: only Desktop's Code tab, which is Claude Code",
+          "value": "Partial: Code tab and Cowork; not regular chat",
           "mark": "partial"
         },
         "os": {

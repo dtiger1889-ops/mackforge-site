@@ -130,6 +130,86 @@
   ],
   "tools": [
     {
+      "name": "Harness Toolbox (CHECKPOINT.md)",
+      "url": "https://github.com/dtiger1889-ops/claude-harness-toolbox",
+      "category": "memory tool",
+      "description": "A CLAUDE.md file for stable rules and a CHECKPOINT.md file for where the work stands, kept current by a /checkpoint skill, plus hooks that make each session read the checkpoint before it changes anything.",
+      "checked_on": "2026-11-07 (documentation only)",
+      "source_note": "From its own documentation; nothing installed or tested for this chart.",
+      "is_baseline": false,
+      "is_authors_own": true,
+      "features": {
+        "installs_as": {
+          "value": "Plugin (skills and hooks), or files copied by hand",
+          "mark": "info"
+        },
+        "offline_no_account": {
+          "value": "Yes: files and local scripts; the agent still needs its own login",
+          "mark": "yes"
+        },
+        "plain_files": {
+          "value": "Yes: CLAUDE.md and CHECKPOINT.md, plain Markdown",
+          "mark": "yes"
+        },
+        "footprint": {
+          "value": "Tiny: Markdown files plus PowerShell scripts",
+          "mark": "info"
+        },
+        "claude_code": {
+          "value": "Yes, built for it: hooks make each session read the checkpoint",
+          "mark": "yes"
+        },
+        "codex": {
+          "value": "Yes: Codex hooks make it read the checkpoint (Windows)",
+          "mark": "yes"
+        },
+        "claude_desktop": {
+          "value": "Partial: Code tab and Cowork; not regular chat",
+          "mark": "partial"
+        },
+        "os": {
+          "value": "Windows tested; macOS and Linux versions untested",
+          "mark": "info"
+        },
+        "survives_crash": {
+          "value": "Yes: saved file stays; /necromancy recovers unsaved work",
+          "mark": "yes"
+        },
+        "survives_compaction": {
+          "value": "Yes: a hook asks for a checkpoint update before compaction",
+          "mark": "yes"
+        },
+        "undo_delete": {
+          "value": "Whatever your editor or git gives you",
+          "mark": "n/a"
+        },
+        "outdated_memory": {
+          "value": "By hand: its guide has steps to find and fix clashing rules",
+          "mark": "partial"
+        },
+        "service_failure": {
+          "value": "No background service",
+          "mark": "n/a"
+        },
+        "uninstall": {
+          "value": "No uninstall steps found on pages read",
+          "mark": "undocumented"
+        },
+        "license_cost": {
+          "value": "MIT; no paid tier",
+          "mark": "info"
+        },
+        "stars": {
+          "value": "32 (2026-11-07)",
+          "mark": "info"
+        },
+        "last_release": {
+          "value": "No releases published (checked 2026-11-07)",
+          "mark": "info"
+        }
+      }
+    },
+    {
       "name": "Plain Markdown folder",
       "url": "https://code.claude.com/docs/en/memory",
       "category": "baseline",
@@ -925,86 +1005,6 @@
         },
         "last_release": {
           "value": "v0.6.0 (2026-10-04)",
-          "mark": "info"
-        }
-      }
-    },
-    {
-      "name": "Harness Toolbox (CHECKPOINT.md)",
-      "url": "https://github.com/dtiger1889-ops/claude-harness-toolbox",
-      "category": "memory tool",
-      "description": "A CLAUDE.md file for stable rules and a CHECKPOINT.md file for where the work stands, kept current by a /checkpoint skill, plus hooks that make each session read the checkpoint before it changes anything.",
-      "checked_on": "2026-11-07 (documentation only)",
-      "source_note": "From its own documentation; nothing installed or tested for this chart.",
-      "is_baseline": false,
-      "is_authors_own": true,
-      "features": {
-        "installs_as": {
-          "value": "Plugin (skills and hooks), or files copied by hand",
-          "mark": "info"
-        },
-        "offline_no_account": {
-          "value": "Yes: files and local scripts; the agent still needs its own login",
-          "mark": "yes"
-        },
-        "plain_files": {
-          "value": "Yes: CLAUDE.md and CHECKPOINT.md, plain Markdown",
-          "mark": "yes"
-        },
-        "footprint": {
-          "value": "Tiny: Markdown files plus PowerShell scripts",
-          "mark": "info"
-        },
-        "claude_code": {
-          "value": "Yes, built for it: hooks make each session read the checkpoint",
-          "mark": "yes"
-        },
-        "codex": {
-          "value": "Yes: Codex hooks make it read the checkpoint (Windows)",
-          "mark": "yes"
-        },
-        "claude_desktop": {
-          "value": "Partial: Code tab and Cowork; not regular chat",
-          "mark": "partial"
-        },
-        "os": {
-          "value": "Windows tested; macOS and Linux versions untested",
-          "mark": "info"
-        },
-        "survives_crash": {
-          "value": "Yes: saved file stays; /necromancy recovers unsaved work",
-          "mark": "yes"
-        },
-        "survives_compaction": {
-          "value": "Yes: a hook asks for a checkpoint update before compaction",
-          "mark": "yes"
-        },
-        "undo_delete": {
-          "value": "Whatever your editor or git gives you",
-          "mark": "n/a"
-        },
-        "outdated_memory": {
-          "value": "By hand: its guide has steps to find and fix clashing rules",
-          "mark": "partial"
-        },
-        "service_failure": {
-          "value": "No background service",
-          "mark": "n/a"
-        },
-        "uninstall": {
-          "value": "No uninstall steps found on pages read",
-          "mark": "undocumented"
-        },
-        "license_cost": {
-          "value": "MIT; no paid tier",
-          "mark": "info"
-        },
-        "stars": {
-          "value": "32 (2026-11-07)",
-          "mark": "info"
-        },
-        "last_release": {
-          "value": "No releases published (checked 2026-11-07)",
           "mark": "info"
         }
       }

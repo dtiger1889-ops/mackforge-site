@@ -402,7 +402,7 @@
   <p class="sub"><span id="n-tools">13</span> ways to give Claude Code or Codex a memory on your own computer, compared across <span id="n-features">16</span> features. Updated <span id="snap-date">2026-10-09</span>.</p>
   <details class="about">
     <summary>About this comparison</summary>
-    <p><b>Column order.</b> The plain Markdown folder comes first as the baseline: notes you save yourself and the assistant reads with its normal file tools. The tools follow by GitHub stars.</p>
+    <p><b>Column order.</b> The Harness Toolbox comes first and is shown by default; it is the author's own project (marked *). The plain Markdown folder is a baseline you can add from the tool list: notes you save yourself and the assistant reads with its normal file tools. The other tools follow by GitHub stars.</p>
     <p>Every cell comes from the tool's own documentation on the date shown. Nothing here was installed or tested, so a Yes means the docs say so, not that it was tried. <b>Not documented</b> means the docs were checked and don't say, which is not the same as a confirmed <b>No</b>. Footprint is an estimate from the dependencies each tool's docs list. <span id="unknown-note"><b>Unknown</b> means the tool wasn't researched that far.</span></p>
     <p>Each row's description says how it was checked. Sister chart: <a href="../agent-managers/">agent-manager comparison</a>.</p>
   </details>
@@ -471,7 +471,8 @@ let VIS = [];                     // tools currently shown as columns (DATA orde
 let bytoolSortKey = "name";
 let bytoolSortDir = 1;
 let currentView = "matrix";
-// The "Featured" default view: the baseline plus the six tools with the most GitHub stars, picked from the data.
+// The "Featured" default view: the author's own project plus the six tools
+// with the most GitHub stars, picked from the data. The plain Markdown baseline is not in it.
 let DEFAULT_TOOLS = [];
 const FEATURED_COUNT = 6;
 let shownTools = null;            // tool names picked in the Tools chips
@@ -1044,8 +1045,8 @@ fetch("data/tools.json")
     document.getElementById("n-tools").textContent = data.tools.length;
     document.getElementById("n-features").textContent = data.features.length;
     document.getElementById("snap-date").textContent = data.snapshot_date;
-    const byStars = data.tools.filter(t => !t.is_baseline).sort((a, b) => starCount(b) - starCount(a));
-    DEFAULT_TOOLS = data.tools.filter(t => t.is_baseline).map(t => t.name)
+    const byStars = data.tools.filter(t => !t.is_baseline && !t.is_authors_own).sort((a, b) => starCount(b) - starCount(a));
+    DEFAULT_TOOLS = data.tools.filter(t => t.is_authors_own).map(t => t.name)
       .concat(byStars.slice(0, FEATURED_COUNT).map(t => t.name));
     shownTools = new Set(DEFAULT_TOOLS.filter(n => data.tools.some(t => t.name === n)));
     renderLegend();
@@ -1069,7 +1070,7 @@ fetch("data/tools.json")
 // Share: plain share links for each network, copy-link, and the device's own share sheet when it has one.
 (function () {
   const url = "https://mackforge.dev/charts/memory-tools/";
-  const title = "Memory tools for Claude Code and Codex, compared feature by feature against a plain Markdown folder";
+  const title = "Memory tools for Claude Code and Codex, compared feature by feature";
   const u = encodeURIComponent(url), t = encodeURIComponent(title);
   const links = {
     linkedin: "https://www.linkedin.com/sharing/share-offsite/?url=" + u,

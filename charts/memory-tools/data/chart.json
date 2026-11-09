@@ -129,6 +129,7 @@
     "Project"
   ],
   "tools": [
+    "claude-harness-toolbox",
     "plain-markdown",
     "claude-mem",
     "mem0",
@@ -139,7 +140,6 @@
     "ai-memory",
     "beacon",
     "okf-agent-memory",
-    "claude-harness-toolbox",
     "codex-mem",
     "mnemosyne",
     "intellex"

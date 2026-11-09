@@ -36,8 +36,8 @@
       "value": "Yes: example claude_desktop_config.json block",
       "mark": "yes"
     },
-    "windows": {
-      "value": "Native: windows-amd64 and arm64 binaries released",
+    "os": {
+      "value": "Windows, macOS, Linux (x64 and ARM builds)",
       "mark": "info"
     },
     "survives_crash": {

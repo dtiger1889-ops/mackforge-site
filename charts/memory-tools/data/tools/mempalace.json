@@ -36,8 +36,8 @@
       "value": "Not named in the pages read (checked 2026-10-09)",
       "mark": "undocumented"
     },
-    "windows": {
-      "value": "Not documented (checked 2026-10-09)",
+    "os": {
+      "value": "Not documented: Python package or Docker, no system named",
       "mark": "info"
     },
     "survives_crash": {

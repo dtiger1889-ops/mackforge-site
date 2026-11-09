@@ -399,7 +399,7 @@
     </div>
     </div>
   </div>
-  <p class="sub"><span id="n-tools">13</span> ways to give Claude Code or Codex a memory on your own PC, compared across <span id="n-features">16</span> features. Updated <span id="snap-date">2026-10-09</span>.</p>
+  <p class="sub"><span id="n-tools">13</span> ways to give Claude Code or Codex a memory on your own computer, compared across <span id="n-features">16</span> features. Updated <span id="snap-date">2026-10-09</span>.</p>
   <details class="about">
     <summary>About this comparison</summary>
     <p><b>Column order.</b> The plain Markdown folder comes first as the baseline: notes you save yourself and the assistant reads with its normal file tools. The tools follow by GitHub stars.</p>
@@ -494,6 +494,7 @@ function category(key, cell) {
   return v.split(/ \(|;|:|,/)[0].trim() || "Other";
 }
 function filterOptions(f) {
+  if (f.key === "os") return [["", "Any"], ["os:Windows", "Runs on Windows"], ["os:macOS", "Runs on macOS"], ["os:Linux", "Runs on Linux"]];
   const cells = DATA.tools.map(t => t.features[f.key]);
   const isFact = cells.every(c => c.mark === "info" || c.mark === "unknown");
   if (!isFact) {

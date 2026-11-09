@@ -36,8 +36,8 @@
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"
     },
-    "windows": {
-      "value": "Native Windows supported (no MSYS needed)",
+    "os": {
+      "value": "Windows, macOS, Linux, FreeBSD",
       "mark": "info"
     },
     "survives_crash": {

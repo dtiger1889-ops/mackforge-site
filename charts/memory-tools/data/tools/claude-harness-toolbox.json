@@ -36,8 +36,8 @@
       "value": "Partial: only Desktop's Code tab, which is Claude Code",
       "mark": "partial"
     },
-    "windows": {
-      "value": "Native: Windows is its tested platform",
+    "os": {
+      "value": "Windows tested; macOS and Linux versions untested",
       "mark": "info"
     },
     "survives_crash": {

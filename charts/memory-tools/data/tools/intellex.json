@@ -36,8 +36,8 @@
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"
     },
-    "windows": {
-      "value": "Not documented (checked 2026-10-09)",
+    "os": {
+      "value": "Not documented: needs Bun, no system named",
       "mark": "info"
     },
     "survives_crash": {

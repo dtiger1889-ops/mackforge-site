@@ -52,11 +52,11 @@
       "how_checked": "Integration docs naming Claude Desktop."
     },
     {
-      "key": "windows",
-      "label": "Windows",
-      "description": "Runs natively on Windows, only under WSL2 (Linux inside Windows), or not documented.",
+      "key": "os",
+      "label": "Operating systems",
+      "description": "Which systems its docs say it runs on: Windows, macOS, Linux. Windows notes say whether it runs natively or only under WSL2 (Linux inside Windows).",
       "group": "Works with",
-      "how_checked": "Install docs and release assets for Windows."
+      "how_checked": "Install docs and release files for each system."
     },
     {
       "key": "survives_crash",
@@ -167,8 +167,8 @@
           "value": "Not in the pages read (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "windows": {
-          "value": "Native: it is just files",
+        "os": {
+          "value": "Windows, macOS, Linux: wherever Claude Code runs",
           "mark": "info"
         },
         "survives_crash": {
@@ -247,8 +247,8 @@
           "value": "Partial: a Desktop skill to search memory is listed",
           "mark": "partial"
         },
-        "windows": {
-          "value": "Native Windows documented (Node, PowerShell notes)",
+        "os": {
+          "value": "Windows, macOS, Linux",
           "mark": "info"
         },
         "survives_crash": {
@@ -327,8 +327,8 @@
           "value": "Yes: custom connector to the hosted MCP URL",
           "mark": "yes"
         },
-        "windows": {
-          "value": "Not documented (checked 2026-10-09)",
+        "os": {
+          "value": "Not documented: Python and npm packages, no system named",
           "mark": "info"
         },
         "survives_crash": {
@@ -407,8 +407,8 @@
           "value": "Not named in the pages read (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "windows": {
-          "value": "Not documented (checked 2026-10-09)",
+        "os": {
+          "value": "Not documented: Python package or Docker, no system named",
           "mark": "info"
         },
         "survives_crash": {
@@ -487,8 +487,8 @@
           "value": "Yes: stdio MCP setup described for Claude Desktop",
           "mark": "yes"
         },
-        "windows": {
-          "value": "Not documented (checked 2026-10-09)",
+        "os": {
+          "value": "Not documented: a Python library (3.10+), no system named",
           "mark": "info"
         },
         "survives_crash": {
@@ -567,8 +567,8 @@
           "value": "Yes: MCP config block for Claude Desktop",
           "mark": "yes"
         },
-        "windows": {
-          "value": "Native with a manual engine install; WSL2 or Docker easier",
+        "os": {
+          "value": "Windows 10/11, macOS, Linux; WSL2 also works",
           "mark": "info"
         },
         "survives_crash": {
@@ -647,8 +647,8 @@
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "windows": {
-          "value": "Native Windows supported (no MSYS needed)",
+        "os": {
+          "value": "Windows, macOS, Linux, FreeBSD",
           "mark": "info"
         },
         "survives_crash": {
@@ -727,8 +727,8 @@
           "value": "MCP only in Chat; Code tab sessions are captured",
           "mark": "partial"
         },
-        "windows": {
-          "value": "WSL2 supported; native Windows experimental",
+        "os": {
+          "value": "macOS, Linux; Windows via WSL2 (native is experimental)",
           "mark": "info"
         },
         "survives_crash": {
@@ -807,8 +807,8 @@
           "value": "Not named for memory; a generic desktop MCP config is shown",
           "mark": "undocumented"
         },
-        "windows": {
-          "value": "Native: x64 installer (needs admin; not code-signed yet)",
+        "os": {
+          "value": "Windows, macOS, Linux",
           "mark": "info"
         },
         "survives_crash": {
@@ -887,8 +887,8 @@
           "value": "Yes: example claude_desktop_config.json block",
           "mark": "yes"
         },
-        "windows": {
-          "value": "Native: windows-amd64 and arm64 binaries released",
+        "os": {
+          "value": "Windows, macOS, Linux (x64 and ARM builds)",
           "mark": "info"
         },
         "survives_crash": {
@@ -967,8 +967,8 @@
           "value": "Partial: only Desktop's Code tab, which is Claude Code",
           "mark": "partial"
         },
-        "windows": {
-          "value": "Native: Windows is its tested platform",
+        "os": {
+          "value": "Windows tested; macOS and Linux versions untested",
           "mark": "info"
         },
         "survives_crash": {
@@ -1047,8 +1047,8 @@
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "windows": {
-          "value": "Native Windows setup notes appear (PowerShell npm tip)",
+        "os": {
+          "value": "Windows setup notes only; other systems not documented",
           "mark": "info"
         },
         "survives_crash": {
@@ -1127,8 +1127,8 @@
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "windows": {
-          "value": "Native: PowerShell installer script on releases",
+        "os": {
+          "value": "Windows, macOS, Linux (release builds)",
           "mark": "info"
         },
         "survives_crash": {
@@ -1207,8 +1207,8 @@
           "value": "Not in its docs (checked 2026-10-09)",
           "mark": "undocumented"
         },
-        "windows": {
-          "value": "Not documented (checked 2026-10-09)",
+        "os": {
+          "value": "Not documented: needs Bun, no system named",
           "mark": "info"
         },
         "survives_crash": {

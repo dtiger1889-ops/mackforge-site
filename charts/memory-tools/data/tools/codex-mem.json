@@ -36,8 +36,8 @@
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"
     },
-    "windows": {
-      "value": "Native Windows setup notes appear (PowerShell npm tip)",
+    "os": {
+      "value": "Windows setup notes only; other systems not documented",
       "mark": "info"
     },
     "survives_crash": {

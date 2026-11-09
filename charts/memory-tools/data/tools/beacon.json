@@ -36,8 +36,8 @@
       "value": "Not named for memory; a generic desktop MCP config is shown",
       "mark": "undocumented"
     },
-    "windows": {
-      "value": "Native: x64 installer (needs admin; not code-signed yet)",
+    "os": {
+      "value": "Windows, macOS, Linux",
       "mark": "info"
     },
     "survives_crash": {

@@ -36,8 +36,8 @@
       "value": "Yes: stdio MCP setup described for Claude Desktop",
       "mark": "yes"
     },
-    "windows": {
-      "value": "Not documented (checked 2026-10-09)",
+    "os": {
+      "value": "Not documented: a Python library (3.10+), no system named",
       "mark": "info"
     },
     "survives_crash": {

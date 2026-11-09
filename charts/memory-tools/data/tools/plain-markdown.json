@@ -36,8 +36,8 @@
       "value": "Not in the pages read (checked 2026-10-09)",
       "mark": "undocumented"
     },
-    "windows": {
-      "value": "Native: it is just files",
+    "os": {
+      "value": "Windows, macOS, Linux: wherever Claude Code runs",
       "mark": "info"
     },
     "survives_crash": {

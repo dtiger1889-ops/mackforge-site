@@ -36,8 +36,8 @@
       "value": "Yes: custom connector to the hosted MCP URL",
       "mark": "yes"
     },
-    "windows": {
-      "value": "Not documented (checked 2026-10-09)",
+    "os": {
+      "value": "Not documented: Python and npm packages, no system named",
       "mark": "info"
     },
     "survives_crash": {

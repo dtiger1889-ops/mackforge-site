@@ -36,8 +36,8 @@
       "value": "Not in its docs (checked 2026-10-09)",
       "mark": "undocumented"
     },
-    "windows": {
-      "value": "Native: PowerShell installer script on releases",
+    "os": {
+      "value": "Windows, macOS, Linux (release builds)",
       "mark": "info"
     },
     "survives_crash": {

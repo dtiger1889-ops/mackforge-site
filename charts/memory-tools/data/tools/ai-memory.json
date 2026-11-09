@@ -36,8 +36,8 @@
       "value": "MCP only in Chat; Code tab sessions are captured",
       "mark": "partial"
     },
-    "windows": {
-      "value": "WSL2 supported; native Windows experimental",
+    "os": {
+      "value": "macOS, Linux; Windows via WSL2 (native is experimental)",
       "mark": "info"
     },
     "survives_crash": {

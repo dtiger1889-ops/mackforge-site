@@ -36,8 +36,8 @@
       "value": "Partial: a Desktop skill to search memory is listed",
       "mark": "partial"
     },
-    "windows": {
-      "value": "Native Windows documented (Node, PowerShell notes)",
+    "os": {
+      "value": "Windows, macOS, Linux",
       "mark": "info"
     },
     "survives_crash": {

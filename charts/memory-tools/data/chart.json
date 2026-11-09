@@ -52,11 +52,11 @@
       "how_checked": "Integration docs naming Claude Desktop."
     },
     {
-      "key": "windows",
-      "label": "Windows",
-      "description": "Runs natively on Windows, only under WSL2 (Linux inside Windows), or not documented.",
+      "key": "os",
+      "label": "Operating systems",
+      "description": "Which systems its docs say it runs on: Windows, macOS, Linux. Windows notes say whether it runs natively or only under WSL2 (Linux inside Windows).",
       "group": "Works with",
-      "how_checked": "Install docs and release assets for Windows."
+      "how_checked": "Install docs and release files for each system."
     },
     {
       "key": "survives_crash",

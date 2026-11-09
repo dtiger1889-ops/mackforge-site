@@ -36,8 +36,8 @@
       "value": "Yes: MCP config block for Claude Desktop",
       "mark": "yes"
     },
-    "windows": {
-      "value": "Native with a manual engine install; WSL2 or Docker easier",
+    "os": {
+      "value": "Windows 10/11, macOS, Linux; WSL2 also works",
       "mark": "info"
     },
     "survives_crash": {

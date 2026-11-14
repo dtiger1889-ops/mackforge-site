@@ -1676,6 +1676,7 @@ bar.setAttribute("aria-expanded", String(S.pathOpen));
 function draw() {
 const rd = round(S.slug), c = screen(rd), kind = c.kind;
 const card = S.card;
+const y0 = window.scrollY; // where the reader was, before the card is rebuilt
 card.replaceChildren();
 S.after = null;
 if (kind === "meet") meet(card, rd, c);
@@ -1695,7 +1696,18 @@ document.fonts.ready.then(() => R().fitAll(card));
 if (S.focus) {
 const typing = S.focus === "input" || (S.focus === true && kind === "type" && !S.fb);
 const f = S.focus === "next" ? card.querySelector(".ln-next") : typing ? card.querySelector("#ln-name") : card.querySelector(".ln-prompt");
-if (f) { f.focus({ preventScroll: true }); f.scrollIntoView({ block: S.focus === "next" ? "center" : "nearest" }); }
+const still = S.focus === "next" && (!S.kbd || matchMedia("(pointer: coarse)").matches);
+if (f) {
+S.quiet = still;
+f.focus({ preventScroll: true });
+S.quiet = false;
+if (still) window.scrollTo(0, y0);
+else {
+const p = S.focus === true && f !== card.querySelector(".ln-prompt") ? card.querySelector(".ln-prompt") : null;
+if (p) p.scrollIntoView({ block: "nearest" });
+f.scrollIntoView({ block: S.focus === "next" ? "center" : "nearest" });
+}
+}
 S.focus = false;
 }
 }
@@ -1710,7 +1722,12 @@ const live = h("p", { class: "vh", "aria-live": "polite" });
 root.append(bar, path, card, sd, live);
 viewEl.replaceChildren(root);
 Object.assign(S, { root, bar, path, card, side: sd, live });
-card.addEventListener("focusin", e => { if (e.target !== card) e.target.scrollIntoView({ block: "nearest" }); });
+card.addEventListener("focusin", e => { if (e.target !== card && !S.quiet) e.target.scrollIntoView({ block: "nearest" }); });
+if (!S.watching) {
+S.watching = true;
+document.addEventListener("keydown", e => { if (!["Shift", "Control", "Alt", "Meta"].includes(e.key)) S.kbd = true; }, true);
+document.addEventListener("pointerdown", () => { S.kbd = false; }, true);
+}
 let lastW = 0;
 new ResizeObserver(() => {
 const w = card.clientWidth;

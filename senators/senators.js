@@ -1780,7 +1780,7 @@ const h = (...a) => SM.h(...a);
 const esc = s => SM.esc(s);
 const desk = () => innerWidth >= 1024;
 const PRESETS = [["state", "State", "State"], ["years", "Years in the Senate", "Years"],
-["age", "Age", "Age"], ["next", "Next election", "Next"]];
+["age", "Age", "Age"], ["next", "Next election", "Election"]]; // "Next" alone didn't say next what
 const RANKS = { senior: "Senior", junior: "Junior" };
 const F = { q: "", party: "", cls: "", rank: "", group: null };
 const sortOf = st => (!st.sort || st.sort === "party" ? "state" : st.sort);

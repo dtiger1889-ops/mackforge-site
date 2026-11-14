@@ -45,9 +45,9 @@ SITE ="https://mackforge.dev"
 # Pages outside the guides that the sitemap lists. They carry no lastmod, because
 # this script cannot know when they last changed.
 OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/", "/sites.html", "/senators/"]
-ASSET_VERSION = "20261114c"
-# Share icon: an arrow curving up and out of a box, in place of the word Share
-SHARE_MARK = ('<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9H6.5A1.5 1.5 0 0 0 5 10.5v9A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-4"/><path d="M10 15c0-5 3-8 9-8"/><path d="M15.5 3.5 19 7l-3.5 3.5"/></svg>')
+ASSET_VERSION = "20261114d"
+# Share icon: Phosphor share-fat (MIT, phosphoricons.com), in place of the word Share
+SHARE_MARK = ('<svg viewBox="0 0 256 256" aria-hidden="true"><path d="M237.66,106.35l-80-80A8,8,0,0,0,144,32V72.35c-25.94,2.22-54.59,14.92-78.16,34.91-28.38,24.08-46.05,55.11-49.76,87.37a12,12,0,0,0,20.68,9.58h0c11-11.71,50.14-48.74,107.24-52V192a8,8,0,0,0,13.66,5.65l80-80A8,8,0,0,0,237.66,106.35ZM160,172.69V144a8,8,0,0,0-8-8c-28.08,0-55.43,7.33-81.29,21.8a196.17,196.17,0,0,0-36.57,26.52c5.8-23.84,20.42-46.51,42.05-64.86C99.41,99.77,127.75,88,152,88a8,8,0,0,0,8-8V51.32L220.69,112Z"/></svg>')
 # GitHub's mark (Octicons mark-github, MIT), shown in the top row in place of the word
 GITHUB_MARK = ('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>')
 

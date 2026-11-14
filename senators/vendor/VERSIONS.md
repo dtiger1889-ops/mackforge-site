@@ -27,3 +27,4 @@ Pinned copies, served from the page's own folder so it loads nothing from anothe
 | `../assets/icons/plus.svg` | lucide-static | 1.72.0 | https://cdn.jsdelivr.net/npm/lucide-static@1.72.0/icons/plus.svg | ISC, `licenses/lucide-static-LICENSE` |
 | `../assets/icons/minus.svg` | lucide-static | 1.72.0 | https://cdn.jsdelivr.net/npm/lucide-static@1.72.0/icons/minus.svg | ISC, `licenses/lucide-static-LICENSE` |
 | `../assets/icons/chevron-left.svg` | lucide-static | 1.72.0 | https://cdn.jsdelivr.net/npm/lucide-static@1.72.0/icons/chevron-left.svg | ISC, `licenses/lucide-static-LICENSE` |
+| `../index.html` (Share button, inline) | @phosphor-icons/core, share-fat regular | 2.1.1 | https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/share-fat.svg | MIT, `licenses/phosphor-icons-core-LICENSE` |

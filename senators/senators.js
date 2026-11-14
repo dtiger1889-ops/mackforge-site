@@ -1037,8 +1037,7 @@ return a;
 function pickChoices(rec, pool, rng) {
 const reg = regionOfState(rec.state);
 const all = pool.filter(r => r.seat_id !== rec.seat_id && r.name !== rec.name);
-const same = all.filter(r => rec.gender && r.gender === rec.gender);
-const others = same.length >= 3 ? same : all;
+const others = rec.gender ? all.filter(r => r.gender === rec.gender) : all;
 const inReg = r => reg && reg.states.includes(r.state);
 const tiers = [others.filter(r => inReg(r) && r.party === rec.party), others.filter(r => inReg(r) && r.party !== rec.party),
 others.filter(r => !inReg(r))];
@@ -2140,7 +2139,9 @@ SM.kbd = false;
 document.addEventListener("keydown", e => {
 if (["Shift", "Control", "Alt", "Meta"].includes(e.key)) return;
 const text = e.target && e.target.matches && e.target.matches("input, textarea");
-SM.kbd = !(text && matchMedia("(pointer: coarse)").matches);
+const vv = window.visualViewport;
+const onScreen = text && e.key !== "Tab" && matchMedia("(pointer: coarse)").matches && !!vv && vv.height < innerHeight - 120;
+SM.kbd = !onScreen;
 }, true);
 document.addEventListener("pointerdown", () => { SM.kbd = false; }, true);
 function todayISO() {

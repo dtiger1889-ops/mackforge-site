@@ -100,6 +100,7 @@ html:not([data-theme=light]) .seatbar i.hl{outline-color:var(--ink)}
 @media(max-width:1023px){
   .mp-left{display:contents}
   .mp.open .plate{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+  .plate svg.map{max-height:35vh}
 }
 .ph{outline:none}
 .mp-panel h2.ph{font-size:var(--t20);font-weight:600;margin:0 0 4px}

@@ -1244,8 +1244,12 @@ card.appendChild(h("div", { class: "ln-crumb" }, `<span><b>${esc(reg.name)}</b>$
 const strip = h("div", { class: "ln-steps", "aria-hidden": "true" });
 rd.order.forEach(s => strip.appendChild(h("span", { class: LL().seatStatus(rd, s, seats) })));
 card.appendChild(strip);
-const phase = PHASE_OF[kind];
-card.appendChild(h("div", { class: "ln-phase" }, PHASES.map(([k, l]) => `<span${k === phase ? ' class="on" aria-current="step"' : ""}>${l}</span>`).join("")));
+const at = PHASES.findIndex(([k]) => k === PHASE_OF[kind]);
+const steps = PHASES.map(([k, l], i) => {
+const cls = i < at ? "done" : i === at ? "on" : "";
+return `<li${cls ? ` class="${cls}"` : ""}${i === at ? ' aria-current="step"' : ""}><i aria-hidden="true">${i < at ? "✓" : i + 1}</i>${l}</li>`;
+}).join("");
+card.appendChild(h("ol", { class: "ln-phase", "aria-label": "This state's steps" }, steps));
 }
 function prompt(card, text, sub) {
 card.appendChild(h("h2", { class: "ln-prompt", tabindex: "-1" }, esc(text)));

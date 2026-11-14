@@ -25,6 +25,8 @@ a.sm-brand{display:inline-flex;align-items:center;min-height:44px}
 .share #share-menu a,.share #share-menu button{min-height:44px;display:flex;align-items:center}
 .sm-bar nav{display:flex;align-items:center;gap:12px;font-size:var(--t14)}
 .sm-bar .share button{min-height:44px;padding:0 8px;font-weight:600}
+.sm-bar .share #share-btn{display:grid;place-items:center;width:44px;height:44px;padding:0;line-height:0}
+.sm-bar .share #share-btn svg{width:20px;height:20px;fill:currentColor}
 .sm-bar .share #share-menu,html[data-theme] .share #share-menu{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r4);box-shadow:none}
 .share #share-menu a:hover,.share #share-menu button:hover{background:var(--soft)}
 .sm-bar .theme-toggle{border:1px solid var(--line);background:var(--surface);background-image:none;box-shadow:none;color:var(--ink);border-radius:var(--r4);width:44px;height:44px;padding:0;display:grid;place-items:center;line-height:0}

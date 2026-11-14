@@ -2010,7 +2010,20 @@ T.table.clearSort();
 T.headerSorted = false;
 T.table.setGroupBy(grouped() && rows.length ? "region" : false);
 if (grouped() && rows.length) T.table.setGroupValues(groupValues(rows));
+sortedColumnBeside(st.sort || "state");
 T.table.setData(rows).then(() => watchPhotos());
+}
+const COLS = ["name", "state", "rank", "party", "age", "years", "nextWords", "class"];
+const SORT_COL = { party: "party", years: "years", age: "age", next: "nextWords" };
+function sortedColumnBeside(sort) {
+if (desk()) return;
+const order = COLS.slice(), f = SORT_COL[sort];
+if (f) { order.splice(order.indexOf(f), 1); order.splice(1, 0, f); }
+const now = T.table.getColumns().map(c => c.getField());
+if (now.join() === order.join()) return;
+for (let i = 1; i < order.length; i++) T.table.moveColumn(order[i], order[i - 1], true);
+const holder = T.tableEl.querySelector(".tabulator-tableholder");
+if (holder) holder.scrollLeft = 0;
 }
 function select(label, key, options, onChange) {
 const id = `cp-${key}`;

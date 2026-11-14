@@ -650,6 +650,9 @@ if (opts.animate && opts.senateSwitch) {
 const seats = changedSeats();
 o.changedSeats = seats.length;
 o.changed = [...new Set(seats.map(r => r.state))];
+M.changed = { changedSeats: o.changedSeats, changed: o.changed };
+} else if (M.changed) {
+Object.assign(o, M.changed);
 }
 update(st, o);
 },
@@ -944,7 +947,7 @@ else if (reg) region(pn, list, reg);
 else country(pn, list);
 SM.Ring.fitAll(pn);
 document.fonts.ready.then(() => SM.Ring.fitAll(pn));
-if (opts.push) { const hd = pn.querySelector(".ph"); if (hd) hd.focus({ preventScroll: desk() }); }
+if (opts.push) { const hd = pn.querySelector(".ph"); if (hd) hd.focus({ preventScroll: true }); }
 const rec = st.seat && SM.data.bySeat[list][st.seat];
 if (rec && !detail.open) {
 const ringBtn = [...pn.querySelectorAll(".srow-ring")].find(b => b.getAttribute("aria-label").startsWith(rec.name + ":"));
@@ -1696,19 +1699,21 @@ if (S.after) S.after(); // the Place map is sized to the card, so it is drawn on
 R().fitAll(card);
 document.fonts.ready.then(() => R().fitAll(card));
 if (S.focus) {
-const typing = S.focus === "input" || (S.focus === true && kind === "type" && !S.fb);
-const f = S.focus === "next" ? card.querySelector(".ln-next") : typing ? card.querySelector("#ln-name") : card.querySelector(".ln-prompt");
-const still = S.focus === "next" && (!S.kbd || matchMedia("(pointer: coarse)").matches);
+const touch = !S.kbd || matchMedia("(pointer: coarse)").matches;
+const typing = S.focus === "input" || (S.focus === true && kind === "type" && !S.fb && !touch);
+const prompt = card.querySelector(".ln-prompt");
+const f = S.focus === "next" ? card.querySelector(".ln-next") : typing ? card.querySelector("#ln-name") : prompt;
+const still = S.focus === "next" && touch;
 if (f) {
-S.quiet = still;
+S.quiet = true; // draw places the page itself; the focusin handler must not scroll as well
 f.focus({ preventScroll: true });
 S.quiet = false;
 if (still) window.scrollTo(0, y0);
-else {
-const p = S.focus === true && f !== card.querySelector(".ln-prompt") ? card.querySelector(".ln-prompt") : null;
-if (p) p.scrollIntoView({ block: "nearest" });
-f.scrollIntoView({ block: S.focus === "next" ? "center" : "nearest" });
-}
+else if (S.focus === true) {
+const top = card.getBoundingClientRect().top;
+if (top < 0) window.scrollTo(0, window.scrollY + top - 8);
+if (f !== prompt) f.scrollIntoView({ block: "nearest" });
+} else f.scrollIntoView({ block: S.focus === "next" ? "center" : "nearest" });
 }
 S.focus = false;
 }
@@ -1861,17 +1866,18 @@ if (F.rank) chips.push([`Rank: ${RANKS[F.rank]}`, () => { F.rank = ""; }]);
 if (F.q.trim()) chips.push([`Name or state: ${F.q.trim()}`, () => { F.q = ""; }]);
 T.active.replaceChildren();
 T.active.hidden = !chips.length;
+const refocus = () => { if (!matchMedia("(pointer: coarse)").matches) T.search.focus(); };
 chips.forEach(([label, clear]) => {
 const b = h("button", { type: "button", class: "cp-chip", "aria-label": `Remove filter: ${label}` },
 `${esc(label)}<span class="ico ico-x" aria-hidden="true"></span>`);
-b.addEventListener("click", () => { clear(); syncControls(); update(); T.search.focus(); });
+b.addEventListener("click", () => { clear(); syncControls(); update(); refocus(); });
 T.active.appendChild(b);
 });
 if (chips.length > 1) {
 const all = h("button", { type: "button", class: "cp-clear" }, "Clear all");
 all.addEventListener("click", () => {
 F.q = ""; F.party = ""; F.cls = ""; F.rank = ""; setRegion("");
-syncControls(); update(); T.search.focus();
+syncControls(); update(); refocus();
 });
 T.active.appendChild(all);
 }

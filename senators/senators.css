@@ -199,6 +199,7 @@ footer.sm-foot{max-width:1440px;width:auto;margin:32px auto 0;padding:18px 16px 
 .ln-note{font-size:var(--t13);color:var(--muted);margin:16px 12px 0;line-height:1.5}
 .ln-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r4);padding:18px 16px 20px;min-width:0}
 .ln-crumb{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:var(--t13);color:var(--muted)}
+.ln-crumb>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ln-crumb>span:last-child{flex:none}
 .ln-crumb b{color:var(--ink);font-weight:600}.ln-steps{display:flex;gap:4px;margin:10px 0 0}
 .ln-steps span{flex:1;height:8px;border-radius:4px;background:var(--bg);border:1px solid var(--line)}
 .ln-steps span.ok{background:var(--good);border-color:var(--good)}

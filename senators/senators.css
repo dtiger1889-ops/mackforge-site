@@ -311,6 +311,8 @@ svg.lmap{background:var(--plate)}
 .cp{display:block;padding-top:4px;min-width:0}
 .seatbar i.off{opacity:.25}
 .cp-sort{margin-top:2px}
+.cp-order{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 12px;margin-top:2px}
+.cp-note{margin:0;font-size:var(--t14);color:var(--muted)}
 .cp-tools{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 12px;margin-top:6px}
 .cp-q{flex:1 1 180px;min-width:0;max-width:340px}
 .cp-tools input[type=search]{width:100%;min-height:44px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 12px;border-radius:var(--r4);font-size:var(--t15)}

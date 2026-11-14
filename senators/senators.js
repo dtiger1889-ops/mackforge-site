@@ -1795,7 +1795,10 @@ const desk = () => innerWidth >= 1024;
 const PRESETS = [["state", "State", "State"], ["party", "Party", "Party"], ["years", "Years in the Senate", "Years"],
 ["age", "Age", "Age"], ["next", "Next election", "Next"]];
 const RANKS = { senior: "Senior", junior: "Junior" };
-const F = { q: "", party: "", cls: "", rank: "", group: true };
+const F = { q: "", party: "", cls: "", rank: "", group: null };
+const grouped = () => F.group ?? ((SM.state.sort || "state") === "state");
+const SORT_WORDS = { state: "state, A to Z", party: "party, then longest serving", years: "years in the Senate, longest first",
+age: "age, oldest first", next: "next election, soonest first" };
 let T = null; // the mounted tab: its elements and the table
 let loading = null;
 function loadTable() {
@@ -1892,7 +1895,10 @@ function syncControls() {
 T.search.value = F.q;
 T.sel.region.value = SM.state.region || "";
 T.sel.party.value = F.party; T.sel.cls.value = F.cls; T.sel.rank.value = F.rank;
-T.group.checked = F.group;
+T.group.checked = grouped();
+}
+function sortNote(words) {
+T.note.textContent = `Sorted by ${words}.`; // one line, so the box below never moves; the box shows the grouping
 }
 function numCell(value, max, extra) {
 const pct = value === null || !max ? 0 : Math.max(0, Math.min(100, (value / max) * 100));
@@ -1990,6 +1996,10 @@ seatBar(list, view, new Set(rows.map(r => r.seat_id)));
 countLine(list, rows.length);
 summaryLine(rows.map(r => r._rec), on);
 activeBar(st);
+const nOn = [st.region, F.party, F.cls, F.rank].filter(Boolean).length;
+T.more.textContent = nOn ? `Filters (${nOn})` : "Filters";
+T.group.checked = grouped();
+sortNote(SORT_WORDS[st.sort || "state"]);
 T.presets.forEach(b => {
 const on_ = b.dataset.sort === (st.sort || "state") && !T.headerSorted;
 b.classList.toggle("on", on_);
@@ -1998,8 +2008,8 @@ b.setAttribute("aria-checked", String(on_));
 if (!T.table) return;
 T.table.clearSort();
 T.headerSorted = false;
-T.table.setGroupBy(F.group && rows.length ? "region" : false);
-if (F.group && rows.length) T.table.setGroupValues(groupValues(rows));
+T.table.setGroupBy(grouped() && rows.length ? "region" : false);
+if (grouped() && rows.length) T.table.setGroupValues(groupValues(rows));
 T.table.setData(rows).then(() => watchPhotos());
 }
 function select(label, key, options, onChange) {
@@ -2054,19 +2064,21 @@ box.appendChild(el);
 box.appendChild(el);
 [el, sel.rank] = select("Rank", "rank", [["", "Senior and junior"], ["senior", "Senior"], ["junior", "Junior"]], v => { F.rank = v; });
 box.appendChild(el);
+tools.append(qLab, more, box);
+const order = h("div", { class: "cp-order" });
+const note = h("p", { class: "cp-note", "aria-live": "polite" });
 const gl = h("label", { class: "cp-check", for: "cp-group" });
 const group = h("input", { id: "cp-group", type: "checkbox" });
 group.addEventListener("change", () => { F.group = group.checked; update(); });
 gl.append(group, document.createTextNode("Group by region"));
-box.appendChild(gl);
-tools.append(qLab, more, box);
+order.append(note, gl);
 const active = h("div", { class: "cp-active", "aria-label": "Filters in use" });
 const sum = h("p", { class: "cp-sum" });
 const tableEl = h("div", { class: "cp-table" });
 const status = h("p", { class: "cp-status", role: "status" });
-root.append(bar, count, sortRow, tools, active, sum, status, tableEl);
+root.append(bar, count, sortRow, order, tools, active, sum, status, tableEl);
 viewEl.replaceChildren(root);
-T = { root, bar, count, presets, search, sel, group, active, sum, tableEl, status, table: null, big: desk() };
+T = { root, bar, count, presets, search, sel, group, note, more, active, sum, tableEl, status, table: null, big: desk() };
 syncControls();
 }
 function build(st) {
@@ -2098,6 +2110,12 @@ table.on("dataSorted", sorters => {
 if (!live() || !sorters.length) return;
 mine.headerSorted = true;
 mine.presets.forEach(b => { b.classList.remove("on"); b.setAttribute("aria-checked", "false"); });
+const f = sorters[0].field, asc = sorters[0].dir === "asc";
+const HEAD = { name: ["name", "A to Z", "Z to A"], state: ["state", "A to Z", "Z to A"], rank: ["rank", "senior first", "junior first"],
+party: ["party", "A to Z", "Z to A"], age: ["age", "youngest first", "oldest first"],
+years: ["years in the Senate", "shortest first", "longest first"], nextWords: ["next election", "soonest first", "latest first"],
+class: ["class", "1 to 3", "3 to 1"] }[f];
+if (HEAD) sortNote(`${HEAD[0]}, ${asc ? HEAD[1] : HEAD[2]}`);
 watchPhotos();
 });
 table.on("rowClick", (e, row) => {

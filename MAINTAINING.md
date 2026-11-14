@@ -40,6 +40,10 @@ A guide can also carry a full walkthrough: its Hintforge player's-guide book, sh
 
 The link preview for the walkthrough pages is `assets/guides/previews/<repo>-walkthrough.png`, a 1200x630 screenshot of the contents page; retake it when that page's look changes. A renamed chapter gets a new address; the old page's folder is not removed by the build.
 
+### Senators map
+
+`senators/` is the U.S. Senators map: learn the 100 senators state by state, explore them on a map, and compare them in one table, for the Senate sitting now and the one seated next. Everything in `senators/` is generated, including `senators/data/` (the senators, from the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) dataset plus sourced election results) and `senators/photos/` (official portraits and Wikimedia Commons photos, credited on the page). Don't edit them by hand; they are rebuilt and copied in from the page's build tool. Refresh the page after each election result is certified and after new senators are sworn in.
+
 After a publish is live, run `python tools/indexnow.py` to tell Bing (through [IndexNow](https://www.indexnow.org/documentation), no account needed) to crawl every page in the sitemap; pass URLs to send only those. The text file at the site root named after the key proves the site owns the key, so keep it there.
 
 Open `index.html` or `guides.html` in a browser to preview. The pages themselves need nothing installed.

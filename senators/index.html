@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>U.S. Senators map</title>
+<meta name="description" content="Learn the 100 U.S. senators state by state: face, name, party, senior or junior, age and years in the Senate, on a map you can explore. Today's Senate and the one seated 3 Jan 2027.">
+<meta name="color-scheme" content="dark light"><meta name="theme-color" content="#0d1117">
+<link rel="canonical" href="https://mackforge.dev/senators/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="U.S. Senators map">
+<meta property="og:description" content="Learn the 100 U.S. senators state by state: face, name, party, senior or junior, age and years in the Senate, on a map you can explore.">
+<meta property="og:url" content="https://mackforge.dev/senators/">
+<meta property="og:image" content="https://mackforge.dev/senators/assets/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mackforge.dev/senators/assets/preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23e8862e'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Arial,sans-serif' font-size='22' font-weight='700' fill='%23111921'%3Em%3C/text%3E%3C/svg%3E">
+<script>document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="senators.css">
+<script data-goatcounter="https://mackforge.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="../track.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#view">Skip to the content</a>
+<header class="sm-bar"><a class="sm-brand" href="../">mackforge<span aria-hidden="true">.</span></a>
+<nav aria-label="Site"><div class="share"><button type="button" id="share-btn" aria-expanded="false" aria-controls="share-menu">Share</button><div id="share-menu" hidden><a data-net="linkedin" target="_blank" rel="noopener">LinkedIn</a><a data-net="reddit" target="_blank" rel="noopener">Reddit</a><a data-net="x" target="_blank" rel="noopener">X</a><a data-net="bluesky" target="_blank" rel="noopener">Bluesky</a><button type="button" id="share-copy">Copy link</button><button type="button" id="share-native" hidden>More…</button></div></div><button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" title="Switch to light theme" hidden><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button></nav></header>
+<div class="sm-page">
+<div class="sm-top">
+<h1>U.S. Senators map</h1>
+<div class="sm-tabs" role="tablist" aria-label="Views" hidden>
+<button type="button" role="tab" id="tab-learn" data-view="learn" aria-selected="false" aria-controls="view">Learn</button>
+<button type="button" role="tab" id="tab-map" data-view="map" aria-selected="false" aria-controls="view">Map</button>
+<button type="button" role="tab" id="tab-compare" data-view="compare" aria-selected="false" aria-controls="view">Compare</button>
+<button type="button" class="sm-find" id="find-btn" aria-label="Find a state or senator" title="Find a state or senator"><span class="ico ico-search" aria-hidden="true"></span></button>
+</div>
+<fieldset class="sm-switch" id="senate-switch" hidden>
+<legend class="vh">Which Senate</legend>
+<label><input type="radio" name="senate" value="now"><span>119th Senate</span></label>
+<label><input type="radio" name="senate" value="next"><span>120th Senate</span></label>
+</fieldset>
+</div>
+<main id="view" role="tabpanel" tabindex="-1"></main>
+<section id="plain" class="plain">
+<h2>Senators by state</h2>
+<p>Today's Senate, two senators for each of the 50 states.</p>
+<ul class="plain-list">
+<li data-state="AL"><b>Alabama</b>: <span data-senator="T000278">senior senator Tommy Tuberville (Republican)</span>; <span data-senator="B001319">junior senator Katie Boyd Britt (Republican)</span></li>
+<li data-state="AK"><b>Alaska</b>: <span data-senator="M001153">senior senator Lisa Murkowski (Republican)</span>; <span data-senator="S001198">junior senator Dan Sullivan (Republican)</span></li>
+<li data-state="AZ"><b>Arizona</b>: <span data-senator="K000377">senior senator Mark Kelly (Democrat)</span>; <span data-senator="G000574">junior senator Ruben Gallego (Democrat)</span></li>
+<li data-state="AR"><b>Arkansas</b>: <span data-senator="B001236">senior senator John Boozman (Republican)</span>; <span data-senator="C001095">junior senator Tom Cotton (Republican)</span></li>
+<li data-state="CA"><b>California</b>: <span data-senator="P000145">senior senator Alex Padilla (Democrat)</span>; <span data-senator="S001150">junior senator Adam B. Schiff (Democrat)</span></li>
+<li data-state="CO"><b>Colorado</b>: <span data-senator="B001267">senior senator Michael F. Bennet (Democrat)</span>; <span data-senator="H000273">junior senator John W. Hickenlooper (Democrat)</span></li>
+<li data-state="CT"><b>Connecticut</b>: <span data-senator="B001277">senior senator Richard Blumenthal (Democrat)</span>; <span data-senator="M001169">junior senator Christopher Murphy (Democrat)</span></li>
+<li data-state="DE"><b>Delaware</b>: <span data-senator="C001088">senior senator Christopher A. Coons (Democrat)</span>; <span data-senator="B001303">junior senator Lisa Blunt Rochester (Democrat)</span></li>
+<li data-state="FL"><b>Florida</b>: <span data-senator="S001217">senior senator Rick Scott (Republican)</span>; <span data-senator="M001244">junior senator Ashley Moody (Republican)</span></li>
+<li data-state="GA"><b>Georgia</b>: <span data-senator="O000174">senior senator Jon Ossoff (Democrat)</span>; <span data-senator="W000790">junior senator Raphael G. Warnock (Democrat)</span></li>
+<li data-state="HI"><b>Hawaii</b>: <span data-senator="S001194">senior senator Brian Schatz (Democrat)</span>; <span data-senator="H001042">junior senator Mazie K. Hirono (Democrat)</span></li>
+<li data-state="ID"><b>Idaho</b>: <span data-senator="C000880">senior senator Mike Crapo (Republican)</span>; <span data-senator="R000584">junior senator James E. Risch (Republican)</span></li>
+<li data-state="IL"><b>Illinois</b>: <span data-senator="D000563">senior senator Richard J. Durbin (Democrat)</span>; <span data-senator="D000622">junior senator Tammy Duckworth (Democrat)</span></li>
+<li data-state="IN"><b>Indiana</b>: <span data-senator="Y000064">senior senator Todd Young (Republican)</span>; <span data-senator="B001299">junior senator Jim Banks (Republican)</span></li>
+<li data-state="IA"><b>Iowa</b>: <span data-senator="G000386">senior senator Chuck Grassley (Republican)</span>; <span data-senator="E000295">junior senator Joni Ernst (Republican)</span></li>
+<li data-state="KS"><b>Kansas</b>: <span data-senator="M000934">senior senator Jerry Moran (Republican)</span>; <span data-senator="M001198">junior senator Roger Marshall (Republican)</span></li>
+<li data-state="KY"><b>Kentucky</b>: <span data-senator="M000355">senior senator Mitch McConnell (Republican)</span>; <span data-senator="P000603">junior senator Rand Paul (Republican)</span></li>
+<li data-state="LA"><b>Louisiana</b>: <span data-senator="C001075">senior senator Bill Cassidy (Republican)</span>; <span data-senator="K000393">junior senator John Kennedy (Republican)</span></li>
+<li data-state="ME"><b>Maine</b>: <span data-senator="C001035">senior senator Susan M. Collins (Republican)</span>; <span data-senator="K000383">junior senator Angus S. King, Jr. (Independent)</span></li>
+<li data-state="MD"><b>Maryland</b>: <span data-senator="V000128">senior senator Chris Van Hollen (Democrat)</span>; <span data-senator="A000382">junior senator Angela D. Alsobrooks (Democrat)</span></li>
+<li data-state="MA"><b>Massachusetts</b>: <span data-senator="W000817">senior senator Elizabeth Warren (Democrat)</span>; <span data-senator="M000133">junior senator Edward J. Markey (Democrat)</span></li>
+<li data-state="MI"><b>Michigan</b>: <span data-senator="P000595">senior senator Gary C. Peters (Democrat)</span>; <span data-senator="S001208">junior senator Elissa Slotkin (Democrat)</span></li>
+<li data-state="MN"><b>Minnesota</b>: <span data-senator="K000367">senior senator Amy Klobuchar (Democrat)</span>; <span data-senator="S001203">junior senator Tina Smith (Democrat)</span></li>
+<li data-state="MS"><b>Mississippi</b>: <span data-senator="W000437">senior senator Roger F. Wicker (Republican)</span>; <span data-senator="H001079">junior senator Cindy Hyde-Smith (Republican)</span></li>
+<li data-state="MO"><b>Missouri</b>: <span data-senator="H001089">senior senator Josh Hawley (Republican)</span>; <span data-senator="S001227">junior senator Eric Schmitt (Republican)</span></li>
+<li data-state="MT"><b>Montana</b>: <span data-senator="D000618">senior senator Steve Daines (Republican)</span>; <span data-senator="S001232">junior senator Tim Sheehy (Republican)</span></li>
+<li data-state="NE"><b>Nebraska</b>: <span data-senator="F000463">senior senator Deb Fischer (Republican)</span>; <span data-senator="R000618">junior senator Pete Ricketts (Republican)</span></li>
+<li data-state="NV"><b>Nevada</b>: <span data-senator="C001113">senior senator Catherine Cortez Masto (Democrat)</span>; <span data-senator="R000608">junior senator Jacky Rosen (Democrat)</span></li>
+<li data-state="NH"><b>New Hampshire</b>: <span data-senator="S001181">senior senator Jeanne Shaheen (Democrat)</span>; <span data-senator="H001076">junior senator Margaret Wood Hassan (Democrat)</span></li>
+<li data-state="NJ"><b>New Jersey</b>: <span data-senator="B001288">senior senator Cory A. Booker (Democrat)</span>; <span data-senator="K000394">junior senator Andy Kim (Democrat)</span></li>
+<li data-state="NM"><b>New Mexico</b>: <span data-senator="H001046">senior senator Martin Heinrich (Democrat)</span>; <span data-senator="L000570">junior senator Ben Ray Luján (Democrat)</span></li>
+<li data-state="NY"><b>New York</b>: <span data-senator="S000148">senior senator Charles E. Schumer (Democrat)</span>; <span data-senator="G000555">junior senator Kirsten E. Gillibrand (Democrat)</span></li>
+<li data-state="NC"><b>North Carolina</b>: <span data-senator="T000476">senior senator Thom Tillis (Republican)</span>; <span data-senator="B001305">junior senator Ted Budd (Republican)</span></li>
+<li data-state="ND"><b>North Dakota</b>: <span data-senator="H001061">senior senator John Hoeven (Republican)</span>; <span data-senator="C001096">junior senator Kevin Cramer (Republican)</span></li>
+<li data-state="OH"><b>Ohio</b>: <span data-senator="M001242">senior senator Bernie Moreno (Republican)</span>; <span data-senator="H001104">junior senator Jon Husted (Republican)</span></li>
+<li data-state="OK"><b>Oklahoma</b>: <span data-senator="L000575">senior senator James Lankford (Republican)</span>; <span data-senator="A000383">junior senator Alan Armstrong (Republican)</span></li>
+<li data-state="OR"><b>Oregon</b>: <span data-senator="W000779">senior senator Ron Wyden (Democrat)</span>; <span data-senator="M001176">junior senator Jeff Merkley (Democrat)</span></li>
+<li data-state="PA"><b>Pennsylvania</b>: <span data-senator="F000479">senior senator John Fetterman (Democrat)</span>; <span data-senator="M001243">junior senator David McCormick (Republican)</span></li>
+<li data-state="RI"><b>Rhode Island</b>: <span data-senator="R000122">senior senator Jack Reed (Democrat)</span>; <span data-senator="W000802">junior senator Sheldon Whitehouse (Democrat)</span></li>
+<li data-state="SC"><b>South Carolina</b>: <span data-senator="S001184">senior senator Tim Scott (Republican)</span>; <span data-senator="G000608">junior senator Darline Graham (Republican)</span></li>
+<li data-state="SD"><b>South Dakota</b>: <span data-senator="T000250">senior senator John Thune (Republican)</span>; <span data-senator="R000605">junior senator Mike Rounds (Republican)</span></li>
+<li data-state="TN"><b>Tennessee</b>: <span data-senator="B001243">senior senator Marsha Blackburn (Republican)</span>; <span data-senator="H000601">junior senator Bill Hagerty (Republican)</span></li>
+<li data-state="TX"><b>Texas</b>: <span data-senator="C001056">senior senator John Cornyn (Republican)</span>; <span data-senator="C001098">junior senator Ted Cruz (Republican)</span></li>
+<li data-state="UT"><b>Utah</b>: <span data-senator="L000577">senior senator Mike Lee (Republican)</span>; <span data-senator="C001114">junior senator John R. Curtis (Republican)</span></li>
+<li data-state="VT"><b>Vermont</b>: <span data-senator="S000033">senior senator Bernard Sanders (Independent)</span>; <span data-senator="W000800">junior senator Peter Welch (Democrat)</span></li>
+<li data-state="VA"><b>Virginia</b>: <span data-senator="W000805">senior senator Mark R. Warner (Democrat)</span>; <span data-senator="K000384">junior senator Tim Kaine (Democrat)</span></li>
+<li data-state="WA"><b>Washington</b>: <span data-senator="M001111">senior senator Patty Murray (Democrat)</span>; <span data-senator="C000127">junior senator Maria Cantwell (Democrat)</span></li>
+<li data-state="WV"><b>West Virginia</b>: <span data-senator="C001047">senior senator Shelley Moore Capito (Republican)</span>; <span data-senator="J000312">junior senator James C. Justice (Republican)</span></li>
+<li data-state="WI"><b>Wisconsin</b>: <span data-senator="J000293">senior senator Ron Johnson (Republican)</span>; <span data-senator="B001230">junior senator Tammy Baldwin (Democrat)</span></li>
+<li data-state="WY"><b>Wyoming</b>: <span data-senator="B001261">senior senator John Barrasso (Republican)</span>; <span data-senator="L000571">junior senator Cynthia M. Lummis (Republican)</span></li>
+</ul>
+</section>
+</div>
+<footer class="sm-foot">
+<p class="sources">Sources: <a href="https://github.com/unitedstates/congress-legislators">unitedstates/congress-legislators</a> and <a href="https://github.com/unitedstates/images">unitedstates/images</a> (public domain), the <a href="https://www.senate.gov/senators/">U.S. Senate</a>, the <a href="https://bioguide.congress.gov/">Biographical Directory of the United States Congress</a>, and U.S. Census Bureau state shapes through <a href="https://github.com/topojson/us-atlas">us-atlas</a>. Results for the Senate seated 3 Jan 2027 link to their sources in each senator's details. Data checked <time datetime="2026-11-14">14 Nov 2026</time>.</p>
+<p class="sources">Photos of senators and senators-elect from outside the official Senate set:</p>
+<ul class="credits"><li data-license="Public domain">Kurt Alme: United States Department of Justice, Public domain, <a href="https://commons.wikimedia.org/wiki/File:Kurt_G._Alme_official_photo.jpg">source</a></li><li data-license="Public domain">Annie Andrews: U.S. Senate (Senate Democrats), Public domain, <a href="https://commons.wikimedia.org/wiki/File:Annie_Andrews_in_November_2026.jpg">source</a></li><li data-license="Public domain">Alan Armstrong: Daniel Rios, U.S. Senate, Public domain, <a href="https://commons.wikimedia.org/wiki/File:Alan_S_Armstrong_official_portrait_(cropped_2).jpg">source</a></li><li data-license="CC BY 4.0">Scott Colom: The Contrarian, CC BY 4.0, <a href="https://commons.wikimedia.org/wiki/File:Scott_Colom_2_(cropped).png">source</a></li><li data-license="Public domain">Roy Cooper: U.S. Army photo by Staff Sgt. Mary Junell, North Carolina National Guard, Public domain, <a href="https://commons.wikimedia.org/wiki/File:Roy_Cooper_2019_(cropped).jpg">source</a></li><li data-license="CC BY-SA 4.0">Abdul El-Sayed: Conlan Houston, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Abdul_El-Sayed_meet-and-greet_by_Conlan_Houston_5_(cropped).jpg">source</a></li><li data-license="Public domain">Peggy Flanagan: Office of Governor Tim Walz and Lt. Governor Peggy Flanagan, Public domain, <a href="https://commons.wikimedia.org/wiki/File:Peggy_Flanagan_and_Premier_Kinew_(cropped).jpg">source</a></li><li data-license="Public domain">Darline Graham: Office of Senator Darline Graham, U.S. Senate, Public domain, <a href="https://commons.wikimedia.org/wiki/File:Darline_Graham_official_portrait_(cropped).jpg">source</a></li><li data-license="CC0">Adam Hamilton: Leoniceno (Wikimedia Commons), CC0, <a href="https://commons.wikimedia.org/wiki/File:Adam_Hamilton_campaign_rally,_Newton,_Kansas,_30_Oct_2026_(3x4_cropped).jpg">source</a></li><li data-license="CC BY-SA 4.0">Jon Husted: Vivien McClain, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:LtGov-Jon-Husted_(cropped).jpg">source</a></li><li data-license="CC0">Troy Jackson: ArenLeBrun (Wikimedia Commons), CC0, <a href="https://commons.wikimedia.org/wiki/File:Troy_Jackson_in_the_Senate_Chamber_(cropped).jpg">source</a></li><li data-license="Public domain">Juliana Stratton: Sgt. Trenton Fouche, Illinois National Guard (DVIDS), Public domain, <a href="https://commons.wikimedia.org/wiki/File:Juliana_Stratton_2023_(cropped).jpg">source</a></li><li data-license="CC BY-SA 4.0">James Talarico: Antonioaesparza (Wikimedia Commons), CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:James_Talarico_Press_Conference_(cropped).jpg">source</a></li><li data-license="Copyrighted free use">Josh Turek: Iowa General Assembly, Copyrighted free use, <a href="https://commons.wikimedia.org/wiki/File:Joshua_Turek_(cropped_2).jpg">source</a></li></ul>
+<p class="byline"><a class="sm-brand" href="../">mackforge<span aria-hidden="true">.</span></a></p>
+</footer>
+<dialog id="find" class="sm-dialog" aria-labelledby="find-title"></dialog>
+<dialog id="detail" class="sm-dialog sm-detail" aria-labelledby="detail-name"></dialog>
+<script src="vendor/d3-topo.min.js" defer></script>
+<script src="senators.js" defer></script>
+</body>
+</html>

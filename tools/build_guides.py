@@ -44,7 +44,7 @@ sys.dont_write_bytecode = True  # importing tools/build_books.py must not leave 
 SITE ="https://mackforge.dev"
 # Pages outside the guides that the sitemap lists. They carry no lastmod, because
 # this script cannot know when they last changed.
-OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/", "/sites.html"]
+OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/", "/sites.html", "/senators/"]
 ASSET_VERSION = "20261104a"
 
 ORG = "hintforge"

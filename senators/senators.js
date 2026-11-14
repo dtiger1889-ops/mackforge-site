@@ -1022,7 +1022,9 @@ return a;
 }
 function pickChoices(rec, pool, rng) {
 const reg = regionOfState(rec.state);
-const others = pool.filter(r => r.seat_id !== rec.seat_id && r.name !== rec.name);
+const all = pool.filter(r => r.seat_id !== rec.seat_id && r.name !== rec.name);
+const same = all.filter(r => rec.gender && r.gender === rec.gender);
+const others = same.length >= 3 ? same : all;
 const inReg = r => reg && reg.states.includes(r.state);
 const tiers = [others.filter(r => inReg(r) && r.party === rec.party), others.filter(r => inReg(r) && r.party !== rec.party),
 others.filter(r => !inReg(r))];

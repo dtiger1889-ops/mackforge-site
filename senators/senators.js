@@ -2146,7 +2146,7 @@ if (st.missed && st.view === "learn") p.set("missed", st.missed);
 if (st.sort && st.view === "compare") p.set("sort", st.sort);
 return "?" + p.toString().replace(/%2C/g, ",");
 }
-SM.shareUrl = () => SITE_URL + addressFor(SM.state);
+SM.shareUrl = () => SITE_URL;
 SM.linkFor = st => SITE_URL + addressFor(st);
 SM.setSeat = seat => SM.setAddress({ seat });
 SM.setAddress = patch => {

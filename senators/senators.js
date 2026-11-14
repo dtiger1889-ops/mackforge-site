@@ -947,7 +947,18 @@ else if (reg) region(pn, list, reg);
 else country(pn, list);
 SM.Ring.fitAll(pn);
 document.fonts.ready.then(() => SM.Ring.fitAll(pn));
-if (opts.push) { const hd = pn.querySelector(".ph"); if (hd) hd.focus({ preventScroll: true }); }
+if (opts.push) {
+const hd = pn.querySelector(".ph");
+if (hd) {
+hd.focus({ preventScroll: true });
+if (SM.kbd) {
+const plate = document.querySelector(".mp.open .plate");
+const cover = plate && getComputedStyle(plate).position === "sticky" ? plate.getBoundingClientRect().bottom : 0;
+const r = hd.getBoundingClientRect();
+if (r.top < cover || r.bottom > innerHeight) window.scrollTo(0, window.scrollY + r.top - cover - 8);
+}
+}
+}
 const rec = st.seat && SM.data.bySeat[list][st.seat];
 if (rec && !detail.open) {
 const ringBtn = [...pn.querySelectorAll(".srow-ring")].find(b => b.getAttribute("aria-label").startsWith(rec.name + ":"));
@@ -1699,7 +1710,7 @@ if (S.after) S.after(); // the Place map is sized to the card, so it is drawn on
 R().fitAll(card);
 document.fonts.ready.then(() => R().fitAll(card));
 if (S.focus) {
-const touch = !S.kbd || matchMedia("(pointer: coarse)").matches;
+const touch = !SM.kbd;
 const typing = S.focus === "input" || (S.focus === true && kind === "type" && !S.fb && !touch);
 const prompt = card.querySelector(".ln-prompt");
 const f = S.focus === "next" ? card.querySelector(".ln-next") : typing ? card.querySelector("#ln-name") : prompt;
@@ -1730,11 +1741,6 @@ root.append(bar, path, card, sd, live);
 viewEl.replaceChildren(root);
 Object.assign(S, { root, bar, path, card, side: sd, live });
 card.addEventListener("focusin", e => { if (e.target !== card && !S.quiet) e.target.scrollIntoView({ block: "nearest" }); });
-if (!S.watching) {
-S.watching = true;
-document.addEventListener("keydown", e => { if (!["Shift", "Control", "Alt", "Meta"].includes(e.key)) S.kbd = true; }, true);
-document.addEventListener("pointerdown", () => { S.kbd = false; }, true);
-}
 let lastW = 0;
 new ResizeObserver(() => {
 const w = card.clientWidth;
@@ -1866,7 +1872,7 @@ if (F.rank) chips.push([`Rank: ${RANKS[F.rank]}`, () => { F.rank = ""; }]);
 if (F.q.trim()) chips.push([`Name or state: ${F.q.trim()}`, () => { F.q = ""; }]);
 T.active.replaceChildren();
 T.active.hidden = !chips.length;
-const refocus = () => { if (!matchMedia("(pointer: coarse)").matches) T.search.focus(); };
+const refocus = () => { if (SM.kbd) T.search.focus(); else T.count.focus({ preventScroll: true }); };
 chips.forEach(([label, clear]) => {
 const b = h("button", { type: "button", class: "cp-chip", "aria-label": `Remove filter: ${label}` },
 `${esc(label)}<span class="ico ico-x" aria-hidden="true"></span>`);
@@ -2009,7 +2015,7 @@ return [wrap, s];
 function mount(viewEl, st) {
 const root = h("div", { class: "cp", "data-view": "compare" });
 const bar = h("div", { class: "seatbar cp-bar", "aria-hidden": "true" });
-const count = h("p", { class: "sm-count mp-count cp-count", "aria-live": "polite" });
+const count = h("p", { class: "sm-count mp-count cp-count", "aria-live": "polite", tabindex: "-1" });
 const sortRow = h("div", { class: "colorby cp-sort", role: "radiogroup", "aria-label": "Sort the table by" });
 sortRow.appendChild(h("span", { class: "lbl", "aria-hidden": "true" }, "Sort by"));
 const presets = PRESETS.map(([k, l, short]) => {
@@ -2130,6 +2136,13 @@ const VIEWS = ["learn", "map", "compare"];
 const STEPS = ["meet", "pick", "type", "place", "end"];
 const SWEARING_IN = "2027-01-03";
 const SITE_URL = "https://mackforge.dev/senators/";
+SM.kbd = false;
+document.addEventListener("keydown", e => {
+if (["Shift", "Control", "Alt", "Meta"].includes(e.key)) return;
+const text = e.target && e.target.matches && e.target.matches("input, textarea");
+SM.kbd = !(text && matchMedia("(pointer: coarse)").matches);
+}, true);
+document.addEventListener("pointerdown", () => { SM.kbd = false; }, true);
 function todayISO() {
 const d = new Date();
 return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;

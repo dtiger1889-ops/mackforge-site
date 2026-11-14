@@ -313,6 +313,9 @@ svg.lmap{background:var(--plate)}
 .cp-sort{margin-top:2px}
 .cp-order{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 12px;margin-top:2px}
 .cp-note{margin:0;font-size:var(--t14);color:var(--muted)}
+.cp-group{display:inline-flex;align-items:center;gap:8px;margin:4px 0 0;font-size:var(--t14);font-weight:400;color:var(--ink);text-transform:none;letter-spacing:normal}
+.cp-group span{white-space:nowrap}
+.cp-group select{min-height:44px;border:1px solid var(--line);border-radius:var(--r4);background:var(--surface);color:var(--ink);padding:0 10px;font-size:var(--t14)}
 .cp-tools{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 12px;margin-top:6px}
 .cp-q{flex:1 1 180px;min-width:0;max-width:340px}
 .cp-tools input[type=search]{width:100%;min-height:44px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 12px;border-radius:var(--r4);font-size:var(--t15)}
@@ -322,14 +325,10 @@ svg.lmap{background:var(--plate)}
 .cp-fields.open{display:flex}
 .cp-field{display:flex;flex-direction:column;gap:2px;margin:0;font-size:var(--t13);font-weight:400;color:var(--muted);text-transform:none;letter-spacing:normal}
 .cp-field select{min-height:44px;min-width:150px;max-width:100%;border:1px solid var(--line);border-radius:var(--r4);background:var(--surface);color:var(--ink);padding:0 10px;font-size:var(--t14)}
-.cp-check{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin:0;font-size:var(--t14);font-weight:400;color:var(--ink);text-transform:none;letter-spacing:normal;cursor:pointer}
-.cp-check input{width:20px;height:20px;margin:0;accent-color:var(--ink)}
 .cp-active{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .cp-chip,.cp-clear{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:var(--r4);background:var(--surface);color:var(--ink);font-size:var(--t14)}
 .cp-chip .ico{width:16px;height:16px}
 .cp-clear{border-color:transparent;background:none;text-decoration:underline;text-underline-offset:3px}
-.cp-sum{font-size:var(--t14);margin:10px 0 8px;color:var(--ink)}
-.cp-sum span{white-space:nowrap}
 .cp-status{font-size:var(--t14);color:var(--muted)}
 .cp-table{margin-top:4px}
 .cp-who{display:flex;align-items:center;gap:8px;width:100%;min-height:52px;padding:0;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer}

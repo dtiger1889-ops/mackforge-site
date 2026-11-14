@@ -100,19 +100,6 @@ return plain(STATE_NAMES[a.state] || "", STATE_NAMES[b.state] || "") ||
 }
 const SORTS = ["state", "party", "years", "age", "next"];
 function cleanSort(v) { return SORTS.includes(v) ? v : null; }
-function summary(records, on) {
-const aged = records.filter(r => r.birthday);
-if (!records.length) return null;
-const byAge = aged.slice().sort(compareBy("age", on));
-const ages = aged.map(r => ageOn(r.birthday, on)).sort((x, y) => x - y);
-const mid = ages.length >> 1;
-const median = !ages.length ? null : ages.length % 2 ? ages[mid] : (ages[mid - 1] + ages[mid]) / 2;
-const longest = records.slice().sort(compareBy("years", on))[0];
-return {
-oldest: byAge[0] || null, youngest: byAge[byAge.length - 1] || null, medianAge: median,
-longest, longestYears: wholeYearsInSenate(longest, on),
-};
-}
 const STATES = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA",
 "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA",
 "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
@@ -134,7 +121,7 @@ UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia"
 const Calc = {
 STATES, STATE_NAMES, REGION_SLUGS, SORTS, cleanState, cleanRegion, cleanSort, SWEARING_IN, PARTIES, YEARS_CAP, dateFor, ageOn,
 yearsInSenate, wholeYearsInSenate, earlierYears, yearsT, sameHolder, nextElectionShown, nextElectionWords, partyCounts, sortKeys,
-compareBy, compareState, summary, serviceDays, ageDays, wholeYearsBetween,
+compareBy, compareState, serviceDays, ageDays, wholeYearsBetween,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Calc;
 else root.Calc = Calc;
@@ -1792,12 +1779,13 @@ const C = () => window.Calc;
 const h = (...a) => SM.h(...a);
 const esc = s => SM.esc(s);
 const desk = () => innerWidth >= 1024;
-const PRESETS = [["state", "State", "State"], ["party", "Party", "Party"], ["years", "Years in the Senate", "Years"],
+const PRESETS = [["state", "State", "State"], ["years", "Years in the Senate", "Years"],
 ["age", "Age", "Age"], ["next", "Next election", "Next"]];
 const RANKS = { senior: "Senior", junior: "Junior" };
 const F = { q: "", party: "", cls: "", rank: "", group: null };
-const grouped = () => F.group ?? ((SM.state.sort || "state") === "state");
-const SORT_WORDS = { state: "state, A to Z", party: "party, then longest serving", years: "years in the Senate, longest first",
+const sortOf = st => (!st.sort || st.sort === "party" ? "state" : st.sort);
+const grouped = () => F.group ?? (SM.state.sort === "party" ? "party" : sortOf(SM.state) === "state" ? "region" : "none");
+const SORT_WORDS = { state: "state, A to Z", years: "years in the Senate, longest first",
 age: "age, oldest first", next: "next election, soonest first" };
 let T = null; // the mounted tab: its elements and the table
 let loading = null;
@@ -1853,17 +1841,6 @@ if (i < 2) T.count.appendChild(document.createTextNode(" · "));
 });
 T.count.appendChild(h("span", { class: "chg" }, `Showing ${n} of ${SM.data.senate[list].length}`));
 }
-function summaryLine(rows, on) {
-const s = C().summary(rows, on);
-if (!s) { T.sum.hidden = true; return; }
-const parts = [];
-if (s.oldest) parts.push(`Oldest: ${esc(s.oldest.name)}, ${C().ageOn(s.oldest.birthday, on)}`);
-if (s.youngest) parts.push(`Youngest: ${esc(s.youngest.name)}, ${C().ageOn(s.youngest.birthday, on)}`);
-if (s.medianAge !== null) parts.push(`Median age: ${s.medianAge}`);
-if (s.longest && s.longestYears > 0) parts.push(`Longest serving: ${esc(s.longest.name)}, ${s.longestYears} year${s.longestYears === 1 ? "" : "s"}`);
-T.sum.hidden = !parts.length;
-T.sum.innerHTML = parts.map(p => `<span>${p}</span>`).join(" · ");
-}
 function activeBar(st) {
 const chips = [];
 const reg = st.region && SM.regionBySlug(st.region);
@@ -1895,10 +1872,10 @@ function syncControls() {
 T.search.value = F.q;
 T.sel.region.value = SM.state.region || "";
 T.sel.party.value = F.party; T.sel.cls.value = F.cls; T.sel.rank.value = F.rank;
-T.group.checked = grouped();
+T.group.value = grouped();
 }
 function sortNote(words) {
-T.note.textContent = `Sorted by ${words}.`; // one line, so the box below never moves; the box shows the grouping
+T.note.textContent = `Sorted by ${words}.`; // one line, so the controls below never move; the Group by box shows the grouping
 }
 function numCell(value, max, extra) {
 const pct = value === null || !max ? 0 : Math.max(0, Math.min(100, (value / max) * 100));
@@ -1965,7 +1942,7 @@ return y === null ? `<span class="m">${esc(cell.getValue())}</span>` : esc(cell.
 ];
 }
 function rowsFor(list, on, st) {
-const next = SM.data.bySeat.next, sort = st.sort || "state";
+const next = SM.data.bySeat.next, sort = sortOf(st);
 const recs = SM.data.senate[list].filter(r => matches(r, st)).sort(C().compareBy(sort, on, next));
 return recs.map(r => ({
 seat_id: r.seat_id, name: r.name, state: r.state, rank: r.rank, party: r.party, class: r.class,
@@ -1984,37 +1961,38 @@ if (e.isIntersecting) { show(e.target); T.io.unobserve(e.target); }
 }), { root: holder || null, rootMargin: "200px 0px" });
 imgs.forEach(i => T.io.observe(i));
 }
-function groupValues(rows) {
-const present = new Set(rows.map(r => r.region));
-return [SM.REGIONS.map(r => r.name).filter(n => present.has(n))];
+function groupValues(rows, by) {
+const present = new Set(rows.map(r => r[by]));
+const all = by === "party" ? C().PARTIES : SM.REGIONS.map(r => r.name);
+return [all.filter(n => present.has(n))];
 }
 function update() {
-const st = SM.state, list = SM.senate(), on = SM.onDate(list);
+const st = SM.state, list = SM.senate(), on = SM.onDate(list), sort = sortOf(st), by = grouped();
 const rows = rowsFor(list, on, st);
 const view = st.sort && st.sort !== "state" ? st.sort : SM.colorView;
 seatBar(list, view, new Set(rows.map(r => r.seat_id)));
 countLine(list, rows.length);
-summaryLine(rows.map(r => r._rec), on);
 activeBar(st);
 const nOn = [st.region, F.party, F.cls, F.rank].filter(Boolean).length;
 T.more.textContent = nOn ? `Filters (${nOn})` : "Filters";
-T.group.checked = grouped();
-sortNote(SORT_WORDS[st.sort || "state"]);
+T.group.value = by;
+sortNote(SORT_WORDS[sort]);
 T.presets.forEach(b => {
-const on_ = b.dataset.sort === (st.sort || "state") && !T.headerSorted;
+const on_ = b.dataset.sort === sort && !T.headerSorted;
 b.classList.toggle("on", on_);
 b.setAttribute("aria-checked", String(on_));
 });
 if (!T.table) return;
 T.table.clearSort();
 T.headerSorted = false;
-T.table.setGroupBy(grouped() && rows.length ? "region" : false);
-if (grouped() && rows.length) T.table.setGroupValues(groupValues(rows));
-sortedColumnBeside(st.sort || "state");
+const g = by !== "none" && rows.length ? by : false;
+T.table.setGroupBy(g);
+if (g) T.table.setGroupValues(groupValues(rows, g));
+sortedColumnBeside(sort);
 T.table.setData(rows).then(() => watchPhotos());
 }
 const COLS = ["name", "state", "rank", "party", "age", "years", "nextWords", "class"];
-const SORT_COL = { party: "party", years: "years", age: "age", next: "nextWords" };
+const SORT_COL = { years: "years", age: "age", next: "nextWords" };
 function sortedColumnBeside(sort) {
 if (desk()) return;
 const order = COLS.slice(), f = SORT_COL[sort];
@@ -2080,18 +2058,18 @@ box.appendChild(el);
 tools.append(qLab, more, box);
 const order = h("div", { class: "cp-order" });
 const note = h("p", { class: "cp-note", "aria-live": "polite" });
-const gl = h("label", { class: "cp-check", for: "cp-group" });
-const group = h("input", { id: "cp-group", type: "checkbox" });
-group.addEventListener("change", () => { F.group = group.checked; update(); });
-gl.append(group, document.createTextNode("Group by region"));
+const gl = h("label", { class: "cp-group", for: "cp-group" }, "<span>Group by</span>");
+const group = h("select", { id: "cp-group" });
+[["region", "Region"], ["party", "Party"], ["none", "No groups"]].forEach(([v, t]) => group.appendChild(h("option", { value: v }, t)));
+group.addEventListener("change", () => { F.group = group.value; update(); });
+gl.appendChild(group);
 order.append(note, gl);
 const active = h("div", { class: "cp-active", "aria-label": "Filters in use" });
-const sum = h("p", { class: "cp-sum" });
 const tableEl = h("div", { class: "cp-table" });
 const status = h("p", { class: "cp-status", role: "status" });
-root.append(bar, count, sortRow, order, tools, active, sum, status, tableEl);
+root.append(bar, count, sortRow, order, tools, active, status, tableEl);
 viewEl.replaceChildren(root);
-T = { root, bar, count, presets, search, sel, group, note, more, active, sum, tableEl, status, table: null, big: desk() };
+T = { root, bar, count, presets, search, sel, group, note, more, active, tableEl, status, table: null, big: desk() };
 syncControls();
 }
 function build(st) {

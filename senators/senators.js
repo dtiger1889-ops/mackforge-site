@@ -1726,7 +1726,10 @@ function side(sd, rd, curState, meetState, askedSeat) {
 const reg = rd.reg, t = LL().tallies(rd);
 sd.replaceChildren(h("h2", {}, reg.country ? "Your map of the senators you missed" : `Your map of the ${esc(reg.name)} states`));
 const mc = h("div", { class: "ln-mapcard" });
-const pick = meetState && rd.states.length > 1 ? st => { LL().meetGo(rd, st); S.focus = true; draw(); } : null;
+const pick = meetState && rd.states.length > 1 ? st => {
+S.anchor = mc.getBoundingClientRect().top; // where the map is now; draw keeps it there
+LL().meetGo(rd, st); S.focus = "map"; draw();
+} : null;
 mc.appendChild(sideMap(rd, curState, placedSeats(rd, meetState, askedSeat), pick));
 if (pick) mc.appendChild(h("p", { class: "ln-maphint" }, "Tap a state to meet its senators."));
 const sw = p => `<i style="background:${R().shade(p, 0.6)}"></i>`;
@@ -1778,7 +1781,13 @@ SM.setAddress({ region: rd.reg.country ? null : rd.slug, step: kind === "look" ?
 if (S.after) S.after(); // the Place map is sized to the card, so it is drawn once the card is on the page
 R().fitAll(card);
 document.fonts.ready.then(() => R().fitAll(card));
-if (S.focus) {
+if (S.focus === "map") {
+const m = S.side && S.side.querySelector(".ln-mapcard");
+if (m && typeof S.anchor === "number") window.scrollBy(0, m.getBoundingClientRect().top - S.anchor);
+S.anchor = null;
+S.focus = false;
+announce(`${SM.NAMES[c.state]}: ${c.at + 1} of ${c.of}`);
+} else if (S.focus) {
 const touch = !SM.kbd;
 const typing = S.focus === "input" || (S.focus === true && kind === "type" && !S.fb && !touch);
 const prompt = card.querySelector(".ln-prompt");

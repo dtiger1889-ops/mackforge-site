@@ -64,6 +64,38 @@ const c = { Democrat: 0, Independent: 0, Republican: 0 };
 records.forEach(r => { if (r.party in c) c[r.party]++; });
 return c;
 }
+function caucusCounts(records) {
+const out = { Democrat: { n: 0, ind: 0 }, Republican: { n: 0, ind: 0 }, Independent: { n: 0, ind: 0 } };
+records.forEach(r => {
+const s = r.party === "Independent" && r.caucus in out ? r.caucus : r.party;
+if (!(s in out)) return;
+out[s].n++;
+if (r.party === "Independent" && s !== "Independent") out[s].ind++;
+});
+return out;
+}
+const CLASS_BASE = { 1: 2024, 2: 2026, 3: 2028 };
+function classUp(cls, on) {
+const base = CLASS_BASE[cls];
+if (!base) return null;
+let y = base;
+while (`${y}-11-01` <= on) y += 6;
+while (y - 6 >= base && `${y - 6}-11-01` > on) y -= 6;
+return y;
+}
+function classWords(cls, on) {
+const y = classUp(cls, on);
+return y ? `Up in ${y} (Class ${cls})` : `Class ${cls}`; // year first, as Senate.gov and Wikipedia label it
+}
+function caucusWords(c) {
+const part = (p, plural) => {
+const x = c[p];
+return `${x.n} ${x.n === 1 ? p : plural}${x.ind ? `, including ${x.ind} independent${x.ind === 1 ? "" : "s"}` : ""}`;
+};
+const parts = [["Democrat", part("Democrat", "Democrats")], ["Republican", part("Republican", "Republicans")]];
+if (c.Independent.n) parts.splice(1, 0, ["Independent", `${c.Independent.n} independent${c.Independent.n === 1 ? "" : "s"}`]);
+return parts;
+}
 function serviceDays(rec, on) {
 if (!rec.service_start || rec.service_start > on) return 0;
 return dayNumber(on) - dayNumber(rec.service_start);
@@ -120,7 +152,7 @@ OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: 
 UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
 const Calc = {
 STATES, STATE_NAMES, REGION_SLUGS, SORTS, cleanState, cleanRegion, cleanSort, SWEARING_IN, PARTIES, YEARS_CAP, dateFor, ageOn,
-yearsInSenate, wholeYearsInSenate, earlierYears, yearsT, sameHolder, nextElectionShown, nextElectionWords, partyCounts, sortKeys,
+yearsInSenate, wholeYearsInSenate, earlierYears, yearsT, sameHolder, nextElectionShown, nextElectionWords, partyCounts, caucusCounts, caucusWords, classUp, classWords, sortKeys,
 compareBy, compareState, serviceDays, ageDays, wholeYearsBetween,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Calc;
@@ -155,7 +187,8 @@ function shade(party, t) {
 return window.d3.color(ramp(party)(Math.max(0, Math.min(1, t)))).formatHex();
 }
 function darkEnd(party) { return ramp(party)(1); }
-function band(rec, on) { return shade(rec.party, window.Calc.yearsT(window.Calc.yearsInSenate(rec, on))); }
+function side(rec) { return rec.party === "Independent" && rec.caucus ? rec.caucus : rec.party; }
+function band(rec, on) { return shade(side(rec), window.Calc.yearsT(window.Calc.yearsInSenate(rec, on))); }
 function el(tag, attrs, parent) {
 const e = document.createElementNS(NS, tag);
 for (const k in attrs) e.setAttribute(k, attrs[k]);
@@ -190,8 +223,8 @@ const svg = el("svg", { class: "ring", width: 2 * R, height: 2 * R, viewBox: `${
 "aria-label": hidden ? (opts.neutral ? "A senator's face" : `A senator's face, ${rank.toLowerCase()}, ${rec.party}`) : label(rec, opts.list, opts.stateName) });
 const defs = el("defs", {}, svg);
 el("circle", { r: Z.rP }, el("clipPath", { id: id + "p" }, defs));
-el("circle", { class: opts.neutral ? "edge neutral" : `edge ${TOKEN[rec.party]}`, r: Z.rB, fill: opts.neutral ? "var(--vacant)" : band(rec, opts.on), "stroke-width": 1 }, svg);
-el("circle", { class: opts.neutral ? "edge neutral" : `edge ${TOKEN[rec.party]}`, r: Z.rP, fill: "var(--soft)", "stroke-width": 1 }, svg);
+el("circle", { class: opts.neutral ? "edge neutral" : `edge ${TOKEN[side(rec)]}`, r: Z.rB, fill: opts.neutral ? "var(--vacant)" : band(rec, opts.on), "stroke-width": 1 }, svg);
+el("circle", { class: opts.neutral ? "edge neutral" : `edge ${TOKEN[side(rec)]}`, r: Z.rP, fill: "var(--soft)", "stroke-width": 1 }, svg);
 el("image", { href: photoUrl(rec, Z.rP > 80 ? "320" : "160"), x: -Z.rP, y: -Z.rP, width: 2 * Z.rP, height: 2 * Z.rP,
 preserveAspectRatio: "xMidYMin slice", "clip-path": `url(#${id}p)` }, svg);
 if (!opts.neutral) {
@@ -244,7 +277,7 @@ el("circle", { cx: R - 4, cy: R - 8, r: 9, fill: "var(--surface)", stroke: "var(
 el("text", { x: R - 4, y: R - 8, "text-anchor": "middle", "dominant-baseline": "central", "font-size": 12, "font-weight": 600, fill: "var(--ink)" }, svg).textContent = LETTER[rec.party];
 return svg;
 }
-SM.Ring = { ring, fit, fitAll, compact, shade, band, darkEnd, LETTER, SIZES, el };
+SM.Ring = { ring, fit, fitAll, compact, shade, side, band, darkEnd, LETTER, SIZES, el };
 })();
 ;
 (function () {
@@ -329,7 +362,7 @@ return y === null ? null : NEXT_T[y] ?? null;
 function seatFill(rec, view, list) {
 const t = tFor(rec, view, list);
 if (t === null) return view === "next" ? "url(#sm-hatch)" : "var(--plate)";
-return R().shade(rec.party, t);
+return R().shade(R().side(rec), t);
 }
 SM.seatFill = seatFill;
 SM.seatT = tFor;
@@ -353,6 +386,16 @@ SM.shapeIcon = (party, size = 12, fill = "var(--surface)", stroke = "var(--ink)"
 const sv = el("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, "aria-hidden": "true", class: "pshape" });
 shape(sv, party, size / 2, size / 2, size - 2, fill, stroke, 1.25);
 return sv;
+};
+SM.caucusLine = (box, records) => {
+box.replaceChildren();
+window.Calc.caucusWords(window.Calc.caucusCounts(records)).forEach(([p, words], i) => {
+const s = h("span", { class: "cnt" });
+s.appendChild(SM.shapeIcon(p));
+s.appendChild(document.createTextNode(` ${words}`));
+if (i) box.appendChild(document.createTextNode(" · "));
+box.appendChild(s);
+});
 };
 function stateLabel(st, list) {
 const pair = SM.data.byState[list][st];
@@ -612,15 +655,7 @@ M.bar.appendChild(g);
 });
 }
 function countLine(list, opts) {
-const c = window.Calc.partyCounts(SM.data.senate[list]);
-M.count.replaceChildren();
-window.Calc.PARTIES.forEach((p, i) => {
-const s = h("span", { class: "cnt" });
-s.appendChild(SM.shapeIcon(p));
-s.appendChild(document.createTextNode(` ${c[p]} ${p}`));
-M.count.appendChild(s);
-if (i < 2) M.count.appendChild(document.createTextNode(" · "));
-});
+SM.caucusLine(M.count, SM.data.senate[list]);
 if (opts.changed && list === "next") {
 M.count.appendChild(h("span", { class: "chg" }, `From 3 Jan 2027, ${opts.changedSeats} seats have a new senator. Their states are outlined.`));
 }
@@ -839,7 +874,7 @@ const add = (k, v) => rows.push(`<dt>${esc(k)}</dt><dd>${v}</dd>`);
 const age = C().ageOn(rec.birthday, on);
 add("Party", esc(rec.party) + (rec.caucus ? `, caucuses with the ${esc(rec.caucus)}s` : ""));
 add("Age", age === null ? "–" : String(age));
-add("Class", String(rec.class));
+add("Class", `${esc(C().classWords(rec.class, on))}: the third of the Senate elected in the same year`);
 if (list === "next" && rec.status === "elect") add("In the Senate", esc(serviceLine(rec, list, on)) + (rec.service_start ? ` from ${fmtDate(rec.service_start)}` : ""));
 else add("In the Senate since", `${fmtDate(rec.service_start)} · ${C().wholeYearsInSenate(rec, on)} years` + (C().earlierYears(rec) ? ` · plus ${C().earlierYears(rec)} earlier years` : ""));
 add("Term", termLines(rec, list).map(esc).join("<br>"));
@@ -1285,7 +1320,16 @@ function meet(card, rd, c) {
 const st = c.state, name = SM.NAMES[st], reg = LL().regionOfState(st); // the state's own region, also in a missed-set round
 head(card, rd, "meet", c.seats, st);
 const holders = LL().regionSeats(next(), LL().regionOfState(st).slug, SM.NAMES).filter(s => s.rec.state === st);
-prompt(card, holders.length === 2 ? `Meet ${name}'s two senators` : `Meet ${name}'s senator`, "Take a look, then you'll be asked to recall them.");
+const two = holders.length === 2;
+prompt(card, two ? `Meet ${name}'s two senators` : `Meet ${name}'s senator`,
+`Take a look, then quiz yourself on ${two ? "them" : "this senator"}. After the quiz, the next state comes up.`);
+const actions = () => {
+const act = h("div", { class: "ln-actions" });
+act.appendChild(rd.unmet.length > 1 ? quiet("Skip to the next state", () => { LL().meetLater(rd); S.focus = true; draw(); }) : h("span"));
+act.appendChild(primary(`Quiz me on ${name}`, () => { LL().meetDone(rd); S.focus = true; draw(); }));
+return act;
+};
+card.appendChild(actions());
 const line = h("div", { class: "ln-state" });
 line.appendChild(plainShape(st, desk() ? 58 : 48));
 line.appendChild(h("span", { class: "postal", "aria-hidden": "true" }, st));
@@ -1301,10 +1345,7 @@ if (!asked) who.appendChild(h("p", { class: "ln-said m" }, "Appointed and not ye
 pair.appendChild(who);
 });
 card.appendChild(pair);
-const act = h("div", { class: "ln-actions" });
-act.appendChild(rd.unmet.length > 1 ? quiet("Show me again later", () => { LL().meetLater(rd); S.focus = true; draw(); }) : h("span"));
-act.appendChild(primary("Quiz me", () => { LL().meetDone(rd); S.focus = true; draw(); }));
-card.appendChild(act);
+card.appendChild(actions());
 }
 function look(card, rd, c) {
 const r = rec(c.seat), name = SM.NAMES[r.state];
@@ -1485,7 +1526,7 @@ label(fb.chosen, `That's ${SM.NAMES[fb.chosen]}`, "no");
 [targets[r.state], targets[r.state + ":box"]].forEach(g => {
 if (!g) return;
 g.classList.add("right");
-g.querySelectorAll(".ps, .pbox").forEach(n => n.setAttribute("style", `fill:${R().shade(r.party, 0.6)}`));
+g.querySelectorAll(".ps, .pbox").forEach(n => n.setAttribute("style", `fill:${R().shade(R().side(r), 0.6)}`));
 });
 const [fx, fy] = boxAt[r.state] || sts[r.state].c, fr = px(boxAt[r.state] ? 17 : 20);
 const id = "pm" + lmUid++;
@@ -1633,7 +1674,7 @@ const fx = g.x + (i ? r + 1.5 * u : -r - 1.5 * u), fy = g.y - 6 * u;
 if (!s.asked || shown.has(s.rec.seat_id)) {
 const id = "lm" + lmUid++;
 el("circle", { cx: fx, cy: fy, r }, el("clipPath", { id }, svg));
-el("circle", { cx: fx, cy: fy, r: r + 1.8 * u, fill: R().shade(s.rec.party, 0.6) }, svg);
+el("circle", { cx: fx, cy: fy, r: r + 1.8 * u, fill: R().shade(R().side(s.rec), 0.6) }, svg);
 el("circle", { cx: fx, cy: fy, r, fill: "var(--soft)" }, svg);
 el("image", { href: `photos/${s.rec.photo["160"]}`, x: fx - r, y: fy - r, width: 2 * r, height: 2 * r, preserveAspectRatio: "xMidYMin slice", "clip-path": `url(#${id})` }, svg);
 } else {
@@ -1651,7 +1692,7 @@ sd.replaceChildren(h("h2", {}, reg.country ? "Your map of the senators you misse
 const mc = h("div", { class: "ln-mapcard" });
 mc.appendChild(sideMap(rd, curState, placedSeats(rd, meetState, askedSeat)));
 const sw = p => `<i style="background:${R().shade(p, 0.6)}"></i>`;
-mc.appendChild(h("div", { class: "ln-legend" }, `<span>${sw("Democrat")}Democrat</span><span>${sw("Independent")}Independent</span><span>${sw("Republican")}Republican</span><span>? not placed yet</span>`));
+mc.appendChild(h("div", { class: "ln-legend" }, `<span>${sw("Democrat")}Democrat or independent who caucuses with them</span><span>${sw("Republican")}Republican</span><span>? not placed yet</span>`));
 sd.appendChild(mc);
 sd.appendChild(h("div", { class: "ln-tally" },
 `<div><b>${t.recalled}</b><span>of ${t.total} recalled</span></div><div><b>${t.comingBack}</b><span>coming back</span></div><div><b>${t.toMeet}</b><span>still to meet</span></div>`));
@@ -1834,15 +1875,7 @@ T.bar.appendChild(g);
 });
 }
 function countLine(list, n) {
-const c = C().partyCounts(SM.data.senate[list]);
-T.count.replaceChildren();
-C().PARTIES.forEach((p, i) => {
-const s = h("span", { class: "cnt" });
-s.appendChild(SM.shapeIcon(p));
-s.appendChild(document.createTextNode(` ${c[p]} ${p}`));
-T.count.appendChild(s);
-if (i < 2) T.count.appendChild(document.createTextNode(" · "));
-});
+SM.caucusLine(T.count, SM.data.senate[list]);
 T.count.appendChild(h("span", { class: "chg" }, `Showing ${n} of ${SM.data.senate[list].length}`));
 }
 function activeBar(st) {
@@ -1850,7 +1883,7 @@ const chips = [];
 const reg = st.region && SM.regionBySlug(st.region);
 if (reg) chips.push([`Region: ${reg.name}`, () => setRegion("")]);
 if (F.party) chips.push([`Party: ${F.party}`, () => { F.party = ""; }]);
-if (F.cls) chips.push([`Class ${F.cls}`, () => { F.cls = ""; }]);
+if (F.cls) chips.push([C().classWords(F.cls, SM.onDate(SM.senate())), () => { F.cls = ""; }]);
 if (F.rank) chips.push([`Rank: ${RANKS[F.rank]}`, () => { F.rank = ""; }]);
 if (F.q.trim()) chips.push([`Name or state: ${F.q.trim()}`, () => { F.q = ""; }]);
 T.active.replaceChildren();
@@ -1942,7 +1975,8 @@ formatter: cell => {
 const rec = cell.getRow().getData()._rec, y = C().nextElectionShown(rec, next);
 return y === null ? `<span class="m">${esc(cell.getValue())}</span>` : esc(cell.getValue());
 } },
-{ title: "Class", field: "class", hozAlign: "right", headerHozAlign: "right", ...w(0.8, 76), minWidth: 72, sorter: "number" },
+{ title: "Class", field: "class", ...w(1.2, 132), minWidth: 124, sorter: "number",
+formatter: cell => esc(C().classWords(cell.getValue(), on)) },
 ];
 }
 function rowsFor(list, on, st) {
@@ -2055,7 +2089,8 @@ let el;
 box.appendChild(el);
 [el, sel.party] = select("Party", "party", [["", "All parties"]].concat(C().PARTIES.map(p => [p, p])), v => { F.party = v; });
 box.appendChild(el);
-[el, sel.cls] = select("Class", "cls", [["", "All classes"], ["1", "Class 1"], ["2", "Class 2"], ["3", "Class 3"]], v => { F.cls = v; });
+const onNow = SM.onDate(SM.senate());
+[el, sel.cls] = select("Class (when its seats are next up)", "cls", [["", "All classes"]].concat([1, 2, 3].map(c => [String(c), C().classWords(c, onNow)])), v => { F.cls = v; });
 box.appendChild(el);
 [el, sel.rank] = select("Rank", "rank", [["", "Senior and junior"], ["senior", "Senior"], ["junior", "Junior"]], v => { F.rank = v; });
 box.appendChild(el);
@@ -2089,7 +2124,7 @@ data: [], columns: columns(list, on), index: "seat_id",
 columnDefaults: { headerWordWrap: true, titleFormatter: cell => h("button", { type: "button", class: "cp-sorth",
 "aria-label": `Sort by ${cell.getValue()}` }, esc(cell.getValue())) }, layout: desk() ? "fitColumns" : "fitData",
 renderVertical: "basic", maxHeight: "calc(100dvh - 32px)", movableColumns: false, headerSortClickElement: "header",
-groupToggleElement: "header", groupHeader: (value, count) => `${esc(value)}<span class="gn">${count} senator${count === 1 ? "" : "s"}</span>`,
+groupToggleElement: "header", groupHeader: (value, count) => `${esc(value === "Independent" ? "Independent, caucus with Democrats" : value)}<span class="gn">${count} senator${count === 1 ? "" : "s"}</span>`,
 placeholder: "No senators match these filters.",
 rowFormatter: row => { row.getElement().dataset.seat = row.getData().seat_id; },
 });

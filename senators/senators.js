@@ -1687,8 +1687,9 @@ const seats = reg.country ? rd.order.map(s => ({ rec: rec(s), asked: true })) : 
 Object.keys(sts).forEach(p => {
 const inR = own.includes(p);
 const full = inR && seats.filter(s => s.rec.state === p).every(s => !s.asked || shown.has(s.rec.seat_id));
-const a = { d: sts[p].d, class: (inR ? (full ? "rs met" : "rs") : "os") + (inR && onPick ? " tap" : ""), "stroke-width": (inR ? 0.9 : 0.5) * u };
-if (inR && onPick) a["data-st"] = p;
+const can = inR && onPick && rd.states.includes(p);
+const a = { d: sts[p].d, class: (inR ? (full ? "rs met" : "rs") : "os") + (can ? " tap" : ""), "stroke-width": (inR ? 0.9 : 0.5) * u };
+if (can) a["data-st"] = p;
 el("path", a, svg);
 });
 if (onPick) {
@@ -1703,7 +1704,7 @@ const r = 16 * u;
 const groups = own.map(p =>({ p, x: sts[p].c[0], y: sts[p].c[1], ox: sts[p].c[0], oy: sts[p].c[1], hw: 2 * r + 3 * u, hh: r + 9 * u }));
 relax(groups, [x0, y0, x1, y1]);
 groups.forEach(g => {
-const gg = onPick ? el("g", { "data-st": g.p, class: "tap" }, svg) : svg;
+const gg = onPick && rd.states.includes(g.p) ? el("g", { "data-st": g.p, class: "tap" }, svg) : svg;
 if (Math.hypot(g.x - g.ox, g.y - g.oy) > r) el("line", { x1: g.ox, y1: g.oy, x2: g.x, y2: g.y - 4 * u, class: "lead", "stroke-width": 0.8 * u }, gg);
 seats.filter(s => s.rec.state === g.p).forEach((s, i) => {
 const fx = g.x + (i ? r + 1.5 * u : -r - 1.5 * u), fy = g.y - 6 * u;

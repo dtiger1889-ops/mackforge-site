@@ -75,17 +75,22 @@ if (r.party === "Independent" && s !== "Independent") out[s].ind++;
 return out;
 }
 const CLASS_BASE = { 1: 2024, 2: 2026, 3: 2028 };
+function electionDay(y) {
+const w = new Date(Date.UTC(y, 10, 1)).getUTCDay(); // 0 Sunday .. 6 Saturday
+const monday = 1 + ((8 - w) % 7);
+return `${y}-11-${String(monday + 1).padStart(2, "0")}`;
+}
 function classUp(cls, on) {
 const base = CLASS_BASE[cls];
 if (!base) return null;
 let y = base;
-while (`${y}-11-01` <= on) y += 6;
-while (y - 6 >= base && `${y - 6}-11-01` > on) y -= 6;
+while (electionDay(y) < on) y += 6;
+while (y - 6 >= base && electionDay(y - 6) >= on) y -= 6;
 return y;
 }
 function classWords(cls, on) {
 const y = classUp(cls, on);
-return y ? `Up in ${y} (Class ${cls})` : `Class ${cls}`; // year first, as Senate.gov and Wikipedia label it
+return y ? `Up in ${y} (Class ${cls})` : `Class ${cls}`; // year first, as Wikipedia's table does ("2028 Class 3"); Senate.gov adds the expiry year after the class
 }
 function caucusWords(c) {
 const part = (p, plural) => {
@@ -1095,13 +1100,22 @@ seats = (opts.only || []).map(id => next.find(r => r.seat_id === id)).filter(r =
 }
 const states = [];
 seats.forEach(r => { if (!states.includes(r.state)) states.push(r.state); });
-return {
+const round = {
 slug, reg: roundRegion(slug, seats), rng: opts.rng || Math.random,
 pool: opts.pool || next.filter(r => !neverElected(r)),
 recs: Object.fromEntries(seats.map(r => [r.seat_id, r])),
 order: seats.map(r => r.seat_id),
+states, meetAt: 0, quizzing: false,
 unmet: states.slice(), met: [], items: [], q: 0, firstTry: 0, cur: null, log: [],
 };
+if (states.length) see(round, states[0]);
+return round;
+}
+function see(round, st) {
+if (round.met.includes(st)) return;
+round.met.push(st);
+round.unmet = round.unmet.filter(x => x !== st);
+round.log.push({ kind: "meet", state: st });
 }
 function makeItem(round, seat, kind, readyQ) {
 const it = { seat, kind, status: "ready", dueQ: readyQ, shows: 0, missed: false, order: round.items.length };
@@ -1114,9 +1128,10 @@ if (round.cur) return round.cur;
 const open = round.items.filter(it => it.status === "ready" || it.status === "retry");
 const due = open.filter(it => it.dueQ <= round.q);
 let it = due.filter(x => x.status === "retry").sort(byDue)[0] || due.sort(byDue)[0];
-if (!it && round.unmet.length) {
-const st = round.unmet[0];
-round.cur = { kind: "meet", state: st, seats: round.order.filter(s => round.recs[s].state === st) };
+if (!round.quizzing && round.states.length) {
+const st = round.states[round.meetAt];
+round.cur = { kind: "meet", state: st, seats: round.order.filter(s => round.recs[s].state === st),
+at: round.meetAt, of: round.states.length };
 return round.cur;
 }
 if (!it) {
@@ -1136,21 +1151,23 @@ round.cur = { kind: it.kind, seat: it.seat, item: it };
 if (it.kind === "pick") round.cur.choices = pickChoices(round.recs[it.seat], round.pool, round.rng);
 return round.cur;
 }
-function meetDone(round) {
-const c = current(round);
-if (c.kind !== "meet") return;
-round.unmet.shift();
-round.met.push(c.state);
-c.seats.forEach(s => makeItem(round, s, "pick", round.q));
-round.log.push({ kind: "meet", state: c.state });
+function meetGo(round, st) {
+const i = round.states.indexOf(st);
+if (round.quizzing || i < 0) return;
+round.meetAt = i;
+see(round, st);
 round.cur = null;
 }
-function meetLater(round) {
-const c = current(round);
-if (c.kind !== "meet" || round.unmet.length < 2) return;
-round.unmet.shift();
-round.unmet.splice(1, 0, c.state);
+function meetStep(round, d) {
+const i = round.meetAt + d;
+if (i >= 0 && i < round.states.length) meetGo(round, round.states[i]);
+}
+function meetDone(round) {
+if (round.quizzing) return;
+round.quizzing = true;
+round.states.forEach(st => see(round, st));
 round.cur = null;
+round.order.forEach(s => makeItem(round, s, "pick", round.q));
 }
 function answer(round, correct) {
 const c = current(round);
@@ -1193,7 +1210,7 @@ function tallies(round) {
 const t = { recalled: 0, comingBack: 0, toMeet: 0, total: round.order.length };
 round.order.forEach(s => {
 const its = round.items.filter(it => it.seat === s);
-if (!round.met.includes(round.recs[s].state)) t.toMeet++;
+if (!round.quizzing && !round.met.includes(round.recs[s].state)) t.toMeet++;
 else if (its.some(it => it.status === "retry" || it.status === "final")) t.comingBack++;
 else if (its.some(it => it.status === "done") && !its.some(it => it.status === "capped")) t.recalled++;
 });
@@ -1218,7 +1235,7 @@ return round;
 }
 const Learn = {
 REGIONS, KINDS, GAP, MAX_SHOWS, seatShows, missedSet, roundRegion, region, regionOfState, neverElected, regionSeats, lessonSenators, seeded, shuffle,
-pickChoices, checkTyped, newRound, current, meetDone, meetLater, answer, seatStatus, tallies, summary, showings, fastForward,
+pickChoices, checkTyped, newRound, current, meetDone, meetGo, meetStep, answer, seatStatus, tallies, summary, showings, fastForward,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Learn;
 else root.LearnLogic = Learn;
@@ -1273,7 +1290,7 @@ return svg;
 function head(card, rd, kind, seats, st) {
 const reg = rd.reg;
 let where = "";
-if (kind === "meet") where = `State ${rd.met.length + 1} of ${rd.met.length + rd.unmet.length}`;
+if (kind === "meet") where = `State ${rd.meetAt + 1} of ${rd.states.length}`;
 else if (seats.length) where = `Senator ${rd.order.indexOf(seats[0]) + 1} of ${rd.order.length}`;
 card.appendChild(h("div", { class: "ln-crumb" }, `<span><b>${esc(reg.name)}</b>${st ? ` · ${esc(SM.NAMES[st])}` : ""}</span><span>${where}</span>`));
 const strip = h("div", { class: "ln-steps", "aria-hidden": "true" });
@@ -1321,15 +1338,24 @@ const st = c.state, name = SM.NAMES[st], reg = LL().regionOfState(st); // the st
 head(card, rd, "meet", c.seats, st);
 const holders = LL().regionSeats(next(), LL().regionOfState(st).slug, SM.NAMES).filter(s => s.rec.state === st);
 const two = holders.length === 2;
+const many = c.of > 1, n = rd.order.length;
+const group = rd.reg.country ? `these ${n} senators` : `all ${n} ${rd.reg.name} senators`;
 prompt(card, two ? `Meet ${name}'s two senators` : `Meet ${name}'s senator`,
-`Take a look, then quiz yourself on ${two ? "them" : "this senator"}. After the quiz, the next state comes up.`);
+many ? `Go through the states in order, or tap one on the map. Quiz me covers ${group}.` : `Quiz me covers ${group}.`);
 const actions = () => {
-const act = h("div", { class: "ln-actions" });
-act.appendChild(rd.unmet.length > 1 ? quiet("Skip to the next state", () => { LL().meetLater(rd); S.focus = true; draw(); }) : h("span"));
-act.appendChild(primary(`Quiz me on ${name}`, () => { LL().meetDone(rd); S.focus = true; draw(); }));
-return act;
+const box = h("div", { class: "ln-meetnav" });
+if (many) {
+const nav = h("div", { class: "ln-actions ln-steprow" });
+const prevSt = rd.states[c.at - 1], nextSt = rd.states[c.at + 1];
+nav.appendChild(prevSt ? quiet(`‹ ${SM.NAMES[prevSt]}`, () => { LL().meetStep(rd, -1); S.focus = true; draw(); }) : h("span"));
+nav.appendChild(nextSt ? quiet(`${SM.NAMES[nextSt]} ›`, () => { LL().meetStep(rd, 1); S.focus = true; draw(); }) : h("span"));
+box.appendChild(nav);
+}
+const go = h("div", { class: "ln-actions end" });
+go.appendChild(primary("Quiz me", () => { LL().meetDone(rd); S.focus = true; draw(); }));
+box.appendChild(go);
+return box;
 };
-card.appendChild(actions());
 const line = h("div", { class: "ln-state" });
 line.appendChild(plainShape(st, desk() ? 58 : 48));
 line.appendChild(h("span", { class: "postal", "aria-hidden": "true" }, st));
@@ -1646,11 +1672,11 @@ SM.learnRegionBox = regionBox;
 let lmUid = 0;
 function placedSeats(rd, meetState, askedSeat) {
 const out = new Set(rd.log.filter(e => e.kind === "place" && e.correct).map(e => e.seat));
-if (meetState) rd.order.filter(s => rec(s).state === meetState).forEach(s => out.add(s));
+if (meetState) rd.order.filter(s => rec(s).state === meetState || (!rd.quizzing && rd.met.includes(rec(s).state))).forEach(s => out.add(s));
 if (askedSeat) out.delete(askedSeat);
 return out;
 }
-function sideMap(rd, curState, shown) {
+function sideMap(rd, curState, shown, onPick) {
 const el = R().el, reg = rd.reg, sts = SM.data.states;
 const own = reg.country ? reg.seatStates : reg.states;
 const [x0, y0, x1, y1] = regionBox(reg.country ? Object.keys(sts) : reg.states, 24), vw = x1 - x0, vh = y1 - y0;
@@ -1661,28 +1687,38 @@ const seats = reg.country ? rd.order.map(s => ({ rec: rec(s), asked: true })) : 
 Object.keys(sts).forEach(p => {
 const inR = own.includes(p);
 const full = inR && seats.filter(s => s.rec.state === p).every(s => !s.asked || shown.has(s.rec.seat_id));
-el("path", { d: sts[p].d, class: inR ? (full ? "rs met" : "rs") : "os", "stroke-width": (inR ? 0.9 : 0.5) * u }, svg);
+const a = { d: sts[p].d, class: (inR ? (full ? "rs met" : "rs") : "os") + (inR && onPick ? " tap" : ""), "stroke-width": (inR ? 0.9 : 0.5) * u };
+if (inR && onPick) a["data-st"] = p;
+el("path", a, svg);
 });
+if (onPick) {
+svg.classList.add("picking");
+svg.addEventListener("click", e => {
+const t = e.target.closest("[data-st]");
+if (t) onPick(t.getAttribute("data-st"));
+});
+}
 if (curState) el("path", { d: sts[curState].d, class: "cur", "stroke-width": 2 * u }, svg);
 const r = 16 * u;
 const groups = own.map(p =>({ p, x: sts[p].c[0], y: sts[p].c[1], ox: sts[p].c[0], oy: sts[p].c[1], hw: 2 * r + 3 * u, hh: r + 9 * u }));
 relax(groups, [x0, y0, x1, y1]);
 groups.forEach(g => {
-if (Math.hypot(g.x - g.ox, g.y - g.oy) > r) el("line", { x1: g.ox, y1: g.oy, x2: g.x, y2: g.y - 4 * u, class: "lead", "stroke-width": 0.8 * u }, svg);
+const gg = onPick ? el("g", { "data-st": g.p, class: "tap" }, svg) : svg;
+if (Math.hypot(g.x - g.ox, g.y - g.oy) > r) el("line", { x1: g.ox, y1: g.oy, x2: g.x, y2: g.y - 4 * u, class: "lead", "stroke-width": 0.8 * u }, gg);
 seats.filter(s => s.rec.state === g.p).forEach((s, i) => {
 const fx = g.x + (i ? r + 1.5 * u : -r - 1.5 * u), fy = g.y - 6 * u;
 if (!s.asked || shown.has(s.rec.seat_id)) {
 const id = "lm" + lmUid++;
 el("circle", { cx: fx, cy: fy, r }, el("clipPath", { id }, svg));
-el("circle", { cx: fx, cy: fy, r: r + 1.8 * u, fill: R().shade(R().side(s.rec), 0.6) }, svg);
-el("circle", { cx: fx, cy: fy, r, fill: "var(--soft)" }, svg);
-el("image", { href: `photos/${s.rec.photo["160"]}`, x: fx - r, y: fy - r, width: 2 * r, height: 2 * r, preserveAspectRatio: "xMidYMin slice", "clip-path": `url(#${id})` }, svg);
+el("circle", { cx: fx, cy: fy, r: r + 1.8 * u, fill: R().shade(R().side(s.rec), 0.6) }, gg);
+el("circle", { cx: fx, cy: fy, r, fill: "var(--soft)" }, gg);
+el("image", { href: `photos/${s.rec.photo["160"]}`, x: fx - r, y: fy - r, width: 2 * r, height: 2 * r, preserveAspectRatio: "xMidYMin slice", "clip-path": `url(#${id})` }, gg);
 } else {
-el("circle", { cx: fx, cy: fy, r, class: "unmet", "stroke-width": 0.9 * u, "stroke-dasharray": `${2 * u} ${1.5 * u}` }, svg);
-el("text", { x: fx, y: fy + 0.5 * u, class: "q", "font-size": 13 * u, "text-anchor": "middle", "dominant-baseline": "central" }, svg).textContent = "?";
+el("circle", { cx: fx, cy: fy, r, class: "unmet", "stroke-width": 0.9 * u, "stroke-dasharray": `${2 * u} ${1.5 * u}` }, gg);
+el("text", { x: fx, y: fy + 0.5 * u, class: "q", "font-size": 13 * u, "text-anchor": "middle", "dominant-baseline": "central" }, gg).textContent = "?";
 }
 });
-el("text", { x: g.x, y: g.y + r + 7 * u, class: "code", "font-size": 12 * u, "stroke-width": 3 * u, "text-anchor": "middle" }, svg).textContent = g.p;
+el("text", { x: g.x, y: g.y + r + 7 * u, class: "code", "font-size": 12 * u, "stroke-width": 3 * u, "text-anchor": "middle" }, gg).textContent = g.p;
 });
 return svg;
 }
@@ -1690,7 +1726,9 @@ function side(sd, rd, curState, meetState, askedSeat) {
 const reg = rd.reg, t = LL().tallies(rd);
 sd.replaceChildren(h("h2", {}, reg.country ? "Your map of the senators you missed" : `Your map of the ${esc(reg.name)} states`));
 const mc = h("div", { class: "ln-mapcard" });
-mc.appendChild(sideMap(rd, curState, placedSeats(rd, meetState, askedSeat)));
+const pick = meetState && rd.states.length > 1 ? st => { LL().meetGo(rd, st); S.focus = true; draw(); } : null;
+mc.appendChild(sideMap(rd, curState, placedSeats(rd, meetState, askedSeat), pick));
+if (pick) mc.appendChild(h("p", { class: "ln-maphint" }, "Tap a state to meet its senators."));
 const sw = p => `<i style="background:${R().shade(p, 0.6)}"></i>`;
 mc.appendChild(h("div", { class: "ln-legend" }, `<span>${sw("Democrat")}Democrat or independent who caucuses with them</span><span>${sw("Republican")}Republican</span><span>? not placed yet</span>`));
 sd.appendChild(mc);
@@ -1986,6 +2024,7 @@ return recs.map(r => ({
 seat_id: r.seat_id, name: r.name, state: r.state, rank: r.rank, party: r.party, class: r.class,
 age: C().ageOn(r.birthday, on), years: C().wholeYearsInSenate(r, on), nextWords: C().nextElectionWords(r, list, next),
 region: SM.regionOf(r.state).name, _rec: r,
+side: r.party === "Independent" && r.caucus ? r.caucus : r.party,
 }));
 }
 function watchPhotos() {
@@ -2001,7 +2040,7 @@ imgs.forEach(i => T.io.observe(i));
 }
 function groupValues(rows, by) {
 const present = new Set(rows.map(r => r[by]));
-const all = by === "party" ? C().PARTIES : SM.REGIONS.map(r => r.name);
+const all = by === "side" ? C().PARTIES : SM.REGIONS.map(r => r.name);
 return [all.filter(n => present.has(n))];
 }
 function update() {
@@ -2023,7 +2062,7 @@ b.setAttribute("aria-checked", String(on_));
 if (!T.table) return;
 T.table.clearSort();
 T.headerSorted = false;
-const g = by !== "none" && rows.length ? by : false;
+const g = by === "none" || !rows.length ? false : by === "party" ? "side" : by;
 T.table.setGroupBy(g);
 if (g) T.table.setGroupValues(groupValues(rows, g));
 sortedColumnBeside(sort);
@@ -2031,9 +2070,11 @@ T.table.setData(rows).then(() => watchPhotos());
 }
 const COLS = ["name", "state", "rank", "party", "age", "years", "nextWords", "class"];
 const SORT_COL = { years: "years", age: "age", next: "nextWords" };
-function sortedColumnBeside(sort) {
+function sortedColumnBeside(sort) { columnBeside(SORT_COL[sort]); }
+function columnBeside(f) {
 if (desk()) return;
-const order = COLS.slice(), f = SORT_COL[sort];
+const order = COLS.slice();
+if (f === "name" || f === "state") f = null;
 if (f) { order.splice(order.indexOf(f), 1); order.splice(1, 0, f); }
 const now = T.table.getColumns().map(c => c.getField());
 if (now.join() === order.join()) return;
@@ -2124,7 +2165,11 @@ data: [], columns: columns(list, on), index: "seat_id",
 columnDefaults: { headerWordWrap: true, titleFormatter: cell => h("button", { type: "button", class: "cp-sorth",
 "aria-label": `Sort by ${cell.getValue()}` }, esc(cell.getValue())) }, layout: desk() ? "fitColumns" : "fitData",
 renderVertical: "basic", maxHeight: "calc(100dvh - 32px)", movableColumns: false, headerSortClickElement: "header",
-groupToggleElement: "header", groupHeader: (value, count) => `${esc(value === "Independent" ? "Independent, caucus with Democrats" : value)}<span class="gn">${count} senator${count === 1 ? "" : "s"}</span>`,
+groupToggleElement: "header", groupHeader: (value, count, data) => {
+const ind = value === "Democrat" || value === "Republican" ? data.filter(d => d.party === "Independent").length : 0;
+const name = { Democrat: "Democrats", Republican: "Republicans", Independent: "Independents" }[value] || value;
+return `${esc(name)}${ind ? `, including ${ind} independent${ind === 1 ? "" : "s"}` : ""}<span class="gn">${count} senator${count === 1 ? "" : "s"}</span>`;
+},
 placeholder: "No senators match these filters.",
 rowFormatter: row => { row.getElement().dataset.seat = row.getData().seat_id; },
 });
@@ -2146,6 +2191,7 @@ party: ["party", "A to Z", "Z to A"], age: ["age", "youngest first", "oldest fir
 years: ["years in the Senate", "shortest first", "longest first"], nextWords: ["next election", "soonest first", "latest first"],
 class: ["class", "1 to 3", "3 to 1"] }[f];
 if (HEAD) sortNote(`${HEAD[0]}, ${asc ? HEAD[1] : HEAD[2]}`);
+columnBeside(f);
 watchPhotos();
 });
 table.on("rowClick", (e, row) => {

@@ -288,6 +288,13 @@ svg.lmap{background:var(--plate)}
 .lmap .lead{stroke:var(--plate-line)}
 .lmap .unmet{fill:var(--plate);stroke:var(--plate-line)}
 .lmap .q{fill:var(--plate-line);font-weight:600;font-family:Inter,system-ui,sans-serif}
+.lmap.picking .tap{cursor:pointer}
+.lmap.picking path.tap:hover{fill:color-mix(in srgb,var(--plate-line) 24%,var(--plate))}
+.lmap .cur{pointer-events:none}
+.ln-maphint{margin:6px 0 0;font-size:var(--t14);color:var(--muted)}
+.ln-meetnav .ln-steprow{flex-wrap:nowrap}
+.ln-meetnav .ln-actions.end{margin-top:8px;padding-top:0;border-top:0}
+.ln-meetnav .ln-actions.end .fill{flex:1}
 .lmap .code{font-weight:600;fill:var(--plate-ink);stroke:var(--plate);paint-order:stroke;font-family:Inter,system-ui,sans-serif}
 .ln-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:var(--t13);color:var(--muted);margin:10px 2px 0}
 .ln-legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:5px;vertical-align:-1px}

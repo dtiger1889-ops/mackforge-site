@@ -1999,8 +1999,7 @@ formatter: cell => esc(RANKS[cell.getValue()] || "–") },
 formatter: cell => {
 const rec = cell.getRow().getData()._rec;
 const d = h("div", { class: "cp-party" });
-d.appendChild(SM.shapeIcon(rec.party, 12));
-d.appendChild(h("span", {}, esc(rec.party)));
+d.appendChild(h("span", {}, esc(rec.party))); // party in words only: the map's shape marks add nothing in a table
 return d;
 } },
 { title: "Age", field: "age", hozAlign: "right", headerHozAlign: "right", ...w(1.2, 104), minWidth: 96, headerSortStartingDir: "desc",
@@ -2246,7 +2245,7 @@ const d = new Date();
 return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 SM.today = todayISO();
-SM.defaultSenate = () => (SM.today < SWEARING_IN ? "now" : "next");
+SM.defaultSenate = () => "next";
 const ordinal = n => n + ({ 1: "st", 2: "nd", 3: "rd" }[(n % 100 >= 11 && n % 100 <= 13) ? 0 : n % 10] || "th");
 function nameSenates(swearingIn) {
 const next = Math.floor((+swearingIn.slice(0, 4) - 1789) / 2) + 1;

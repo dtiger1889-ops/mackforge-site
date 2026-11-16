@@ -1,0 +1,12 @@
+/* The site copy's header pieces: the South Carolina mark beside the wordmark and the share menu at the right. */
+.bar .sc-mark { width: 20px; height: 20px; margin-left: 12px; flex: none; }
+.bar .share { position: relative; margin-left: auto; }
+.bar .share #share-btn { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0; border: 0;
+  background: transparent; color: var(--text); cursor: pointer; line-height: 0; }
+.bar .share #share-btn svg { width: 22px; height: 22px; fill: currentColor; }
+.bar .share #share-btn:hover { color: var(--accent); }
+.bar #share-menu { position: absolute; right: 0; top: 100%; z-index: 30; min-width: 170px; padding: 8px; background: var(--panel, var(--bg));
+  color: var(--text); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 12px 28px #0003; }
+.bar #share-menu a, .bar #share-menu button { display: block; width: 100%; padding: 10px; border: 0; background: transparent;
+  color: inherit; text-align: left; font-size: 14px; text-decoration: none; cursor: pointer; }
+.bar #share-menu a:hover, .bar #share-menu button:hover { color: var(--accent); }

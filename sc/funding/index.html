@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Where South Carolina hospitals' money comes from</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap">
+<link rel="stylesheet" href="sankey.css">
+<meta name="description" content="Where South Carolina hospitals' money comes from: Medicare, Medicaid, private insurers and other income, hospital by hospital, from each hospital's federal cost report.">
+<link rel="canonical" href="https://mackforge.dev/sc/funding/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Where South Carolina hospitals' money comes from">
+<meta property="og:description" content="Medicare, Medicaid, private insurers and other income, hospital by hospital, from each hospital's federal cost report.">
+<meta property="og:url" content="https://mackforge.dev/sc/funding/">
+<meta property="og:image" content="https://mackforge.dev/sc/funding/assets/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mackforge.dev/sc/funding/assets/preview.png">
+<link rel="icon" href="../../assets/icons/sc-palmetto.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+<script data-goatcounter="https://mackforge.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="../../track.js" defer></script>
+<script src="share.js" defer></script>
+</head>
+<body>
+<header class="bar"><a class="brand" href="/">mackforge<span aria-hidden="true">.</span></a><img class="sc-mark" src="../../assets/icons/sc-palmetto.svg" width="20" height="20" alt="South Carolina"><div class="share"><button type="button" id="share-btn" aria-expanded="false" aria-controls="share-menu" aria-label="Share" title="Share"><svg viewBox="0 0 256 256" aria-hidden="true"><path d="M237.66,106.35l-80-80A8,8,0,0,0,144,32V72.35c-25.94,2.22-54.59,14.92-78.16,34.91-28.38,24.08-46.05,55.11-49.76,87.37a12,12,0,0,0,20.68,9.58h0c11-11.71,50.14-48.74,107.24-52V192a8,8,0,0,0,13.66,5.65l80-80A8,8,0,0,0,237.66,106.35ZM160,172.69V144a8,8,0,0,0-8-8c-28.08,0-55.43,7.33-81.29,21.8a196.17,196.17,0,0,0-36.57,26.52c5.8-23.84,20.42-46.51,42.05-64.86C99.41,99.77,127.75,88,152,88a8,8,0,0,0,8-8V51.32L220.69,112Z"/></svg></button><div id="share-menu" hidden><a data-net="linkedin" target="_blank" rel="noopener">LinkedIn</a><a data-net="reddit" target="_blank" rel="noopener">Reddit</a><a data-net="x" target="_blank" rel="noopener">X</a><a data-net="bluesky" target="_blank" rel="noopener">Bluesky</a><button type="button" id="share-copy">Copy link</button><button type="button" id="share-native" hidden>More…</button></div></div></header>
+<main id="app">
+  <header class="top">
+    <h1 id="title">Loading the chart</h1>
+    <aside id="notice" class="notice" role="note" hidden></aside>
+    <p id="headline" class="headline" aria-live="polite"></p>
+  </header>
+  <div id="controls" class="controls"></div>
+  <div id="legend" class="legend"></div>
+  <section id="chart-view" aria-label="Chart">
+    <div id="chart" class="chart"></div>
+  </section>
+  <section id="table-view" aria-label="Table" hidden>
+    <div id="table" class="table"></div>
+  </section>
+  <section class="notes-wrap" aria-labelledby="notes-h">
+    <h2 id="notes-h" class="label">Notes</h2>
+    <div id="notes" class="notes"></div>
+  </section>
+</main>
+<footer class="foot"><div class="foot-in">
+  <h2 class="label">Sources</h2>
+  <ul id="sources" class="credits"></ul>
+  <a class="brand" href="/">mackforge<span aria-hidden="true">.</span></a>
+</div></footer>
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<aside id="sheet" class="sheet" hidden aria-labelledby="sheet-title">
+  <div class="sheet-head">
+    <h2 id="sheet-title" class="sheet-title"></h2>
+    <button type="button" class="sheet-close" aria-label="Close the card">&times;</button>
+  </div>
+  <div class="sheet-body"></div>
+</aside>
+<script src="vendor/d3-topo.min.js"></script>
+<script src="vendor/d3-path.min.js"></script>
+<script src="vendor/d3-shape.min.js"></script>
+<script src="vendor/d3-sankey.min.js"></script>
+<script src="state.js"></script>
+<script src="catalog.js"></script>
+<script src="chart.js"></script>
+<script src="table.js"></script>
+<script src="cards.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

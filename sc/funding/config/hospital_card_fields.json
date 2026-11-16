@@ -1,0 +1,20 @@
+[
+  {"key": "name", "label": "Hospital", "format": "text"},
+  {"key": "city", "label": "City", "format": "text"},
+  {"key": "county", "label": "County", "format": "text"},
+  {"key": "facility_type", "label": "Type", "format": "text"},
+  {"key": "beds_pos_certified", "label": "Beds (Medicare certified)", "format": "integer"},
+  {"key": "health_system_ahrq_2023", "label": "Health system", "format": "text"},
+  {"key": "ownership_category", "label": "Ownership", "format": "text"},
+  {"key": "any_rural", "label": "Rural by location", "format": "yesno"},
+  {"key": "rural_general_cah", "label": "Rural general or critical access", "format": "yesno"},
+  {"key": "critical_access", "label": "Critical access hospital", "format": "text"},
+  {"key": "sole_community_hospital", "label": "Sole community hospital", "format": "text"},
+  {"key": "fy_end", "label": "Fiscal year ends", "format": "date"},
+  {"key": "operating_margin", "label": "Operating margin", "format": "percent"},
+  {"key": "total_margin", "label": "Total margin", "format": "percent"},
+  {"key": "negative_operating_margin_both_years", "label": "Operating loss two years running", "format": "text"},
+  {"key": "negative_net_income_both_years", "label": "Net loss two years running", "format": "text"},
+  {"key": "medicare_days_share", "label": "Medicare share of days", "format": "percent"},
+  {"key": "medicaid_days_share", "label": "Medicaid share of days", "format": "percent"}
+]

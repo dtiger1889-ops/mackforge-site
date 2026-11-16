@@ -44,7 +44,7 @@ sys.dont_write_bytecode = True  # importing tools/build_books.py must not leave 
 SITE ="https://mackforge.dev"
 # Pages outside the guides that the sitemap lists. They carry no lastmod, because
 # this script cannot know when they last changed.
-OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/", "/sites.html", "/senators/"]
+OTHER_PAGES = ["/", "/charts/agent-managers/", "/charts/memory-tools/", "/sites.html", "/senators/", "/sc/funding/"]
 ASSET_VERSION = "20261114d"
 # Share icon: Phosphor share-fat (MIT, phosphoricons.com), in place of the word Share
 SHARE_MARK = ('<svg viewBox="0 0 256 256" aria-hidden="true"><path d="M237.66,106.35l-80-80A8,8,0,0,0,144,32V72.35c-25.94,2.22-54.59,14.92-78.16,34.91-28.38,24.08-46.05,55.11-49.76,87.37a12,12,0,0,0,20.68,9.58h0c11-11.71,50.14-48.74,107.24-52V192a8,8,0,0,0,13.66,5.65l80-80A8,8,0,0,0,237.66,106.35ZM160,172.69V144a8,8,0,0,0-8-8c-28.08,0-55.43,7.33-81.29,21.8a196.17,196.17,0,0,0-36.57,26.52c5.8-23.84,20.42-46.51,42.05-64.86C99.41,99.77,127.75,88,152,88a8,8,0,0,0,8-8V51.32L220.69,112Z"/></svg>')
@@ -178,6 +178,8 @@ def nav(root):
         f'<header class="nav"><a class="brand" href="{root}">mackforge<span aria-hidden="true">.</span></a>'
         f'<nav aria-label="Main navigation"><a href="{root}#projects">Projects</a><a href="{root}guides.html">Game guides</a><a href="{root}sites.html">Sites I like</a>'
         f'<a href="{root}senators/">Senators</a>'
+        f'<a class="sc" href="{root}sc/funding/" aria-label="South Carolina federal data" title="South Carolina federal data">'
+        f'<img src="{root}assets/icons/sc-palmetto.svg" width="20" height="20" alt=""></a>'
         '<a class="gh" href="https://github.com/hintforge" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">'
         f'{GITHUB_MARK}</a>'
         '<div class="share"><button type="button" id="share-btn" aria-expanded="false" aria-controls="share-menu" aria-label="Share" title="Share">'

@@ -1,0 +1,39 @@
+[
+  {
+    "id": "hospitals",
+    "title": "Where South Carolina hospitals' money comes from",
+    "flows": "data/hospital_flows.json",
+    "levels": ["payer", "program", "system", "hospital"],
+    "default_filter": {"rural": 1},
+    "filters": [
+      {"key": "rural", "label": "Rural general and critical access hospitals only", "type": "toggle"},
+      {"key": "cd", "label": "Congressional district", "type": "select"},
+      {"key": "system", "label": "Health system", "type": "select"},
+      {"key": "type", "label": "Hospital type", "type": "select"}
+    ],
+    "card": "config/hospital_card_fields.json",
+    "leaf_noun": "hospitals",
+    "headline": {"from": "payer:federal", "label": "of it came from the federal government, including its share of Medicaid, which is estimated."},
+    "notice": {
+      "title": "Why some of these numbers are estimates",
+      "text": "Health care is just about the only thing we're expected to buy without any idea what it costs first, and the public money behind it is no easier to see. South Carolina paid its hospitals $2.5 billion in extra Medicaid money in the year ending June 2025. The only public breakdown is a partial list, mostly health system totals, that the state's Medicaid agency gave the SC Daily Gazette. MACPAC, the agency that advises Congress on Medicaid, has asked since 2022 for the payments to each hospital to be made public. It wrote: \"we do not have provider-level data on how billions of dollars in directed payments are being spent.\" Until it is, this chart works from what each hospital reports on its federal cost report, and some of its Medicaid flows are estimates.",
+      "links": [
+        {"label": "MACPAC, June 2022 report to Congress", "url": "https://www.macpac.gov/wp-content/uploads/2022/06/Chapter-2-Oversight-of-Managed-Care-Directed-Payments-1.pdf"},
+        {"label": "MACPAC letter to CMS, July 2026", "url": "https://www.macpac.gov/wp-content/uploads/2026/07/2026-SDP-Proposed-Rule-Comment-Letter.pdf"}
+      ]
+    },
+    "notes": [
+      "Medicare here is traditional Medicare. Medicare Advantage plans pay hospitals the way private insurers do, so that money is counted in all other patient revenue.",
+      "Reported means a dollar figure the hospital filed on its federal cost report.",
+      "Calculated means arithmetic on reported figures only. All other patient revenue is the hospital's net patient revenue minus the Medicare and Medicaid it reported.",
+      "Estimated means the federal and state shares of Medicaid. Hospitals report how much Medicaid paid them, not how much of it came from the federal government, so each hospital's Medicaid revenue is multiplied by South Carolina's federal match rate for that hospital's fiscal year. The rate is 69.5% to 69.7% for most hospitals, and higher for years that include 2022 or 2023, when a temporary pandemic increase applied. CMS, the federal agency that runs Medicare and Medicaid, has its own figures for the state's July 2024 to June 2025 hospital payments, and they come to the same 69.6% federal share. Supplemental Medicaid payments, which hospitals report after paying the state's hospital tax, are counted as federal, because that tax pays the state's share of them.",
+      {"text": "Statewide, Medicaid directed payments, the extra Medicaid money South Carolina pays hospitals through its hospital tax, came to $2.5 billion in the year ending June 2025.", "source": "SC Daily Gazette, July 9, 2025", "url": "https://scdailygazette.com/2025/07/09/by-2043-sc-hospitals-could-receive-2-4b-less-to-treat-medicaid-patients/"}
+    ],
+    "medicaid_not_reported_note": "These hospitals' reports do not list Medicaid on its own line, so their Medicaid money is counted in all other patient revenue:",
+    "no_cost_report_note": "Left out of the chart because they have no usable cost report:",
+    "sources": [
+      {"name": "CMS hospital cost reports", "url": "https://data.cms.gov/provider-compliance/cost-reports/hospital-provider-cost-report", "data_year": "fiscal years ending December 2022 to July 2025", "coverage": "Every South Carolina hospital with a cost report."},
+      {"name": "Federal Register, Medicaid match rates", "url": "https://www.govinfo.gov/content/pkg/FR-2023-11-21/html/2023-25636.htm", "data_year": "fiscal 2025", "coverage": "The federal share of Medicaid, by state and year."}
+    ]
+  }
+]

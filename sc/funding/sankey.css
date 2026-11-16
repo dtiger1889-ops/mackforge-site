@@ -1,0 +1,176 @@
+/* Layout only. Every color, font, size, step and radius comes from config/tokens.json, set by catalog.js as the
+   variables below. The look follows mackforge.dev's own styles (style.css and senators/senators.css): Anton for the
+   wordmark and title, Inter for everything else, flat surfaces with 1 px rules and a 4 px radius, one accent. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: var(--type-body);
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+button, select, input { font: inherit; }
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--text); outline-offset: 2px;
+}
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.label {
+  font-size: var(--type-label); font-weight: 600; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); margin: 0 0 var(--space-s);
+}
+
+/* the site's header bar and wordmark (senators.css .sm-bar, .sm-brand) */
+.bar { max-width: 1240px; margin: 0 auto; padding: 0 var(--space-m); min-height: 56px; display: flex; align-items: center;
+  border-bottom: 1px solid var(--line); }
+.brand { font: 400 var(--type-brand)/1 var(--font-display, Impact, sans-serif); text-transform: uppercase; letter-spacing: .01em;
+  color: var(--text); text-decoration: none; display: inline-flex; align-items: center; min-height: var(--control-h); }
+.brand span { color: var(--accent); }
+.brand:hover { color: var(--text); }
+
+main { max-width: 1240px; margin: 0 auto; padding: 0 var(--space-m) var(--space-xl); }
+
+/* title, notice and headline: the one loud thing is the title; the notice reads as the opening paragraph */
+.top { padding: var(--space-l) 0 var(--space-l); border-bottom: 1px solid var(--line); margin-bottom: var(--space-m); }
+h1 { font: 400 var(--type-title)/1.05 var(--font-display, Impact, sans-serif); text-transform: uppercase; letter-spacing: .01em;
+  margin: 0 0 var(--space-l); text-wrap: balance; }
+.notice { margin: 0 0 var(--space-m); max-width: var(--measure); color: var(--notice-text); background: var(--notice-background); }
+.notice[hidden] { display: none; }
+.notice-title { font-size: var(--type-label); font-weight: 600; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--notice-border); margin: 0 0 var(--space-s); }
+.notice p { margin: 0; font-size: var(--type-lede); line-height: 1.55; text-wrap: pretty; }
+.notice ul { list-style: none; margin: var(--space-s) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 var(--space-l);
+  font-size: var(--type-small); }
+.notice li { margin: 0; }
+.notice a { display: inline-flex; align-items: center; min-height: 32px; }
+.headline { margin: 0; max-width: var(--measure); font-size: var(--type-lede); line-height: 1.55; }
+.headline strong { font-weight: 600; }
+
+/* filters: one row above everything they scope */
+.controls { display: flex; flex-wrap: wrap; gap: var(--space-m) var(--space-l); align-items: end; margin: 0 0 var(--space-m); }
+.ctl { display: flex; flex-direction: column; gap: var(--space-xs); }
+.ctl-name { font-size: var(--type-label); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.ctl select {
+  color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0 var(--space-s); height: var(--field-h); min-width: 160px; max-width: 220px; font-size: var(--type-body); cursor: pointer;
+}
+.ctl select:hover { border-color: var(--muted); }
+.ctl.tg { flex-direction: row; align-items: center; gap: var(--space-s); min-height: var(--field-h); font-size: var(--type-body); cursor: pointer; }
+.ctl.tg input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+/* the Chart / Table switch (senators.css .sm-switch) */
+.seg { flex-direction: row; gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-left: auto; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; }
+.seg span { display: grid; place-items: center; min-height: var(--control-h); padding: 0 var(--space-m); background: var(--panel);
+  color: var(--muted); cursor: pointer; }
+.seg label:hover span { color: var(--text); }
+.seg input:checked + span { background: var(--text); color: var(--bg); font-weight: 600; }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* legend (senators.css .ln-legend) */
+.legend { display: flex; flex-direction: column; gap: var(--space-xs); margin: 0 0 var(--space-s); font-size: var(--type-small); color: var(--muted); }
+.legend ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-m); }
+.legend li { display: flex; align-items: center; gap: var(--space-s); }
+.lg-kinds span { display: inline-block; }
+.lg-kinds span::first-letter { text-transform: uppercase; }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; flex: none; }
+
+/* the chart itself: unchanged look */
+.chart { width: 100%; }
+svg.sk { display: block; max-width: 100%; height: auto; overflow: visible; }
+svg.sk .lbl { font-size: var(--label-size); fill: var(--text); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+svg.sk .lbl .val { fill: var(--muted); font-variant-numeric: tabular-nums; }
+svg.sk .nd { cursor: pointer; outline: none; }
+svg.sk .nd:focus-visible .box, svg.sk .nd.on .box { stroke: var(--text); stroke-width: 1.5px; }
+svg.sk .lk { cursor: pointer; }
+svg.sk .gt { cursor: pointer; outline: none; }
+svg.sk .gt-box { fill: var(--bg); }
+svg.sk .gt-txt { fill: var(--text); font-variant-numeric: tabular-nums; pointer-events: none; }
+svg.sk .gt:focus-visible .gt-box { stroke-width: 2.5px; }
+html.phone svg.sk .lbl { font-size: var(--label-size-phone); }
+
+/* notes under the chart: a readable column, grouped under one label */
+.notes-wrap { margin-top: var(--space-xl); padding-top: var(--space-l); border-top: 1px solid var(--line); }
+.notes { max-width: var(--measure); font-size: var(--type-body); color: var(--text); }
+.notes p { margin: 0 0 var(--space-m); text-wrap: pretty; }
+.notes p:last-child { margin-bottom: 0; }
+
+/* the footer (senators.css footer.sm-foot) */
+.foot { max-width: 1240px; margin: 0 auto; padding: 0 var(--space-m) var(--space-xl); font-size: var(--type-small); color: var(--muted); }
+.foot-in { padding-top: var(--space-l); border-top: 1px solid var(--line); }
+.credits { list-style: none; margin: 0 0 var(--space-l); padding: 0; max-width: var(--measure); }
+.credits li { margin: 0 0 var(--space-s); }
+.credits a { color: var(--text); }
+
+.kind { display: inline-block; font-size: var(--type-label); line-height: 1.6; padding: 0 var(--space-xs); margin-left: var(--space-xs);
+  border-radius: var(--radius); border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.kind.k-estimated { border-style: dashed; }
+
+/* tooltip (senators.css .hovercard): flat, no shadow */
+.tip {
+  position: fixed; z-index: 20; max-width: min(340px, calc(100vw - 16px)); padding: var(--space-s) var(--space-m);
+  background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: var(--radius);
+  font-size: var(--type-small); line-height: 1.45; pointer-events: none;
+}
+.tip p { margin: 0 0 var(--space-xs); }
+.tip .tip-path { font-weight: 600; }
+.tip .tip-val .num { font-size: var(--type-body); font-weight: 600; color: var(--text); }
+.tip .tip-src { color: var(--muted); }
+
+/* the card: a fixed sheet, so opening it never moves the page */
+.sheet {
+  position: fixed; z-index: 30; top: 0; right: 0; bottom: 0; width: min(380px, 100vw);
+  background: var(--panel); color: var(--text); border-left: 1px solid var(--line);
+  display: flex; flex-direction: column;
+}
+.sheet[hidden] { display: none; }
+.sheet-head { display: flex; align-items: start; gap: var(--space-s); padding: var(--space-m) var(--space-m) var(--space-s); border-bottom: 1px solid var(--line); }
+.sheet-title { font-size: var(--type-brand); font-weight: 600; margin: 0; flex: 1; line-height: 1.25; }
+.sheet-close { font-size: 1.5rem; line-height: 1; width: var(--control-h); height: var(--control-h); border: 1px solid var(--line);
+  border-radius: var(--radius); background: var(--panel); color: var(--text); cursor: pointer; flex: none; }
+.sheet-close:hover { border-color: var(--muted); }
+.sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: var(--space-s) var(--space-m) var(--space-l); font-size: var(--type-small); }
+.sheet-body h3 { font-size: var(--type-label); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: var(--space-l) 0 var(--space-s); font-weight: 600; }
+.sheet-body .sub { color: var(--muted); margin: 0; }
+.sheet-body dl { margin: 0; }
+.sheet-body .mrow, .sheet-body .frow { display: flex; justify-content: space-between; gap: var(--space-m); padding: var(--space-s) 0; border-bottom: 1px solid var(--line); }
+.sheet-body dt { display: flex; align-items: center; gap: var(--space-s); color: var(--text); }
+.sheet-body .frow dt { color: var(--muted); }
+.sheet-body dd { margin: 0; text-align: right; }
+.sheet-body .mrow dt { flex: 1 1 auto; min-width: 0; }
+.sheet-body .mrow dd { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: baseline; column-gap: var(--space-s); }
+.sheet-body .pct { color: var(--muted); min-width: var(--pct-w); text-align: right; }
+.sheet-body .mrow.total dt, .sheet-body .mrow.total .num { font-weight: 600; }
+/* html.phone is set from the token chart.phone_below */
+html.phone .sheet { top: auto; left: 0; width: 100vw; height: var(--sheet-h); border-left: 0; border-top: 1px solid var(--line); }
+html.phone .seg { margin-left: 0; }
+html.phone .controls { column-gap: var(--space-s); }
+html.phone .ctl:not(.tg):not(.seg) { flex: 1 1 140px; min-width: 0; }
+html.phone .ctl select { max-width: none; min-width: 0; width: 100%; }
+html.phone .top { padding: var(--space-m) 0; }
+html.phone h1 { margin-bottom: var(--space-m); }
+html.phone .notice p, html.phone .headline { font-size: var(--type-body); }
+
+/* the table view (senators.css .cp-table) */
+.table .tabulator { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); font-size: var(--type-small); color: var(--text); }
+.table .tabulator .tabulator-header, .table .tabulator .tabulator-header .tabulator-col { background: var(--panel); color: var(--text); border-color: var(--line); font-weight: 600; }
+.table .tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover { background: var(--bg); }
+.table .tabulator .tabulator-tableholder { background: var(--bg); }
+.table .tabulator .tabulator-row, .table .tabulator .tabulator-row.tabulator-row-even { background: var(--bg); color: var(--text); border-bottom: 1px solid var(--line); min-height: var(--row-h); }
+.table .tabulator .tabulator-row .tabulator-cell { border-right: 0; }
+.table .tabulator .tabulator-row:focus-visible { outline: 2px solid var(--text); outline-offset: -2px; }
+.table .tabulator .tabulator-row[role="button"] { cursor: pointer; }
+.table .tabulator .tabulator-row.tabulator-selectable:hover, .table .tabulator .tabulator-row:hover { background: var(--panel); }
+
+@media (min-width: 1024px) {
+  .bar, main { padding-left: var(--space-xl); padding-right: var(--space-xl); }
+  .foot { padding-left: var(--space-xl); padding-right: var(--space-xl); }
+  h1 { font-size: var(--type-title-desk); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }

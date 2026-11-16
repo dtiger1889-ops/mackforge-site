@@ -172,5 +172,14 @@ html.phone .notice p, html.phone .headline { font-size: var(--type-body); }
   .bar, main { padding-left: var(--space-xl); padding-right: var(--space-xl); }
   .foot { padding-left: var(--space-xl); padding-right: var(--space-xl); }
   h1 { font-size: var(--type-title-desk); }
+  /* the explanation keeps its reading width on the left; the money summary and the notice's source links take a side
+     column. The notice box shares the page colour, so it dissolves into the grid unseen. */
+  .top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem); column-gap: var(--space-xl); align-items: start; }
+  .top h1 { grid-column: 1 / -1; }
+  .top .notice:not([hidden]) { display: contents; }
+  .top .notice-title { grid-column: 1; grid-row: 2; }
+  .top .notice p:not(.notice-title) { grid-column: 1; grid-row: 3 / span 3; max-width: var(--measure); }
+  .top .headline { grid-column: 2; grid-row: 2 / span 2; max-width: none; padding-left: var(--space-l); border-left: 1px solid var(--line); }
+  .top .notice ul { grid-column: 2; grid-row: 4; flex-direction: column; margin: 0; padding-top: var(--space-m); padding-left: var(--space-l); border-left: 1px solid var(--line); }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }

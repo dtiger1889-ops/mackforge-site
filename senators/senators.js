@@ -1299,7 +1299,11 @@ S.resetArmed = true;
 reset.textContent = "Tap again"; // about as wide as "Start over", so nothing beside it moves
 announce("Tap Start over again to clear this visit's progress in every region.");
 clearTimeout(S.resetTimer);
-S.resetTimer = setTimeout(() => { S.resetArmed = false; if (reset.isConnected) reset.textContent = "Start over"; }, 4000);
+S.resetTimer = setTimeout(() => {
+S.resetArmed = false;
+const b = document.querySelector(".ln-reset");
+if (b) b.textContent = "Start over";
+}, 4000);
 return;
 }
 startOver();

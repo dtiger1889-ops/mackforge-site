@@ -60,12 +60,7 @@
         Object.assign(c, { hozAlign: "right", sorter: "number", formatter: (cell) => cell.getRow().getData().value_text || FS.fmtMoney(cell.getValue(), tokens, true), minWidth: 120 });
       }
       if (k === "source" || k === "target" || k === "ccn") c.minWidth = 150;
-      if (k === "kind") c.formatter = (cell) => {
-        const span = document.createElement("span");
-        span.className = "kind k-" + (cell.getRow().getData().kind_raw || "");
-        span.textContent = cell.getValue();
-        return span;
-      };
+      if (k === "kind") c.minWidth = 320; // plain text, wide enough for the longest wording without cutting it off
       return c;
     });
     host.textContent = "";

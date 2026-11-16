@@ -145,3 +145,18 @@ footer .brand{color:var(--cream)}
 .guide-use .load-line{font:500 14px/1.5 ui-monospace,Consolas,monospace;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:10px 12px;overflow-wrap:anywhere}
 .guide-updated{font:500 12px/1.5 ui-monospace,Consolas,monospace;color:var(--muted);margin:20px 0 0}
 @media(max-width:800px){.guide-detail{grid-template-columns:1fr;gap:22px;margin-top:20px}}
+
+/* Hero tagline: cream text with a dark glow so it reads over the cube pattern. */
+.hero .eyebrow,.guides-intro .eyebrow{color:var(--cream);text-shadow:0 0 4px var(--night),0 0 10px var(--night)}
+.hero .eyebrow::before,.guides-intro .eyebrow::before{color:var(--tiger-hi)}
+
+/* Phone header: GitHub sits left of the wordmark and the light/dark button right of it, inside the cream bar; the South Carolina icon stays in the link row. */
+@media(max-width:640px){
+.nav{position:relative}
+.nav .brand{min-height:56px;padding:8px 60px}
+.nav nav>a.gh{position:absolute;top:6px;left:8px;width:44px;height:44px;min-width:44px;color:var(--night)}
+.nav nav>a.gh:hover{color:var(--tiger-lo)}
+.nav nav>a.gh svg{width:24px;height:24px}
+.nav nav>button.theme-toggle{position:absolute;top:8px;right:8px;width:40px;height:40px}
+.nav nav>a.sc{position:static;min-width:40px;min-height:44px}
+}

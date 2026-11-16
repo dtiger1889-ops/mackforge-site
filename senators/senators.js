@@ -1008,7 +1008,7 @@ const REGIONS = [
 ["Mountain", "mountain", ["AZ", "CO", "ID", "MT", "NV", "NM", "UT", "WY"]],
 ["Pacific", "pacific", ["AK", "CA", "HI", "OR", "WA"]],
 ].map(([name, slug, states]) => ({ name, slug, states }));
-const KINDS = ["pick", "type", "place"];
+const KINDS = ["pick", "place"];
 const GAP = 3;        // questions between a miss and its return, and between one question and the next for a senator
 const MAX_SHOWS = 6;
 const RANK = { senior: 0, junior: 1 };
@@ -1072,24 +1072,10 @@ const wrong = [];
 tiers.forEach(t => shuffle(t, rng).forEach(r => { if (wrong.length < 3) wrong.push(r.seat_id); }));
 return shuffle([rec.seat_id, ...wrong], rng);
 }
-const norm = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z]/g, "");
-function distance(a, b) {
-const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
-for (let j = 1; j <= b.length; j++) d[0][j] = j;
-for (let i = 1; i <= a.length; i++) {
-for (let j = 1; j <= b.length; j++) {
-d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
-}
-}
-return d[a.length][b.length];
-}
-function checkTyped(input, rec) {
-const got = norm(input), last = norm(rec.last_name), full = norm(rec.name);
-if (!got) return { ok: false, exact: false };
-if (got === last || got === full) return { ok: true, exact: true };
-if (last.length >= 5 && distance(got, last) <= 1) return { ok: true, exact: false };
-return { ok: false, exact: false };
-}
+const cleanKinds = ks => {
+const got = KINDS.filter(k => Array.isArray(ks) && ks.includes(k));
+return got.length ? got : KINDS.slice();
+};
 function newRound(next, slug, opts = {}) {
 let seats;
 if (region(slug)) seats = lessonSenators(next, slug, opts.names).filter(r => !opts.only || opts.only.includes(r.seat_id));
@@ -1101,7 +1087,7 @@ seats = (opts.only || []).map(id => next.find(r => r.seat_id === id)).filter(r =
 const states = [];
 seats.forEach(r => { if (!states.includes(r.state)) states.push(r.state); });
 const round = {
-slug, reg: roundRegion(slug, seats), rng: opts.rng || Math.random,
+slug, reg: roundRegion(slug, seats), rng: opts.rng || Math.random, kinds: cleanKinds(opts.kinds),
 pool: opts.pool || next.filter(r => !neverElected(r)),
 recs: Object.fromEntries(seats.map(r => [r.seat_id, r])),
 order: seats.map(r => r.seat_id),
@@ -1138,7 +1124,7 @@ if (!it) {
 const last = round.last, finals = round.items.filter(x => x.status === "final");
 it = open.filter(x => x !== last).sort(byDue)[0] || finals.filter(x => x !== last).sort(byDue)[0];
 if (!it && last && (open.includes(last) || finals.includes(last))) {
-const k = KINDS[KINDS.indexOf(last.kind) + 1];
+const k = round.kinds[round.kinds.indexOf(last.kind) + 1];
 if (k && !round.items.some(x => x.seat === last.seat && x.kind === k)) it = makeItem(round, last.seat, k, round.q);
 else it = makeItem(round, last.seat, "look", round.q);
 }
@@ -1162,12 +1148,13 @@ function meetStep(round, d) {
 const i = round.meetAt + d;
 if (i >= 0 && i < round.states.length) meetGo(round, round.states[i]);
 }
-function meetDone(round) {
+function meetDone(round, kinds) {
 if (round.quizzing) return;
+if (kinds) round.kinds = cleanKinds(kinds);
 round.quizzing = true;
 round.states.forEach(st => see(round, st));
 round.cur = null;
-round.order.forEach(s => makeItem(round, s, "pick", round.q));
+round.order.forEach(s => makeItem(round, s, round.kinds[0], round.q));
 }
 function answer(round, correct) {
 const c = current(round);
@@ -1181,7 +1168,7 @@ if (it.kind === "look") it.status = "done"; // "Got it": nothing to get wrong, a
 else if (correct) {
 if (it.status === "retry") { it.status = "final"; it.dueQ = round.q; }
 else it.status = "done";
-const k = KINDS[KINDS.indexOf(it.kind) + 1];
+const k = round.kinds[round.kinds.indexOf(it.kind) + 1];
 if (k && !round.items.some(x => x.seat === it.seat && x.kind === k)) makeItem(round, it.seat, k, round.q + GAP);
 } else {
 it.missed = true;
@@ -1228,14 +1215,14 @@ function fastForward(round, kind, limit = 1000) {
 for (let i = 0; i < limit; i++) {
 const c = current(round);
 if (c.kind === kind || c.kind === "end") return round;
-if (c.kind === "meet") meetDone(round);
+if (c.kind === "meet") meetDone(round, KINDS.includes(kind) ? [kind] : undefined);
 else answer(round, true);
 }
 return round;
 }
 const Learn = {
 REGIONS, KINDS, GAP, MAX_SHOWS, seatShows, missedSet, roundRegion, region, regionOfState, neverElected, regionSeats, lessonSenators, seeded, shuffle,
-pickChoices, checkTyped, newRound, current, meetDone, meetGo, meetStep, answer, seatStatus, tallies, summary, showings, fastForward,
+pickChoices, newRound, current, meetDone, meetGo, meetStep, answer, seatStatus, tallies, summary, showings, fastForward,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Learn;
 else root.LearnLogic = Learn;
@@ -1252,9 +1239,8 @@ const h = (...a) => SM.h(...a);
 const esc = s => SM.esc(s);
 const desk = () => innerWidth >= 1024;
 const cap = s => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
-const PHASES = [["meet", "Meet"], ["recall", "Recall"], ["place", "Place on map"]];
-const PHASE_OF = { meet: "meet", look: "meet", pick: "recall", type: "recall", place: "place", end: "" };
-const S = { rounds: {}, slug: null, fb: null, pathOpen: false, hint: null, focus: false, root: null };
+const SECTIONS = [["meet", "Meet"], ["pick", "Multiple choice"], ["place", "Map"]];
+const S = { rounds: {}, slug: null, fb: null, pathOpen: false, focus: false, root: null, resetArmed: false };
 const next = () => SM.data.senate.next;
 const rec = seat => SM.data.bySeat.next[seat];
 const on = () => SM.onDate("next");
@@ -1296,12 +1282,54 @@ card.appendChild(h("div", { class: "ln-crumb" }, `<span><b>${esc(reg.name)}</b>$
 const strip = h("div", { class: "ln-steps", "aria-hidden": "true" });
 rd.order.forEach(s => strip.appendChild(h("span", { class: LL().seatStatus(rd, s, seats) })));
 card.appendChild(strip);
-const at = PHASES.findIndex(([k]) => k === PHASE_OF[kind]);
-const steps = PHASES.map(([k, l], i) => {
-const cls = i < at ? "done" : i === at ? "on" : "";
-return `<li${cls ? ` class="${cls}"` : ""}${i === at ? ' aria-current="step"' : ""}><i aria-hidden="true">${i < at ? "✓" : i + 1}</i>${l}</li>`;
-}).join("");
-card.appendChild(h("ol", { class: "ln-phase", "aria-label": "This state's steps" }, steps));
+const now = kind === "look" ? rd.kinds[rd.kinds.length - 1] : kind;
+const row = h("div", { class: "ln-secrow" });
+const nav = h("div", { class: "ln-phase", role: "group", "aria-label": "Sections" });
+SECTIONS.forEach(([k, l]) => {
+const on = k === now;
+const b = h("button", { type: "button", class: "ln-sec" + (on ? " on" : ""), "aria-pressed": String(on), "data-section": k }, esc(l));
+b.addEventListener("click", () => goSection(rd, k));
+nav.appendChild(b);
+});
+row.appendChild(nav);
+const reset = h("button", { type: "button", class: "ln-lnk ln-reset" }, S.resetArmed ? "Tap again" : "Start over");
+reset.addEventListener("click", () => {
+if (!S.resetArmed) {
+S.resetArmed = true;
+reset.textContent = "Tap again"; // about as wide as "Start over", so nothing beside it moves
+announce("Tap Start over again to clear this visit's progress in every region.");
+clearTimeout(S.resetTimer);
+S.resetTimer = setTimeout(() => { S.resetArmed = false; if (reset.isConnected) reset.textContent = "Start over"; }, 4000);
+return;
+}
+startOver();
+});
+row.appendChild(reset);
+card.appendChild(row);
+}
+function goSection(rd, k) {
+const c = screen(rd);
+if (k === (c.kind === "look" ? rd.kinds[rd.kinds.length - 1] : c.kind) && !S.fb) return;
+const only = rd.onlyKey ? rd.order : null;
+const fresh = LL().newRound(next(), rd.slug, { names: SM.NAMES, only });
+fresh.onlyKey = rd.onlyKey || null;
+if (k !== "meet") LL().meetDone(fresh, [k]);
+S.rounds[rd.slug] = fresh;
+S.fb = null;
+S.focus = "stay";
+announce(k === "meet" ? "Meet" : k === "pick" ? "Multiple choice quiz" : "Map quiz");
+draw();
+}
+function startOver() {
+clearTimeout(S.resetTimer);
+S.resetArmed = false;
+const rd = round(S.slug);
+if (!LL().region(S.slug)) S.slug = LL().regionOfState(rd.recs[rd.order[0]].state).slug;
+S.rounds = {};
+S.fb = null;
+S.focus = "stay";
+announce("Progress cleared. Starting over.");
+draw();
 }
 function prompt(card, text, sub) {
 card.appendChild(h("h2", { class: "ln-prompt", tabindex: "-1" }, esc(text)));
@@ -1341,7 +1369,7 @@ const two = holders.length === 2;
 const many = c.of > 1, n = rd.order.length;
 const group = rd.reg.country ? `these ${n} senators` : `all ${n} ${rd.reg.name} senators`;
 prompt(card, two ? `Meet ${name}'s two senators` : `Meet ${name}'s senator`,
-many ? `Go through the states in order, or tap one on the map. Quiz me covers ${group}.` : `Quiz me covers ${group}.`);
+many ? `Go through the states in order, or tap one on the map. The quiz covers ${group}.` : `The quiz covers ${group}.`);
 const actions = () => {
 const box = h("div", { class: "ln-meetnav" });
 if (many) {
@@ -1351,8 +1379,10 @@ nav.appendChild(prevSt ? quiet(`‹ ${SM.NAMES[prevSt]}`, () => { LL().meetStep(
 nav.appendChild(nextSt ? quiet(`${SM.NAMES[nextSt]} ›`, () => { LL().meetStep(rd, 1); S.focus = true; draw(); }) : h("span"));
 box.appendChild(nav);
 }
-const go = h("div", { class: "ln-actions end" });
-go.appendChild(primary("Quiz me", () => { LL().meetDone(rd); S.focus = true; draw(); }));
+const go = h("div", { class: "ln-actions end ln-quizpick", role: "group", "aria-label": "Quiz me" });
+go.appendChild(h("span", { class: "ln-said m" }, "Quiz me:"));
+go.appendChild(primary("Multiple choice", () => { LL().meetDone(rd, ["pick"]); S.focus = true; draw(); }));
+go.appendChild(primary("Map", () => { LL().meetDone(rd, ["place"]); S.focus = true; draw(); }));
 box.appendChild(go);
 return box;
 };
@@ -1376,7 +1406,8 @@ card.appendChild(actions());
 function look(card, rd, c) {
 const r = rec(c.seat), name = SM.NAMES[r.state];
 head(card, rd, "look", [c.seat], r.state);
-prompt(card, `Look again: ${r.name}`, `${cap(r.rank)} senator for ${name}. Then place this senator on the map again.`);
+const then = rd.kinds[rd.kinds.length - 1] === "place" ? "Then place this senator on the map again." : "Then pick this senator's name again.";
+prompt(card, `Look again: ${r.name}`, `${cap(r.rank)} senator for ${name}. ${then}`);
 const who = h("div", { class: "ln-who" });
 who.appendChild(R().ring(r, "meet", { list: "next", on: on(), stateName: name }));
 who.appendChild(factList(r));
@@ -1422,53 +1453,6 @@ const ok = id === c.seat;
 S.fb = { kind: "pick", seat: c.seat, choices: c.choices, chosen: id, ok, first: c.item.shows === 0 };
 LL().answer(rd, ok);
 announce(ok ? `Correct. ${rec(c.seat).name}.` : `Not quite. The answer is ${rec(c.seat).name}.`);
-S.focus = "next";
-draw();
-}
-function type(card, rd, c) {
-const fb = S.fb, seat = c.seat, r = rec(seat), name = SM.NAMES[r.state];
-head(card, rd, "type", [seat], r.state);
-const picked = rd.log.some(e => e.kind === "pick" && e.seat === seat && e.correct);
-prompt(card, "Name this senator", picked ? "You picked this name right before. Now type the last name." : "Type the last name.");
-const q = h("div", { class: "ln-q" });
-const face = h("div", { class: "ln-face" });
-face.appendChild(R().ring(r, "quiz", { list: "next", on: on(), neutral: true }));
-q.appendChild(face);
-const box = h("div", { class: "ln-typed" });
-box.appendChild(h("div", { class: "ln-cue" }, `<span>${esc(name)}</span><span>${esc(cap(r.rank))} senator</span>${r.preceded_by ? `<span>Preceded by ${esc(r.preceded_by.name)}</span>` : ""}`));
-box.appendChild(h("label", { for: "ln-name" }, "Last name"));
-const input = h("input", { id: "ln-name", type: "text", autocomplete: "off", autocapitalize: "words", spellcheck: "false" });
-box.appendChild(input);
-const hintKey = `${seat}:${c.item ? c.item.shows : ""}`;
-if (fb) {
-input.value = fb.typed || "";
-input.disabled = true;
-} else {
-if (S.hint === hintKey) box.appendChild(h("p", { class: "ln-hint" }, `Starts with <b>${esc(r.last_name.charAt(0))}</b>`));
-const row = h("div", { class: "row" });
-const check = () => answerType(rd, c, input.value);
-row.appendChild(primary("Check", check));
-if (S.hint !== hintKey) row.appendChild(quiet("Show the first letter", () => { S.hint = hintKey; S.focus = "input"; draw(); }));
-row.appendChild(quiet("I don't know", () => answerType(rd, c, null)));
-box.appendChild(row);
-input.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); check(); } });
-}
-q.appendChild(box);
-card.appendChild(q);
-if (fb) {
-let said;
-if (fb.ok) said = fb.exact ? `${r.name}, ${name}'s ${r.rank} senator.` : `${r.name}, ${name}'s ${r.rank} senator. It's spelled ${r.last_name}.`;
-else said = `${fb.typed ? `You typed ${fb.typed}. ` : ""}This is ${r.name}, ${name}'s ${r.rank} senator.`;
-feedback(card, fb, said);
-}
-}
-function answerType(rd, c, value) {
-const typed = (value || "").trim();
-if (value !== null && !typed) return; // an empty box is not an answer
-const res = value === null ? { ok: false, exact: false } : LL().checkTyped(typed, rec(c.seat));
-S.fb = { kind: "type", seat: c.seat, typed, ok: res.ok, exact: res.exact, first: c.item.shows === 0 };
-LL().answer(rd, res.ok);
-announce(res.ok ? `Correct. ${rec(c.seat).name}.` : `Not quite. This is ${rec(c.seat).name}.`);
 S.focus = "next";
 draw();
 }
@@ -1635,11 +1619,15 @@ const act = h("div", { class: "ln-actions end" });
 act.appendChild(h("p", { class: "ln-said m" }, "Names stick better when you come back to them another day."));
 act.appendChild(primary(n ? `Go again with the ${n} I missed` : "Play again", () => {
 const only = n ? sm.misses : rd.onlyKey ? rd.order : null;
-const again = LL().newRound(next(), rd.slug, { names: SM.NAMES, only });
+const again = LL().newRound(next(), rd.slug, { names: SM.NAMES, only, kinds: rd.kinds });
 again.onlyKey = only ? only.join(",") : null;
 S.rounds[rd.slug] = again;
 S.fb = null; S.focus = true; draw();
 }));
+if (rd.kinds.length === 1) {
+const other = rd.kinds[0] === "pick" ? "place" : "pick";
+act.appendChild(quiet(other === "place" ? "Now try the map" : "Now try multiple choice", () => goSection(rd, other)));
+}
 card.appendChild(act);
 }
 function relax(items, box) {
@@ -1770,7 +1758,6 @@ card.replaceChildren();
 S.after = null;
 if (kind === "meet") meet(card, rd, c);
 else if (kind === "pick") pick(card, rd, c);
-else if (kind === "type") type(card, rd, c);
 else if (kind === "place") place(card, rd, c);
 else if (kind === "look") look(card, rd, c);
 else end(card, rd);
@@ -1788,11 +1775,17 @@ if (m && typeof S.anchor === "number") window.scrollBy(0, m.getBoundingClientRec
 S.anchor = null;
 S.focus = false;
 announce(`${SM.NAMES[c.state]}: ${c.at + 1} of ${c.of}`);
+} else if (S.focus === "stay") {
+const f = card.querySelector(".ln-prompt");
+S.quiet = true;
+if (f) f.focus({ preventScroll: true });
+S.quiet = false;
+window.scrollTo(0, y0);
+S.focus = false;
 } else if (S.focus) {
 const touch = !SM.kbd;
-const typing = S.focus === "input" || (S.focus === true && kind === "type" && !S.fb && !touch);
 const prompt = card.querySelector(".ln-prompt");
-const f = S.focus === "next" ? card.querySelector(".ln-next") : typing ? card.querySelector("#ln-name") : prompt;
+const f = S.focus === "next" ? card.querySelector(".ln-next") : prompt;
 const still = S.focus === "next" && touch;
 if (f) {
 S.quiet = true; // draw places the page itself; the focusin handler must not scroll as well
@@ -1845,7 +1838,7 @@ const fromState = st.state && LL().regionOfState(st.state);
 const miss = st.missed ? LL().missedSet(next(), st.missed.split(",")) : null;
 const lastReal = S.slug && LL().region(S.slug) ? S.slug : null;
 const slug = (miss && miss.slug) || st.region || (fromState && fromState.slug) || lastReal || LL().REGIONS[0].slug;
-if (slug !== S.slug) { S.fb = null; S.hint = null; }
+if (slug !== S.slug) S.fb = null;
 S.slug = slug;
 const key = miss ? miss.seats.join(",") : null;
 const fresh = () => {
@@ -2236,7 +2229,7 @@ build(st);
 const SM = window.SM = window.SM || {};
 SM.views = SM.views || {};
 const VIEWS = ["learn", "map", "compare"];
-const STEPS = ["meet", "pick", "type", "place", "end"];
+const STEPS = ["meet", "pick", "place", "end"];
 const SWEARING_IN = "2027-01-03";
 const SITE_URL = "https://mackforge.dev/senators/";
 SM.kbd = false;

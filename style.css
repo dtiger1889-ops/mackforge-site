@@ -164,4 +164,7 @@ footer .brand{color:var(--cream)}
 .nav .share #share-btn{min-width:40px}
 .nav .share #share-btn svg{transform:translateY(1px)}
 }
-@media(max-width:379px){.nav nav{gap:4px}.nav nav>a.sc,.nav .share #share-btn{min-width:32px}}
+/* Narrow phones: smaller link text keeps the icons at a 40px tap width; below 330px the row wraps inside its pill rather than overflowing. */
+@media(max-width:379px){.nav nav{gap:4px}.nav nav>a{font-size:10px}}
+@media(max-width:349px){.nav nav{gap:2px;padding-left:10px}}
+@media(max-width:329px){.nav nav{flex-wrap:wrap;white-space:normal;justify-content:flex-start;column-gap:12px}}

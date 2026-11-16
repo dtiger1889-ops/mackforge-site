@@ -159,4 +159,9 @@ footer .brand{color:var(--cream)}
 .nav nav>a.gh svg{width:24px;height:24px}
 .nav nav>button.theme-toggle{position:absolute;top:8px;right:8px;width:40px;height:40px}
 .nav nav>a.sc{position:static;min-width:40px;min-height:44px}
+/* Share icon centred under the light/dark button above it; the arrow glyph sits high in its box, so it drops 1px. */
+.nav nav{padding-right:8px}
+.nav .share #share-btn{min-width:40px}
+.nav .share #share-btn svg{transform:translateY(1px)}
 }
+@media(max-width:379px){.nav nav{gap:4px}.nav nav>a.sc,.nav .share #share-btn{min-width:32px}}

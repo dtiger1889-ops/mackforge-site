@@ -149,6 +149,12 @@ svg.sshape{display:block;flex:none}
 .dlist .why,.dlist .src{font-size:var(--t13);color:var(--muted)}
 .dlist .why{margin:2px 0 0}
 .dlist .src a{color:inherit}
+.fact{margin:8px 0 0;font-size:var(--t15);line-height:1.4;text-wrap:pretty}
+.fact .src{font-size:var(--t13);color:var(--muted)}
+.fact .src a{color:inherit}
+.ln-who .fact{align-self:stretch;text-align:left}
+.ln-whoq{margin:4px 0 12px;padding:12px 16px;border-left:3px solid var(--line);font-size:var(--t17);line-height:1.4}
+.ln-choice img,.ln-choice .noface{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;flex:none;background:var(--line)}
 .plainbtn{min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:var(--r4);background:var(--surface);color:var(--ink);font-weight:600}
 .sm-dialog input[type=search]{width:100%;min-height:46px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:10px 12px;border-radius:var(--r4);font-size:var(--t15);margin:8px 0}
 .flist{list-style:none;margin:0;padding:0}

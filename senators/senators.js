@@ -932,6 +932,9 @@ const why = c.reason ? `<div class="why">${esc(c.reason)}${c.reason_source ? ` <
 return `<div class="com">${c.title ? esc(c.title) + ", " : ""}<span aria-label="${esc(c.full_name)}">${esc(c.name)}</span>${why}</div>`;
 }).join("");
 }
+SM.factLine = rec => (rec && rec.fact
+? h("p", { class: "fact" }, `${esc(rec.fact)}${rec.fact_source ? ` <span class="src">${linkList([[rec.fact_source, "source"]])}</span>` : ""}`)
+: null);
 function openDetail(rec, list, from) {
 const on = SM.onDate(list), st = rec.state;
 returnTo = from;
@@ -946,6 +949,8 @@ const sl = h("div", { class: "dstate" });
 sl.appendChild(chip(st, list, 40, 26));
 sl.appendChild(h("span", {}, `${esc(SM.NAMES[st])} · ${cap(rec.rank)} senator`));
 who.appendChild(sl);
+const fact = SM.factLine(rec);
+if (fact) who.appendChild(fact);
 top.appendChild(who);
 detail.appendChild(top);
 const rows = [];
@@ -1086,6 +1091,7 @@ const KINDS = ["pick", "place"];
 const GAP = 3;        // questions between a miss and its return, and between one question and the next for a senator
 const MAX_SHOWS = 6;
 const RANK = { senior: 0, junior: 1 };
+const WHO_EVERY = 4;
 const region = slug => REGIONS.find(r => r.slug === slug) || null;
 const regionOfState = st => REGIONS.find(r => r.states.includes(st)) || null;
 function neverElected(rec) {
@@ -1146,6 +1152,16 @@ const wrong = [];
 tiers.forEach(t => shuffle(t, rng).forEach(r => { if (wrong.length < 3) wrong.push(r.seat_id); }));
 return shuffle([rec.seat_id, ...wrong], rng);
 }
+function whoChoices(rec, pool, rng) {
+const reg = regionOfState(rec.state);
+const all = pool.filter(r => r.seat_id !== rec.seat_id && r.name !== rec.name);
+const inReg = r => reg && reg.states.includes(r.state);
+const same = r => !rec.gender || r.gender === rec.gender;
+const tiers = [all.filter(r => inReg(r) && same(r)), all.filter(r => inReg(r) && !same(r)), all.filter(r => !inReg(r))];
+const wrong = [];
+tiers.forEach(t => shuffle(t, rng).forEach(r => { if (wrong.length < 3) wrong.push(r.seat_id); }));
+return shuffle([rec.seat_id, ...wrong], rng);
+}
 const cleanKinds = ks => {
 const got = KINDS.filter(k => Array.isArray(ks) && ks.includes(k));
 return got.length ? got : KINDS.slice();
@@ -1162,6 +1178,7 @@ const states = [];
 seats.forEach(r => { if (!states.includes(r.state)) states.push(r.state); });
 const round = {
 slug, reg: roundRegion(slug, seats), rng: opts.rng || Math.random, kinds: cleanKinds(opts.kinds),
+whoEvery: Number.isInteger(opts.whoEvery) && opts.whoEvery >= 0 ? opts.whoEvery : WHO_EVERY, picksAsked: 0,
 pool: opts.pool || next.filter(r => !neverElected(r)),
 recs: Object.fromEntries(seats.map(r => [r.seat_id, r])),
 order: seats.map(r => r.seat_id),
@@ -1208,7 +1225,14 @@ round.cur = { kind: "end" };
 return round.cur;
 }
 round.cur = { kind: it.kind, seat: it.seat, item: it };
-if (it.kind === "pick") round.cur.choices = pickChoices(round.recs[it.seat], round.pool, round.rng);
+if (it.kind === "pick") {
+if (it.who === undefined) {
+round.picksAsked++;
+it.who = !!(round.recs[it.seat].fact && round.whoEvery && round.picksAsked % round.whoEvery === 0);
+}
+round.cur.choices = (it.who ? whoChoices : pickChoices)(round.recs[it.seat], round.pool, round.rng);
+if (it.who) round.cur.who = true;
+}
 return round.cur;
 }
 function meetGo(round, st) {
@@ -1295,8 +1319,8 @@ else answer(round, true);
 return round;
 }
 const Learn = {
-REGIONS, KINDS, GAP, MAX_SHOWS, seatShows, missedSet, roundRegion, region, regionOfState, neverElected, regionSeats, lessonSenators, seeded, shuffle,
-pickChoices, newRound, current, meetDone, meetGo, meetStep, answer, seatStatus, tallies, summary, showings, fastForward,
+REGIONS, KINDS, GAP, MAX_SHOWS, WHO_EVERY, seatShows, missedSet, roundRegion, region, regionOfState, neverElected, regionSeats, lessonSenators, seeded, shuffle,
+pickChoices, whoChoices, newRound, current, meetDone, meetGo, meetStep, answer, seatStatus, tallies, summary, showings, fastForward,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Learn;
 else root.LearnLogic = Learn;
@@ -1474,6 +1498,8 @@ const pair = h("div", { class: "ln-pair" });
 holders.forEach(({ rec: r, asked }) => {
 const who = h("div", { class: "ln-who" });
 who.appendChild(R().ring(r, "meet", { list: "next", on: on(), stateName: name }));
+const fact = SM.factLine(r);
+if (fact) who.appendChild(fact);
 who.appendChild(factList(r));
 if (!asked) who.appendChild(h("p", { class: "ln-said m" }, "Appointed and not yet elected, so Learn does not ask about this senator."));
 pair.appendChild(who);
@@ -1498,13 +1524,19 @@ card.appendChild(act);
 function pick(card, rd, c) {
 const fb = S.fb, seat = c.seat, r = rec(seat), name = SM.NAMES[r.state], reg = rd.reg;
 const choices = fb ? fb.choices : c.choices;
-head(card, rd, "pick", [seat], r.state);
+const who = fb ? fb.who : c.who;
+head(card, rd, "pick", [seat], who && !fb ? null : r.state);
 const allHere = choices.every(id => reg.states.includes(rec(id).state));
-prompt(card, `Who is ${name}'s ${r.rank} senator?`, `Pick a name.${allHere && !reg.country ? ` The answers are all ${reg.name} senators.` : ""}`);
-const q = h("div", { class: "ln-q" });
+const among = allHere && !reg.country ? ` The answers are all ${reg.name} senators.` : "";
+if (who) prompt(card, "Who is this?", `Pick the senator.${among}`);
+else prompt(card, `Who is ${name}'s ${r.rank} senator?`, `Pick a name.${among}`);
+const q = h("div", { class: "ln-q" + (who ? " ln-q-who" : "") });
+if (who) q.appendChild(h("p", { class: "ln-whoq" }, esc(r.fact)));
+else {
 const face = h("div", { class: "ln-face" });
 face.appendChild(R().ring(r, "quiz", { list: "next", on: on(), hideName: true }));
 q.appendChild(face);
+}
 const list = h("div", { class: "ln-choices", role: "group", "aria-label": "Choices" });
 choices.forEach((id, i) => {
 let cls = "ln-choice", key = String(i + 1);
@@ -1513,7 +1545,9 @@ if (id === seat) { cls += " right"; key = '<span class="ico ico-check" aria-hidd
 else if (id === fb.chosen) { cls += " wrong"; key = '<span class="ico ico-x" aria-hidden="true"></span><span class="vh">your answer</span>'; }
 else cls += " dim";
 }
-const b = h("button", { type: "button", class: cls, "data-choice": id }, `<span class="k">${key}</span><span>${esc(rec(id).name)}</span>`);
+const o = rec(id);
+const pic = !who ? "" : o.photo && o.photo["160"] ? `<img src="photos/${esc(o.photo["160"])}" alt="" width="44" height="44">` : '<span class="noface" aria-hidden="true"></span>';
+const b = h("button", { type: "button", class: cls, "data-choice": id }, `<span class="k">${key}</span>${pic}<span>${esc(o.name)}</span>`);
 if (fb) b.setAttribute("aria-disabled", "true");
 else b.addEventListener("click", () => answerPick(rd, c, id));
 list.appendChild(b);
@@ -1528,7 +1562,7 @@ feedback(card, fb, said);
 }
 function answerPick(rd, c, id) {
 const ok = id === c.seat;
-S.fb = { kind: "pick", seat: c.seat, choices: c.choices, chosen: id, ok, first: c.item.shows === 0 };
+S.fb = { kind: "pick", seat: c.seat, choices: c.choices, chosen: id, ok, first: c.item.shows === 0, who: !!c.who };
 LL().answer(rd, ok);
 announce(ok ? `Correct. ${rec(c.seat).name}.` : `Not quite. The answer is ${rec(c.seat).name}.`);
 S.focus = "next";
@@ -1839,11 +1873,11 @@ else if (kind === "pick") pick(card, rd, c);
 else if (kind === "place") place(card, rd, c);
 else if (kind === "look") look(card, rd, c);
 else end(card, rd);
-const curState = kind === "meet" ? c.state : c.seat && (S.fb || kind !== "place") ? rec(c.seat).state : null;
+const curState = kind === "meet" ? c.state : c.seat && (S.fb || (kind !== "place" && !c.who)) ? rec(c.seat).state : null;
 side(S.side, rd, curState, kind === "meet" ? c.state : null, kind === "place" && !S.fb ? c.seat : null);
 pathNav(S.path, rd);
 regionBar(S.bar, rd);
-SM.setAddress({ region: rd.reg.country ? null : rd.slug, step: kind === "look" ? null : kind, state: null, missed: rd.onlyKey || null });
+SM.setAddress({ region: rd.reg.country ? null : rd.slug, step: kind === "look" ? null : c.who ? "who" : kind, state: null, missed: rd.onlyKey || null });
 if (S.after) S.after(); // the Place map is sized to the card, so it is drawn once the card is on the page
 R().fitAll(card);
 document.fonts.ready.then(() => R().fitAll(card));
@@ -1919,15 +1953,17 @@ const slug = (miss && miss.slug) || st.region || (fromState && fromState.slug) |
 if (slug !== S.slug) S.fb = null;
 S.slug = slug;
 const key = miss ? miss.seats.join(",") : null;
-const fresh = () => {
-const rd = LL().newRound(next(), slug, { names: SM.NAMES, only: miss ? miss.seats : null });
+const fresh = (whoEvery) => {
+const rd = LL().newRound(next(), slug, { names: SM.NAMES, only: miss ? miss.seats : null, whoEvery });
 rd.onlyKey = key;
 S.fb = null;
 return (S.rounds[slug] = rd);
 };
 if (miss && round(slug).onlyKey !== key) fresh();
 if (!miss && round(slug).onlyKey) fresh();
-if (st.step && st.step !== screen(round(slug)).kind) LL().fastForward(fresh(), st.step);
+const shown = screen(round(slug)), shownStep = shown.who ? "who" : shown.kind;
+if (st.step === "who" && shownStep !== "who") LL().fastForward(fresh(1), "pick");
+else if (st.step && st.step !== "who" && st.step !== shownStep) LL().fastForward(fresh(), st.step);
 if (!S.root || !viewEl.contains(S.root)) mount(viewEl);
 S.focus = opts.push ? true : S.focus;
 draw();
@@ -2319,7 +2355,7 @@ const SM = window.SM = window.SM || {};
 SM.views = SM.views || {};
 const VIEWS = ["learn", "map", "compare", "committees"];
 const LAZY = { committees: "committees.js" };
-const STEPS = ["meet", "pick", "place", "end"];
+const STEPS = ["meet", "pick", "who", "place", "end"];
 const SWEARING_IN = "2027-01-03";
 const SITE_URL = "https://mackforge.dev/senators/";
 SM.kbd = false;

@@ -51,6 +51,16 @@
     return t ? { label: t.label, note: t.note, source: t.source, source_name: t.source_name } : null;
   }
 
+  // The "How committee rank works" box under the picker: one closed <details> as an HTML string, or "" when the file has
+  // no explainer. `esc` escapes text for HTML.
+  function rankExplainer(tiers, esc) {
+    const x = tiers && tiers.explainer;
+    if (!x || !Array.isArray(x.paragraphs) || !x.paragraphs.length) return "";
+    const ps = x.paragraphs.map(p => `<p>${esc(p)}</p>`).join("");
+    const src = x.source ? `<p><a href="${esc(x.source)}" target="_blank" rel="noopener">${esc(x.source_name || x.source)}</a></p>` : "";
+    return `<details class="cm-rank"><summary>${esc(x.title)}</summary>${ps}${src}</details>`;
+  }
+
   function seatsPerRow(width, pitch) {
     return Math.max(3, Math.floor(width / pitch));
   }
@@ -90,7 +100,7 @@
   }
   const currentTitle = t => (t ? `${t} in the current Congress` : null);
 
-  const Logic = { committeeList, committeeListFor, cleanCommittee, seatsPerRow, dais, incomingWords, currentTitle, groupCommittees, defaultCommittee, tierNote };
+  const Logic = { committeeList, committeeListFor, cleanCommittee, seatsPerRow, dais, incomingWords, currentTitle, groupCommittees, defaultCommittee, tierNote, rankExplainer };
   if (typeof module !== "undefined" && module.exports) { module.exports = Logic; return; }
   root.CommitteesLogic = Logic;
   if (!root.SM) return;
@@ -283,7 +293,10 @@
         pick.appendChild(sel);
         const body = h("div", { class: "cm-body" });
         const wrap = h("div", { class: "cm", "data-view": "committees" });
-        wrap.append(pick, body);
+        const rankHtml = rankExplainer(tiers, esc);
+        wrap.append(pick);
+        if (rankHtml) { const tpl = document.createElement("template"); tpl.innerHTML = rankHtml; wrap.append(tpl.content.firstElementChild); }
+        wrap.append(body);
         viewEl.replaceChildren(wrap);
         T = { committees, body, code, tiers };
         sel.addEventListener("change", () => {

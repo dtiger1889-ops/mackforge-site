@@ -59,6 +59,42 @@ return `Term ends ${dd} ${MONTHS[mm - 1]} ${yy}`;
 }
 return "Leaving";
 }
+const MARGIN_NUMERIC = ["general", "special", "runoff", "ranked-choice"];
+function margin(rec) {
+const m = rec && rec.margin, dash = { main: "–", year: null, line: "–", source: null, sort: null, tier: 2 };
+if (!m) return dash;
+const year = m.year == null ? null : String(m.year), source = m.source || null;
+if (MARGIN_NUMERIC.includes(m.kind) && typeof m.margin_pts === "number" && year) {
+const pts = m.margin_pts.toFixed(1);
+return { main: `${pts} points`, year, line: `Won last election by ${pts} points (${year})`, source, sort: m.margin_pts, tier: 0 };
+}
+if (m.kind === "unopposed" && year) return { main: "Unopposed", year, line: `Unopposed, ${year}`, source, sort: null, tier: 1 };
+if (m.kind === "appointed" && year) return { main: "Appointed", year, line: `Appointed, ${year}`, source, sort: null, tier: 2 };
+return dash;
+}
+function marginCompare(a, b, dir) {
+const x = margin(a), y = margin(b);
+if (x.tier !== y.tier) return x.tier - y.tier;
+if (x.tier === 0 && x.sort !== y.sort) return dir === "desc" ? y.sort - x.sort : x.sort - y.sort;
+return tieBreak(a, b);
+}
+function seatsOf(rec) {
+if (Array.isArray(rec.committees)) return { label: null, committees: rec.committees };
+const p = rec.placement;
+if (p && Array.isArray(p.committees)) return { label: p.label || null, committees: p.committees };
+return { label: null, committees: null };
+}
+function committeeMembers(records, code) {
+const out = [];
+records.forEach(rec => {
+const s = seatsOf(rec);
+const entry = (s.committees || []).find(c => c.code === code);
+if (entry) out.push({ rec, entry });
+});
+const side = e => (/^maj/.test(e.side) ? 0 : /^min/.test(e.side) ? 1 : 2);
+return out.sort((a, b) => side(a.entry) - side(b.entry) || (a.entry.rank ?? 999) - (b.entry.rank ?? 999) ||
+plain(a.rec.last_name || "", b.rec.last_name || "") || plain(a.rec.seat_id || "", b.rec.seat_id || ""));
+}
 function partyCounts(records) {
 const c = { Democrat: 0, Independent: 0, Republican: 0 };
 records.forEach(r => { if (r.party in c) c[r.party]++; });
@@ -158,7 +194,7 @@ UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia"
 const Calc = {
 STATES, STATE_NAMES, REGION_SLUGS, SORTS, cleanState, cleanRegion, cleanSort, SWEARING_IN, PARTIES, YEARS_CAP, dateFor, ageOn,
 yearsInSenate, wholeYearsInSenate, earlierYears, yearsT, sameHolder, nextElectionShown, nextElectionWords, partyCounts, caucusCounts, caucusWords, classUp, classWords, sortKeys,
-compareBy, compareState, serviceDays, ageDays, wholeYearsBetween,
+compareBy, compareState, serviceDays, ageDays, wholeYearsBetween, margin, marginCompare, seatsOf, committeeMembers,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Calc;
 else root.Calc = Calc;
@@ -858,6 +894,16 @@ let returnTo = null;
 function linkList(items) {
 return items.map(([href, text]) => `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(text)}</a>`).join(" · ");
 }
+function committeesHtml(rec, list) {
+const s = C().seatsOf(rec);
+if (!s.committees) return list === "next" ? esc(SM.data.senate.meta.next_placeholder) : "–";
+const label = s.label ? `<div class="plc">${esc(s.label)}</div>` : "";
+if (!s.committees.length) return s.label ? esc(s.label) : "–";
+return label + s.committees.map(c => {
+const why = c.reason ? `<div class="why">${esc(c.reason)}${c.reason_source ? ` <span class="src">${linkList([[c.reason_source, "source"]])}</span>` : ""}</div>` : "";
+return `<div class="com">${c.title ? esc(c.title) + ", " : ""}<span aria-label="${esc(c.full_name)}">${esc(c.name)}</span>${why}</div>`;
+}).join("");
+}
 function openDetail(rec, list, from) {
 const on = SM.onDate(list), st = rec.state;
 returnTo = from;
@@ -890,9 +936,9 @@ add("On the ballot", cands.map(c => `${esc(c.name)} (${esc(c.party)})`).join("<b
 }
 add("Preceded by", rec.preceded_by ? esc(rec.preceded_by.name) : "–");
 add("Before the Senate", rec.path ? esc(rec.path) : "–");
-if (list === "next" && !rec.committees) add("Committees", esc(SM.data.senate.meta.next_placeholder));
-else add("Committees", (rec.committees || []).length
-? rec.committees.map(c => `${c.title ? esc(c.title) + ", " : ""}<span aria-label="${esc(c.full_name)}">${esc(c.name)}</span>`).join("<br>") : "–");
+const mg = C().margin(rec);
+add("Last election", esc(mg.line) + (mg.source ? ` <span class="src">${linkList([[mg.source, "source"]])}</span>` : ""));
+add("Committees", committeesHtml(rec, list));
 if (list === "now") add("Leadership", (rec.leadership || []).length ? rec.leadership.map(esc).join("<br>") : "–");
 const results = (rec.sources || []).filter(s => s.field === "result" && list === "next" && (rec.status === "elect" || rec.result_2026 === "re-elected"));
 if (results.length) add("2026 result", linkList(results.map(s => [s.url, new URL(s.url).hostname.replace(/^www\./, "")])));
@@ -2019,6 +2065,16 @@ formatter: cell => {
 const rec = cell.getRow().getData()._rec, y = C().nextElectionShown(rec, next);
 return y === null ? `<span class="m">${esc(cell.getValue())}</span>` : esc(cell.getValue());
 } },
+{ title: "Won by", field: "margin", ...w(1.6, 124), minWidth: 112, headerSortStartingDir: "asc",
+sorter: (a, b, aRow, bRow, col, dir) => {
+const r = C().marginCompare(aRow.getData()._rec, bRow.getData()._rec, dir);
+return dir === "asc" ? r : -r;
+},
+formatter: cell => {
+const m = C().margin(cell.getRow().getData()._rec);
+return m.main === "–" ? `<span class="m">–</span>` :
+`<div class="cp-won">${esc(m.main)}</div><div class="cp-extra">${esc(m.year)}</div>`;
+} },
 { title: "Class", field: "class", ...w(1.2, 132), minWidth: 124, sorter: "number",
 formatter: cell => esc(C().classWords(cell.getValue(), on)) },
 ];
@@ -2029,6 +2085,7 @@ const recs = SM.data.senate[list].filter(r => matches(r, st)).sort(C().compareBy
 return recs.map(r => ({
 seat_id: r.seat_id, name: r.name, state: r.state, rank: r.rank, party: r.party, class: r.class,
 age: C().ageOn(r.birthday, on), years: C().wholeYearsInSenate(r, on), nextWords: C().nextElectionWords(r, list, next),
+margin: C().margin(r).main,
 region: SM.regionOf(r.state).name, _rec: r,
 side: r.party === "Independent" && r.caucus ? r.caucus : r.party,
 }));
@@ -2074,7 +2131,7 @@ if (g) T.table.setGroupValues(groupValues(rows, g));
 sortedColumnBeside(sort);
 T.table.setData(rows).then(() => watchPhotos());
 }
-const COLS = ["name", "state", "rank", "party", "age", "years", "nextWords", "class"];
+const COLS = ["name", "state", "rank", "party", "age", "years", "nextWords", "margin", "class"];
 const SORT_COL = { years: "years", age: "age", next: "nextWords" };
 function sortedColumnBeside(sort) { columnBeside(SORT_COL[sort]); }
 function columnBeside(f) {
@@ -2195,6 +2252,7 @@ const f = sorters[0].field, asc = sorters[0].dir === "asc";
 const HEAD = { name: ["name", "A to Z", "Z to A"], state: ["state", "A to Z", "Z to A"], rank: ["rank", "senior first", "junior first"],
 party: ["party", "A to Z", "Z to A"], age: ["age", "youngest first", "oldest first"],
 years: ["years in the Senate", "shortest first", "longest first"], nextWords: ["next election", "soonest first", "latest first"],
+margin: ["margin of the last win", "narrowest first", "widest first"],
 class: ["class", "1 to 3", "3 to 1"] }[f];
 if (HEAD) sortNote(`${HEAD[0]}, ${asc ? HEAD[1] : HEAD[2]}`);
 columnBeside(f);
@@ -2231,7 +2289,8 @@ build(st);
 "use strict";
 const SM = window.SM = window.SM || {};
 SM.views = SM.views || {};
-const VIEWS = ["learn", "map", "compare"];
+const VIEWS = ["learn", "map", "compare", "committees"];
+const LAZY = { committees: "committees.js" };
 const STEPS = ["meet", "pick", "place", "end"];
 const SWEARING_IN = "2027-01-03";
 const SITE_URL = "https://mackforge.dev/senators/";
@@ -2269,7 +2328,8 @@ const seat = /^[A-Z]{2}-[123]$/.test(p.get("seat") || "") ? p.get("seat") : null
 const ids = (p.get("missed") || "").split(",").filter(s => /^[A-Z]{2}-[123]$/.test(s)).slice(0, 100);
 const missed = view === "learn" && ids.length ? ids.join(",") : null;
 const sort = view === "compare" ? window.Calc.cleanSort(p.get("sort")) : null;
-return { view, senate, state, region, step, seat, missed, sort };
+const committee = view === "committees" && /^S[A-Z]{3}$/.test(p.get("c") || "") ? p.get("c") : null;
+return { view, senate, state, region, step, seat, missed, sort, committee };
 }
 SM.state = readAddress();
 SM.senate = () => (SM.state.view === "learn" ? "next" : SM.state.senate || SM.defaultSenate());
@@ -2283,6 +2343,7 @@ if (st.step) p.set("step", st.step);
 if (st.seat) p.set("seat", st.seat);
 if (st.missed && st.view === "learn") p.set("missed", st.missed);
 if (st.sort && st.view === "compare") p.set("sort", st.sort);
+if (st.committee && st.view === "committees") p.set("c", st.committee);
 return "?" + p.toString().replace(/%2C/g, ",");
 }
 SM.shareUrl = () => SITE_URL;
@@ -2300,6 +2361,7 @@ next.state = null; next.region = null; next.step = null; next.missed = null;
 if (next.view !== "learn") { next.missed = null; next.step = null; }
 if (next.view === "compare" && SM.state.view === "map" && !("sort" in patch)) next.sort = SM.colorView;
 if (next.view !== "compare") next.sort = null;
+if (next.view !== "committees") next.committee = null;
 SM.state = next;
 history[opts.push ? "pushState" : "replaceState"](null, "", addressFor(next));
 render(opts);
@@ -2308,6 +2370,7 @@ const viewEl = document.getElementById("view");
 const plain = document.getElementById("plain");
 const tabs = [...document.querySelectorAll(".sm-tabs [role=tab]")];
 const radios = [...document.querySelectorAll("#senate-switch input")];
+const lazyFailed = {};
 function render(opts = {}) {
 const st = SM.state;
 tabs.forEach(t => {
@@ -2318,6 +2381,16 @@ t.tabIndex = on ? 0 : -1;
 radios.forEach(r => { r.checked = r.value === SM.senate(); r.disabled = st.view === "learn"; });
 viewEl.setAttribute("aria-labelledby", "tab-" + st.view);
 const view = SM.views[st.view];
+if (!view && SM.data && LAZY[st.view] && !lazyFailed[st.view]) {
+viewEl.replaceChildren(Object.assign(document.createElement("p"), { className: "sm-count", textContent: "Loading…", role: "status" }));
+plain.hidden = true;
+const s = document.createElement("script");
+s.src = LAZY[st.view];
+s.onload = () => { if (SM.state.view === st.view) render(opts); };
+s.onerror = () => { lazyFailed[st.view] = true; if (SM.state.view === st.view) render(opts); };
+document.head.appendChild(s);
+return;
+}
 if (view && SM.data) {
 plain.hidden = true;
 view.render(viewEl, st, opts);

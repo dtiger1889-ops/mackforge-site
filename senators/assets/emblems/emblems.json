@@ -1,0 +1,132 @@
+{
+ "_note": "Each committee's own emblem where its official site uses one, the Senate seal otherwise. Every file is published on the committee's official senate.gov site, a U.S. government work (17 U.S.C. 105). Some are cropped views of the site's logo (the symbol only). 'committees' lists the committees that use an own file (surveyed 2026-11-22).",
+ "seal": {
+  "file": "senate-seal.png",
+  "credit": "Seal of the U.S. Senate, as published on the official Senate Finance Committee site, public domain (U.S. government work)",
+  "source": "https://www.finance.senate.gov/",
+  "image_url": "https://www.finance.senate.gov/wp-content/uploads/2026/04/Us_senate_seal.png",
+  "plate": "light"
+ },
+ "committees": {
+  "SCNC": {
+   "own": true,
+   "file": "SCNC.png",
+   "plate": "light",
+   "credit": "Senate Caucus on International Narcotics Control",
+   "source": "https://www.drugcaucus.senate.gov/",
+   "image_url": "https://www.drugcaucus.senate.gov/wp-content/uploads/DrugCaucus_Favicon.png"
+  },
+  "SLET": {
+   "own": true,
+   "file": "SLET.png",
+   "plate": "light",
+   "credit": "Select Committee on Ethics (dome cropped from its logo)",
+   "source": "https://www.ethics.senate.gov/",
+   "image_url": "https://www.ethics.senate.gov/public/vendor/_accounts/ethics/_skins/ethics-2018/images/logo.png"
+  },
+  "SLIA": {
+   "own": true,
+   "file": "SLIA.png",
+   "plate": "light",
+   "credit": "Committee on Indian Affairs (its site icon)",
+   "source": "https://www.indian.senate.gov/",
+   "image_url": "https://www.indian.senate.gov/wp-content/uploads/2023/02/IA_Favicon-150x150.png"
+  },
+  "SLIN": {
+   "own": true,
+   "file": "SLIN.svg",
+   "plate": "light",
+   "credit": "Select Committee on Intelligence",
+   "source": "https://www.intelligence.senate.gov/",
+   "image_url": "https://www.intelligence.senate.gov/wp-content/uploads/2024/05/logo-seal-blue-1.svg"
+  },
+  "SPAG": {
+   "own": true,
+   "file": "SPAG.svg",
+   "plate": "dark",
+   "credit": "Special Committee on Aging",
+   "source": "https://www.aging.senate.gov/",
+   "image_url": "https://www.aging.senate.gov/ (inline SVG, class SiteFooter__icon)"
+  },
+  "SSAF": {
+   "own": true,
+   "file": "SSAF.svg",
+   "plate": "dark",
+   "credit": "Committee on Agriculture, Nutrition, and Forestry (symbol cropped from its logo)",
+   "source": "https://www.agriculture.senate.gov/",
+   "image_url": "https://www.agriculture.senate.gov/assets/images/logo_rev.svg"
+  },
+  "SSAS": {
+   "own": true,
+   "file": "SSAS.svg",
+   "plate": "dark",
+   "credit": "Committee on Armed Services (symbol cropped from its logo)",
+   "source": "https://www.armed-services.senate.gov/",
+   "image_url": "https://www.armed-services.senate.gov/assets/images/logo_primary_rev.svg"
+  },
+  "SSBK": {
+   "own": true,
+   "file": "SSBK.svg",
+   "plate": "dark",
+   "credit": "Committee on Banking, Housing, and Urban Affairs",
+   "source": "https://www.banking.senate.gov/",
+   "image_url": "https://www.banking.senate.gov/themes/banking/images/circle.svg"
+  },
+  "SSBU": {
+   "own": true,
+   "file": "SSBU.png",
+   "plate": "light",
+   "credit": "Committee on the Budget",
+   "source": "https://www.budget.senate.gov/",
+   "image_url": "https://www.budget.senate.gov/wp-content/uploads/2025/02/logo.png"
+  },
+  "SSCM": {
+   "own": true,
+   "file": "SSCM.png",
+   "plate": "dark",
+   "credit": "Committee on Commerce, Science, and Transportation",
+   "source": "https://www.commerce.senate.gov/",
+   "image_url": "https://www.commerce.senate.gov/wp-content/uploads/2025/05/Coommerce_Favicon.png"
+  },
+  "SSEG": {
+   "own": true,
+   "file": "SSEG.svg",
+   "plate": "light",
+   "credit": "Committee on Energy and Natural Resources",
+   "source": "https://www.energy.senate.gov/",
+   "image_url": "https://www.energy.senate.gov/wp-content/uploads/2026/04/ENR_Favicon.svg"
+  },
+  "SSEV": {
+   "own": true,
+   "file": "SSEV.png",
+   "plate": "light",
+   "credit": "Committee on Environment and Public Works (symbol)",
+   "source": "https://www.epw.senate.gov/",
+   "image_url": "https://www.epw.senate.gov/wp-content/uploads/2026/09/EPW_Logo_Symbol.png"
+  },
+  "SSGA": {
+   "own": true,
+   "file": "SSGA.svg",
+   "plate": "light",
+   "credit": "Committee on Homeland Security and Governmental Affairs",
+   "source": "https://www.hsgac.senate.gov/",
+   "image_url": "https://www.hsgac.senate.gov/wp-content/uploads/HSGAC_Logo_Symbol_Reverse.svg"
+  },
+  "SSJU": {
+   "own": true,
+   "file": "SSJU.png",
+   "plate": "dark",
+   "credit": "Committee on the Judiciary",
+   "source": "https://www.judiciary.senate.gov/",
+   "image_url": "https://www.judiciary.senate.gov/assets/images/apple-touch-icon.png"
+  },
+  "SSSB": {
+   "own": true,
+   "file": "SSSB.svg",
+   "plate": "light",
+   "credit": "Committee on Small Business and Entrepreneurship (symbol cropped from its logo)",
+   "source": "https://www.sbc.senate.gov/",
+   "image_url": "https://www.sbc.senate.gov/public/vendor/_accounts/sbc/_skins/20170428/images/svg/sbc-logo.svg"
+  }
+ }
+}

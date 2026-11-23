@@ -1088,6 +1088,8 @@ const REGIONS = [
 ["Pacific", "pacific", ["AK", "CA", "HI", "OR", "WA"]],
 ].map(([name, slug, states]) => ({ name, slug, states }));
 const KINDS = ["pick", "place"];
+const QUIZ_KINDS = KINDS.concat("face");
+const ALL_STATES = REGIONS.flatMap(r => r.states);
 const GAP = 3;        // questions between a miss and its return, and between one question and the next for a senator
 const MAX_SHOWS = 6;
 const RANK = { senior: 0, junior: 1 };
@@ -1116,12 +1118,36 @@ if (!seen.length) return null;
 const slugs = [...new Set(seen.map(id => regionOfState(asked.get(id).state).slug))];
 return { slug: slugs.length === 1 ? slugs[0] : "missed", seats: seen };
 }
-function roundRegion(slug, seats) {
+function roundRegion(slug, seats, name, what) {
 const r = region(slug);
 if (r) return Object.assign({ country: false }, r);
 const regs = [...new Set(seats.map(rec => regionOfState(rec.state)))];
-return { name: "Senators you missed", slug, country: true,
+return { name: name || "Senators you missed", what: what || "the senators you missed", slug, country: true,
 states: regs.flatMap(x => x.states), seatStates: [...new Set(seats.map(rec => rec.state))] };
+}
+const PRACTICES = ["names", "map", "all", "faces"];
+const PRACTICE_KINDS = { names: ["pick"], map: ["place"], all: ["pick", "place"], faces: ["face"] };
+const practiceOf = kinds => PRACTICES.find(p => PRACTICE_KINDS[p].join() === kinds.join()) || "all";
+function cleanPractice(raw) {
+const r = raw || {};
+if (!PRACTICES.includes(r.practice)) return null;
+let scope = null;
+if (r.scope === "all") scope = "all";
+else if (typeof r.scope === "string" && region(r.scope)) scope = r.scope;
+else if (typeof r.scope === "string") {
+const list = [];
+r.scope.split(",").forEach(s => { const c = s.trim().toUpperCase(); if (ALL_STATES.includes(c) && !list.includes(c)) list.push(c); });
+if (list.length) scope = list.join(",");
+}
+return { practice: r.practice, scope, order: r.order === "shuffle" ? "shuffle" : null };
+}
+const reviewStates = slugs => REGIONS.filter(r => (slugs || []).includes(r.slug)).flatMap(r => r.states);
+function scopeStates(scope) {
+if (scope === "all") return ALL_STATES.slice();
+const list = Array.isArray(scope) ? scope : typeof scope === "string" && !region(scope) ? scope.split(",") : null;
+if (!list) return null;
+const got = ALL_STATES.filter(s => list.includes(s));
+return got.length ? got : null;
 }
 function seeded(seed) {
 let a = seed >>> 0;
@@ -1163,29 +1189,47 @@ tiers.forEach(t => shuffle(t, rng).forEach(r => { if (wrong.length < 3) wrong.pu
 return shuffle([rec.seat_id, ...wrong], rng);
 }
 const cleanKinds = ks => {
-const got = KINDS.filter(k => Array.isArray(ks) && ks.includes(k));
+const want = Array.isArray(ks) ? ks : [];
+const got = KINDS.filter(k => want.includes(k));
+if (!got.length && want.length === 1 && want[0] === "face") return ["face"];
 return got.length ? got : KINDS.slice();
 };
 function newRound(next, slug, opts = {}) {
+const rng = opts.rng || Math.random;
+const wide = scopeStates(opts.scope);
+const keep = r => !opts.only || opts.only.includes(r.seat_id);
+const nm = st => (opts.names && opts.names[st]) || st;
+const ri = st => REGIONS.findIndex(r => r.states.includes(st));
+const byRegion = (a, b) => ri(a.state) - ri(b.state) || nm(a.state).localeCompare(nm(b.state)) || (RANK[a.rank] ?? 2) - (RANK[b.rank] ?? 2);
 let seats;
-if (region(slug)) seats = lessonSenators(next, slug, opts.names).filter(r => !opts.only || opts.only.includes(r.seat_id));
-else {
-const ri = st => REGIONS.findIndex(r => r.states.includes(st)), nm = st => (opts.names && opts.names[st]) || st;
-seats = (opts.only || []).map(id => next.find(r => r.seat_id === id)).filter(r => r && !neverElected(r))
-.sort((a, b) => ri(a.state) - ri(b.state) || nm(a.state).localeCompare(nm(b.state)) || (RANK[a.rank] ?? 2) - (RANK[b.rank] ?? 2));
-}
+if (wide) seats = next.filter(r => wide.includes(r.state) && !neverElected(r) && keep(r)).sort(byRegion);
+else if (region(slug)) seats = lessonSenators(next, slug, opts.names).filter(keep);
+else seats = (opts.only || []).map(id => next.find(r => r.seat_id === id)).filter(r => r && !neverElected(r)).sort(byRegion);
+if (opts.order === "shuffle") seats = shuffle(seats, rng);
 const states = [];
 seats.forEach(r => { if (!states.includes(r.state)) states.push(r.state); });
+const kinds = cleanKinds(opts.kinds);
+let asked = seats, pairs = null;
+if (kinds[0] === "face") {
+pairs = {};
+seats.forEach(r => { (pairs[r.state] = pairs[r.state] || []).push(r.seat_id); });
+asked = seats.filter(r => pairs[r.state][0] === r.seat_id);
+}
+const rslug = wide && region(slug) ? "practice" : slug;
+const label = wide ? (opts.scope === "all" ? `All ${wide.length} states` : `Your ${wide.length} state${wide.length === 1 ? "" : "s"}`) : null;
 const round = {
-slug, reg: roundRegion(slug, seats), rng: opts.rng || Math.random, kinds: cleanKinds(opts.kinds),
+slug: rslug, reg: roundRegion(rslug, seats, label, wide ? "the senators you practice" : null), rng, kinds, pairs,
 whoEvery: Number.isInteger(opts.whoEvery) && opts.whoEvery >= 0 ? opts.whoEvery : WHO_EVERY, picksAsked: 0,
 pool: opts.pool || next.filter(r => !neverElected(r)),
 recs: Object.fromEntries(seats.map(r => [r.seat_id, r])),
-order: seats.map(r => r.seat_id),
+order: asked.map(r => r.seat_id),
+cfg: opts.scope !== undefined || opts.order !== undefined || opts.meet !== undefined
+? { scope: opts.scope === undefined ? null : opts.scope, order: opts.order === "shuffle" ? "shuffle" : "region", meet: opts.meet !== false } : null,
 states, meetAt: 0, quizzing: false,
 unmet: states.slice(), met: [], items: [], q: 0, firstTry: 0, cur: null, log: [],
 };
-if (states.length) see(round, states[0]);
+if (opts.meet === false) startQuiz(round);
+else if (states.length) see(round, states[0]);
 return round;
 }
 function see(round, st) {
@@ -1225,6 +1269,7 @@ round.cur = { kind: "end" };
 return round.cur;
 }
 round.cur = { kind: it.kind, seat: it.seat, item: it };
+if (it.kind === "face") round.cur.seats = round.pairs[round.recs[it.seat].state];
 if (it.kind === "pick") {
 if (it.who === undefined) {
 round.picksAsked++;
@@ -1248,9 +1293,15 @@ if (i >= 0 && i < round.states.length) meetGo(round, round.states[i]);
 }
 function meetDone(round, kinds) {
 if (round.quizzing) return;
-if (kinds) round.kinds = cleanKinds(kinds);
-round.quizzing = true;
+if (kinds) {
+const k = cleanKinds(kinds);
+if ((k[0] === "face") === !!round.pairs) round.kinds = k;
+}
 round.states.forEach(st => see(round, st));
+startQuiz(round);
+}
+function startQuiz(round) {
+round.quizzing = true;
 round.cur = null;
 round.order.forEach(s => makeItem(round, s, round.kinds[0], round.q));
 }
@@ -1319,7 +1370,7 @@ else answer(round, true);
 return round;
 }
 const Learn = {
-REGIONS, KINDS, GAP, MAX_SHOWS, WHO_EVERY, seatShows, missedSet, roundRegion, region, regionOfState, neverElected, regionSeats, lessonSenators, seeded, shuffle,
+REGIONS, KINDS, QUIZ_KINDS, ALL_STATES, PRACTICES, PRACTICE_KINDS, practiceOf, cleanPractice, scopeStates, reviewStates, GAP, MAX_SHOWS, WHO_EVERY, seatShows, missedSet, roundRegion, region, regionOfState, neverElected, regionSeats, lessonSenators, seeded, shuffle,
 pickChoices, whoChoices, newRound, current, meetDone, meetGo, meetStep, answer, seatStatus, tallies, summary, showings, fastForward,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Learn;
@@ -1338,7 +1389,7 @@ const esc = s => SM.esc(s);
 const desk = () => innerWidth >= 1024;
 const cap = s => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
 const SECTIONS = [["meet", "Meet"], ["pick", "Multiple choice"], ["place", "Map"]];
-const S = { rounds: {}, slug: null, fb: null, pathOpen: false, focus: false, root: null, resetArmed: false };
+const S = { rounds: {}, slug: null, key: null, done: new Set(), fb: null, pathOpen: false, focus: false, root: null, resetArmed: false };
 const next = () => SM.data.senate.next;
 const rec = seat => SM.data.bySeat.next[seat];
 const on = () => SM.onDate("next");
@@ -1346,6 +1397,10 @@ function round(slug) {
 if (!S.rounds[slug]) S.rounds[slug] = LL().newRound(next(), slug, { names: SM.NAMES });
 return S.rounds[slug];
 }
+const make = (slug, opts) => LL().newRound(next(), slug, Object.assign({ names: SM.NAMES }, opts));
+const keyOf = rd => (rd.cfg ? "practice" : rd.slug);
+const cfgOpts = rd => (rd.cfg ? { scope: rd.cfg.scope, order: rd.cfg.order, meet: rd.cfg.meet } : {});
+const practiceScope = rd => (!rd.reg.country ? rd.slug : Array.isArray(rd.cfg.scope) ? rd.cfg.scope.join(",") : rd.cfg.scope);
 const screen = rd => (S.fb ? S.fb : LL().current(rd));
 function factRows(r) {
 const o = on(), rows = [];
@@ -1375,9 +1430,10 @@ function head(card, rd, kind, seats, st) {
 const reg = rd.reg;
 let where = "";
 if (kind === "meet") where = `State ${rd.meetAt + 1} of ${rd.states.length}`;
+else if (kind === "face") where = `State ${rd.order.indexOf(seats[0]) + 1} of ${rd.order.length}`;
 else if (seats.length) where = `Senator ${rd.order.indexOf(seats[0]) + 1} of ${rd.order.length}`;
 card.appendChild(h("div", { class: "ln-crumb" }, `<span><b>${esc(reg.name)}</b>${st ? ` · ${esc(SM.NAMES[st])}` : ""}</span><span>${where}</span>`));
-const strip = h("div", { class: "ln-steps", "aria-hidden": "true" });
+const strip = h("div", { class: "ln-steps" + (rd.order.length > 30 ? " many" : ""), "aria-hidden": "true" });
 rd.order.forEach(s => strip.appendChild(h("span", { class: LL().seatStatus(rd, s, seats) })));
 card.appendChild(strip);
 const now = kind === "look" ? rd.kinds[rd.kinds.length - 1] : kind;
@@ -1413,10 +1469,11 @@ function goSection(rd, k) {
 const c = screen(rd);
 if (k === (c.kind === "look" ? rd.kinds[rd.kinds.length - 1] : c.kind) && !S.fb) return;
 const only = rd.onlyKey ? rd.order : null;
-const fresh = LL().newRound(next(), rd.slug, { names: SM.NAMES, only });
+const fresh = make(rd.slug, Object.assign({ only }, cfgOpts(rd), rd.cfg ? { meet: true } : {}, rd.pairs ? { kinds: LL().KINDS } : {}));
 fresh.onlyKey = rd.onlyKey || null;
 if (k !== "meet") LL().meetDone(fresh, [k]);
-S.rounds[rd.slug] = fresh;
+S.rounds[keyOf(fresh)] = fresh;
+S.key = keyOf(fresh);
 S.fb = null;
 S.focus = "stay";
 announce(k === "meet" ? "Meet" : k === "pick" ? "Multiple choice quiz" : "Map quiz");
@@ -1425,9 +1482,11 @@ draw();
 function startOver() {
 clearTimeout(S.resetTimer);
 S.resetArmed = false;
-const rd = round(S.slug);
-if (!LL().region(S.slug)) S.slug = LL().regionOfState(rd.recs[rd.order[0]].state).slug;
+const rd = round(S.key);
+if (!LL().region(S.slug)) S.slug = rd.order.length ? LL().regionOfState(rd.recs[rd.order[0]].state).slug : LL().REGIONS[0].slug;
 S.rounds = {};
+S.done = new Set();
+S.key = S.slug;
 S.fb = null;
 S.focus = "stay";
 announce("Progress cleared. Starting over.");
@@ -1455,9 +1514,9 @@ const word = fb.ok ? (fb.first ? "Correct, first try" : "Correct") : "Not quite"
 left.appendChild(h("div", { class: `ln-verdict ${fb.ok ? "ok" : "no"}` }, `<span class="ico ${fb.ok ? "ico-check" : "ico-x"}" aria-hidden="true"></span>${esc(word)}`));
 left.appendChild(h("p", { class: "ln-said" }, esc(said)));
 if (!fb.ok) left.appendChild(h("p", { class: "ln-said m" }, "This one comes back in a few questions."));
-if (fb.kind !== "place") left.appendChild(factList(r));
+if (fb.kind !== "place" && fb.kind !== "face") left.appendChild(factList(r));
 box.appendChild(left);
-const go = primary(fb.kind === "place" ? "Next senator" : "Next", () => { S.fb = null; S.focus = true; draw(); });
+const go = primary(fb.kind === "place" ? "Next senator" : fb.kind === "face" ? "Next state" : "Next", () => { S.fb = null; S.focus = true; draw(); });
 go.classList.add("ln-next");
 box.appendChild(h("div", {})).appendChild(go);
 card.appendChild(box);
@@ -1510,7 +1569,9 @@ card.appendChild(actions());
 function look(card, rd, c) {
 const r = rec(c.seat), name = SM.NAMES[r.state];
 head(card, rd, "look", [c.seat], r.state);
-const then = rd.kinds[rd.kinds.length - 1] === "place" ? "Then place this senator on the map again." : "Then pick this senator's name again.";
+const last = rd.kinds[rd.kinds.length - 1];
+const then = last === "face" ? "Then tap this senator's state on the map again."
+: last === "place" ? "Then place this senator on the map again." : "Then pick this senator's name again.";
 prompt(card, `Look again: ${r.name}`, `${cap(r.rank)} senator for ${name}. ${then}`);
 const who = h("div", { class: "ln-who" });
 who.appendChild(R().ring(r, "meet", { list: "next", on: on(), stateName: name }));
@@ -1593,14 +1654,15 @@ if (I[y * (w + 1) + x] - I[(y - T) * (w + 1) + x] - I[y * (w + 1) + x - T] + I[(
 }
 return false;
 }
-function placeMap(holder, rd, r, fb) {
+function placeMap(holder, rd, r, fb, rs) {
 const el = R().el, reg = rd.reg, sts = SM.data.states;
 const [x0, y0, x1, y1] = regionBox(reg.states, 12), rw = x1 - x0, rh = y1 - y0;
 const width = Math.max(240, holder.clientWidth || 320);
+const wide = reg.states.length > 20;
 let col = 0, s = 0, tiny = [];
 for (let i = 0; i < 3; i++) {
 s = (width - col) / rw;
-tiny = reg.states.filter(p => !fitsSquare(p, s));
+tiny = wide ? [] : reg.states.filter(p => !fitsSquare(p, s));
 const want = tiny.length ? COL : 0;
 if (want === col) break;
 col = want;
@@ -1648,32 +1710,42 @@ label(fb.chosen, `That's ${SM.NAMES[fb.chosen]}`, "no");
 [targets[r.state], targets[r.state + ":box"]].forEach(g => {
 if (!g) return;
 g.classList.add("right");
-g.querySelectorAll(".ps, .pbox").forEach(n => n.setAttribute("style", `fill:${R().shade(R().side(r), 0.6)}`));
+if (!rs || rs.every(x => R().side(x) === R().side(r))) g.querySelectorAll(".ps, .pbox").forEach(n => n.setAttribute("style", `fill:${R().shade(R().side(r), 0.6)}`));
 });
-const [fx, fy] = boxAt[r.state] || sts[r.state].c, fr = px(boxAt[r.state] ? 17 : 20);
+const [fx, fy] = boxAt[r.state] || sts[r.state].c, many = rs && rs.length > 1;
+const fr = px(boxAt[r.state] ? (many ? 12 : 17) : many ? 16 : 20);
+(rs || [r]).forEach((x, i, all) => {
+const cx = fx + (i - (all.length - 1) / 2) * (2 * fr + px(3));
 const id = "pm" + lmUid++;
-el("circle", { cx: fx, cy: fy, r: fr }, el("clipPath", { id }, svg));
-el("circle", { cx: fx, cy: fy, r: fr + px(2.5), fill: "var(--plate)" }, svg);
-el("image", { href: `photos/${r.photo["160"]}`, x: fx - fr, y: fy - fr, width: 2 * fr, height: 2 * fr, preserveAspectRatio: "xMidYMin slice", "clip-path": `url(#${id})` }, svg);
+el("circle", { cx, cy: fy, r: fr }, el("clipPath", { id }, svg));
+el("circle", { cx, cy: fy, r: fr + px(2.5), fill: "var(--plate)" }, svg);
+el("image", { href: `photos/${x.photo["160"]}`, x: cx - fr, y: fy - fr, width: 2 * fr, height: 2 * fr, preserveAspectRatio: "xMidYMin slice", "clip-path": `url(#${id})` }, svg);
+});
 label(r.state, `${SM.NAMES[r.state]} (${r.state})`, "ok");
 return { tiny };
 }
 function place(card, rd, c) {
-const fb = S.fb, seat = c.seat, r = rec(seat), reg = rd.reg;
-head(card, rd, "place", [seat], fb ? r.state : null);
-const top = h("div", { class: "ln-placehead" });
-const face = h("div", {});
-face.appendChild(R().ring(r, "place", { list: "next", on: on(), hideName: true }));
+const fb = S.fb, seat = c.seat, r = rec(seat), reg = rd.reg, faces = c.kind === "face";
+const rs = faces ? (c.seats || [seat]).map(rec) : null;
+head(card, rd, c.kind, [seat], fb ? r.state : null);
+const top = h("div", { class: "ln-placehead" + (faces ? " faces" : "") });
+const face = h("div", { class: faces ? "ln-facepair" : "" });
+(rs || [r]).forEach(x => face.appendChild(R().ring(x, "place", { list: "next", on: on(), hideName: true })));
 top.appendChild(face);
 const words = h("div", {});
+if (faces) {
+words.appendChild(h("h2", { class: "ln-prompt", tabindex: "-1" }, esc(rs.length > 1 ? "Which state do these two senators serve?" : "Which state does this senator serve?")));
+words.appendChild(h("p", { class: "ln-sub" }, esc("Tap the state, or pick it from the list under the map.")));
+} else {
 words.appendChild(h("h2", { class: "ln-prompt", tabindex: "-1" }, esc(`Where does ${r.name} serve?`)));
 words.appendChild(h("p", { class: "ln-sub" }, esc(`Tap the state, or pick it from the list under the map. ${cap(r.rank)} senator · ${r.party}`)));
+}
 top.appendChild(words);
 card.appendChild(top);
 const holder = h("div", { class: "ln-pmap" });
 card.appendChild(holder);
 S.after = () => {
-const res = placeMap(holder, rd, r, fb);
+const res = placeMap(holder, rd, r, fb, rs);
 holder.dataset.tiny = res.tiny.join(" ");
 };
 const btns = h("div", { class: "ln-statebtns", role: "group", "aria-label": `${reg.name} states` });
@@ -1689,15 +1761,18 @@ btns.appendChild(b);
 });
 card.appendChild(btns);
 if (fb) {
-const said = fb.ok ? `${SM.NAMES[r.state]}. ${r.name} joins your map.` : `That's ${SM.NAMES[fb.chosen]}. ${r.name} serves ${SM.NAMES[r.state]}.`;
+const who = faces ? rs.map(x => x.name).join(" and ") : r.name;
+const said = faces ? (fb.ok ? `${SM.NAMES[r.state]}. ${who} serve${rs.length > 1 ? "" : "s"} ${SM.NAMES[r.state]}.` : `That's ${SM.NAMES[fb.chosen]}. ${who} serve${rs.length > 1 ? "" : "s"} ${SM.NAMES[r.state]}.`)
+: fb.ok ? `${SM.NAMES[r.state]}. ${r.name} joins your map.` : `That's ${SM.NAMES[fb.chosen]}. ${r.name} serves ${SM.NAMES[r.state]}.`;
 feedback(card, fb, said);
 }
 }
 function answerPlace(rd, c, st) {
 const ok = st === rec(c.seat).state;
-S.fb = { kind: "place", seat: c.seat, chosen: st, ok, first: c.item.shows === 0 };
+S.fb = { kind: c.kind === "face" ? "face" : "place", seat: c.seat, seats: c.seats, chosen: st, ok, first: c.item.shows === 0 };
 LL().answer(rd, ok);
-announce(ok ? `Correct: ${SM.NAMES[st]}.` : `Not quite. That's ${SM.NAMES[st]}. ${rec(c.seat).name} serves ${SM.NAMES[rec(c.seat).state]}.`);
+const who = c.kind === "face" ? c.seats.map(s => rec(s).name).join(" and ") : rec(c.seat).name;
+announce(ok ? `Correct: ${SM.NAMES[st]}.` : `Not quite. That's ${SM.NAMES[st]}. ${who} ${c.kind === "face" && c.seats.length > 1 ? "serve" : "serves"} ${SM.NAMES[rec(c.seat).state]}.`);
 S.focus = "next";
 draw();
 }
@@ -1727,16 +1802,33 @@ copy.dataset.link = link;
 copy.classList.add("ln-copy");
 card.appendChild(copy);
 }
+if (!reg.country) S.done.add(rd.slug);
 const act = h("div", { class: "ln-actions end" });
 act.appendChild(h("p", { class: "ln-said m" }, "Names stick better when you come back to them another day."));
-act.appendChild(primary(n ? `Go again with the ${n} I missed` : "Play again", () => {
+act.appendChild(primary("Mixed review of the regions you've done", () => {
+const states = S.done.size ? LL().reviewStates([...S.done]) : [...new Set(rd.order.map(s => rec(s).state))];
+S.rounds.practice = make("practice", { scope: states, order: "shuffle", kinds: LL().KINDS, meet: false });
+S.key = "practice";
+S.fb = null;
+S.focus = true;
+draw();
+}));
+const nextReg = LL().region(rd.slug) ? LL().REGIONS[LL().REGIONS.findIndex(x => x.slug === rd.slug) + 1] : null;
+if (nextReg) {
+act.appendChild(quiet("Next region", () => {
+S.pathOpen = false;
+SM.go({ view: "learn", region: nextReg.slug, state: null, step: null, missed: null, practice: null, scope: null, order: null }, { push: true });
+}));
+}
+act.appendChild(quiet(n ? `Go again with the ${n} I missed` : "Play again", () => {
 const only = n ? sm.misses : rd.onlyKey ? rd.order : null;
-const again = LL().newRound(next(), rd.slug, { names: SM.NAMES, only, kinds: rd.kinds });
+const again = make(rd.slug, Object.assign({ only, kinds: rd.kinds }, cfgOpts(rd)));
 again.onlyKey = only ? only.join(",") : null;
-S.rounds[rd.slug] = again;
+S.rounds[keyOf(again)] = again;
+S.key = keyOf(again);
 S.fb = null; S.focus = true; draw();
 }));
-if (rd.kinds.length === 1) {
+if (rd.kinds.length === 1 && rd.kinds[0] !== "face") {
 const other = rd.kinds[0] === "pick" ? "place" : "pick";
 act.appendChild(quiet(other === "place" ? "Now try the map" : "Now try multiple choice", () => goSection(rd, other)));
 }
@@ -1771,9 +1863,13 @@ return [Math.min(...bs.map(b => b[0])) - pad, Math.min(...bs.map(b => b[1])) - p
 SM.learnRegionBox = regionBox;
 let lmUid = 0;
 function placedSeats(rd, meetState, askedSeat) {
-const out = new Set(rd.log.filter(e => e.kind === "place" && e.correct).map(e => e.seat));
-if (meetState) rd.order.filter(s => rec(s).state === meetState || (!rd.quizzing && rd.met.includes(rec(s).state))).forEach(s => out.add(s));
-if (askedSeat) out.delete(askedSeat);
+const out = new Set();
+rd.log.filter(e => (e.kind === "place" || e.kind === "face") && e.correct).forEach(e => {
+out.add(e.seat);
+if (e.kind === "face") rd.pairs[rec(e.seat).state].forEach(s => out.add(s));
+});
+if (meetState) Object.keys(rd.recs).filter(s => rec(s).state === meetState || (!rd.quizzing && rd.met.includes(rec(s).state))).forEach(s => out.add(s));
+[].concat(askedSeat || []).forEach(s => out.delete(s));
 return out;
 }
 function sideMap(rd, curState, shown, onPick) {
@@ -1781,9 +1877,9 @@ const el = R().el, reg = rd.reg, sts = SM.data.states;
 const own = reg.country ? reg.seatStates : reg.states;
 const [x0, y0, x1, y1] = regionBox(reg.country ? Object.keys(sts) : reg.states, 24), vw = x1 - x0, vh = y1 - y0;
 const svg = el("svg", { class: "lmap", viewBox: `${x0} ${y0} ${vw} ${vh}`, role: "img",
-"aria-label": `Map of ${reg.country ? "the states of the senators you missed" : `the ${reg.name} states`} with the senators you have placed so far` });
+"aria-label": `Map of ${reg.country ? `the states of ${reg.what}` : `the ${reg.name} states`} with the senators you have placed so far` });
 const u = vw / 390; // one screen pixel at the usual width of this map
-const seats = reg.country ? rd.order.map(s => ({ rec: rec(s), asked: true })) : LL().regionSeats(next(), rd.slug, SM.NAMES);
+const seats = reg.country ? Object.keys(rd.recs).map(s => ({ rec: rec(s), asked: true })) : LL().regionSeats(next(), rd.slug, SM.NAMES);
 Object.keys(sts).forEach(p => {
 const inR = own.includes(p);
 const full = inR && seats.filter(s => s.rec.state === p).every(s => !s.asked || shown.has(s.rec.seat_id));
@@ -1825,7 +1921,7 @@ return svg;
 }
 function side(sd, rd, curState, meetState, askedSeat) {
 const reg = rd.reg, t = LL().tallies(rd);
-sd.replaceChildren(h("h2", {}, reg.country ? "Your map of the senators you missed" : `Your map of the ${esc(reg.name)} states`));
+sd.replaceChildren(h("h2", {}, reg.country ? `Your map of ${esc(reg.what)}` : `Your map of the ${esc(reg.name)} states`));
 const mc = h("div", { class: "ln-mapcard" });
 const pick = meetState && rd.states.length > 1 ? st => {
 S.anchor = mc.getBoundingClientRect().top; // where the map is now; draw keeps it there
@@ -1841,6 +1937,7 @@ sd.appendChild(h("div", { class: "ln-tally" },
 }
 function pathNav(nav, rd) {
 nav.replaceChildren(h("h2", { id: "ln-path-h" }, "Learn by region"));
+nav.appendChild(practiceButton("ln-practice ln-practice-path"));
 LL().REGIONS.forEach(r => {
 const tot = LL().lessonSenators(next(), r.slug).length;
 const x = S.rounds[r.slug], got = x ? LL().tallies(x).recalled : 0;
@@ -1850,7 +1947,7 @@ const b = h("button", { type: "button", class: "ln-unit", "aria-current": String
 b.addEventListener("click", () => {
 S.pathOpen = false;
 if (S.rounds[r.slug] && S.rounds[r.slug].onlyKey) delete S.rounds[r.slug]; // the path opens the whole region
-SM.go({ view: "learn", region: r.slug, state: null, step: null, missed: null }, { push: true }); });
+SM.go({ view: "learn", region: r.slug, state: null, step: null, missed: null, practice: null, scope: null, order: null }, { push: true }); });
 nav.appendChild(b);
 });
 nav.appendChild(h("p", { class: "ln-note" }, "The Senate seated 3 Jan 2027. A seat still being counted or filled shows its current senator until a successor is decided."));
@@ -1859,25 +1956,109 @@ nav.classList.toggle("open", S.pathOpen);
 }
 function regionBar(bar, rd) {
 const reg = rd.reg, t = LL().tallies(rd);
-bar.innerHTML = `<span><b>${esc(reg.name)}</b> · ${t.recalled} of ${t.total} recalled</span><span class="u">All regions</span>`;
+bar.innerHTML = `<span class="bn"><b>${esc(reg.name)}</b><span>${t.recalled} of ${t.total} recalled</span></span><span class="u">All regions</span>`;
 bar.setAttribute("aria-expanded", String(S.pathOpen));
 }
+const WHATS = [["all", "Everything", "Pick the name, then place the senator on the map"], ["names", "Names", "Multiple choice, four names"],
+["map", "Map", "Tap the state where the senator serves"], ["faces", "Faces to map", "Two faces, tap their state"]];
+function practiceButton(cls) {
+const b = h("button", { type: "button", class: cls, "aria-haspopup": "dialog" }, "Practice");
+b.addEventListener("click", openPractice);
+return b;
+}
+function openPractice() {
+const dlg = document.getElementById("practice");
+if (!dlg || !SM.data || typeof dlg.showModal !== "function") return;
+const regSlug = S.slug && LL().region(S.slug) ? S.slug : LL().REGIONS[0].slug;
+const reg = LL().region(regSlug);
+const cur = SM.state.practice ? SM.state : null;
+const pick = { what: cur ? cur.practice : "all", where: cur ? (cur.scope === "all" ? "all" : cur.scope && !LL().region(cur.scope) ? "pick" : "region") : "region",
+order: cur && cur.order === "shuffle" ? "shuffle" : "region", states: new Set(cur && cur.scope && cur.scope !== "all" && !LL().region(cur.scope) ? cur.scope.split(",") : []) };
+const close = h("button", { type: "button", class: "dclose", "aria-label": "Close" }, '<span class="ico ico-x" aria-hidden="true"></span>');
+close.addEventListener("click", () => dlg.close());
+const radios = (name, rows, chosen, onchg) => {
+const fs = h("fieldset", { class: "pr-set" });
+rows.forEach(([v, label, sub]) => {
+const l = h("label", { class: "pr-opt" });
+const i = h("input", { type: "radio", name, value: v });
+i.checked = v === chosen;
+i.addEventListener("change", () => onchg(v));
+l.appendChild(i);
+l.appendChild(h("span", {}, `<b>${esc(label)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}`));
+fs.appendChild(l);
+});
+return fs;
+};
+const group = (title, body) => {
+const g = h("div", { class: "pr-group" });
+g.appendChild(h("h3", { class: "pr-h" }, esc(title)));
+g.appendChild(body);
+return g;
+};
+const start = h("button", { type: "button", class: "fill pr-start" }, "Start");
+const note = h("p", { class: "ln-said m pr-note", role: "status" });
+const states = h("div", { class: "pr-states" });
+LL().REGIONS.forEach(r => {
+const gp = h("fieldset", { class: "pr-reg" });
+gp.appendChild(h("legend", {}, esc(r.name)));
+r.states.slice().sort((a, b) => SM.NAMES[a].localeCompare(SM.NAMES[b])).forEach(st => {
+const l = h("label", { class: "pr-opt pr-st" });
+const i = h("input", { type: "checkbox", value: st });
+i.checked = pick.states.has(st);
+i.addEventListener("change", () => { if (i.checked) pick.states.add(st); else pick.states.delete(st); sync(); });
+l.appendChild(i);
+l.appendChild(h("span", {}, esc(SM.NAMES[st])));
+gp.appendChild(l);
+});
+states.appendChild(gp);
+});
+function sync() {
+states.hidden = pick.where !== "pick";
+const bad = pick.where === "pick" && !pick.states.size;
+start.disabled = bad;
+note.textContent = bad ? "Pick at least one state." : "";
+}
+const title = h("h2", { id: "practice-title" }, "Practice");
+dlg.replaceChildren(close, title,
+group("What", radios("pr-what", WHATS, pick.what, v => { pick.what = v; })),
+group("Where", (() => {
+const w = radios("pr-where", [["region", `This region (${reg.name})`], ["pick", "Pick states"], ["all", "All 50 states"]], pick.where, v => { pick.where = v; sync(); });
+w.appendChild(states);
+return w;
+})()),
+group("Order", radios("pr-order", [["region", "In order"], ["shuffle", "Shuffled"]], pick.order, v => { pick.order = v; })),
+note, start);
+sync();
+start.addEventListener("click", () => {
+if (start.disabled) return;
+const scope = pick.where === "all" ? "all" : pick.where === "pick" ? LL().ALL_STATES.filter(s => pick.states.has(s)).join(",") : regSlug;
+dlg.close();
+S.pathOpen = false;
+SM.go({ view: "learn", region: pick.where === "region" ? regSlug : null, state: null, step: null, missed: null,
+practice: pick.what, scope, order: pick.order === "shuffle" ? "shuffle" : null }, { push: true });
+});
+dlg.onclick = e => { if (e.target === dlg) dlg.close(); };
+dlg.showModal();
+}
 function draw() {
-const rd = round(S.slug), c = screen(rd), kind = c.kind;
+const rd = round(S.key), c = screen(rd), kind = c.kind;
 const card = S.card;
 const y0 = window.scrollY; // where the reader was, before the card is rebuilt
 card.replaceChildren();
 S.after = null;
 if (kind === "meet") meet(card, rd, c);
 else if (kind === "pick") pick(card, rd, c);
-else if (kind === "place") place(card, rd, c);
+else if (kind === "place" || kind === "face") place(card, rd, c);
 else if (kind === "look") look(card, rd, c);
 else end(card, rd);
-const curState = kind === "meet" ? c.state : c.seat && (S.fb || (kind !== "place" && !c.who)) ? rec(c.seat).state : null;
-side(S.side, rd, curState, kind === "meet" ? c.state : null, kind === "place" && !S.fb ? c.seat : null);
+const hides = kind === "place" || kind === "face";
+const curState = kind === "meet" ? c.state : c.seat && (S.fb || (!hides && !c.who)) ? rec(c.seat).state : null;
+side(S.side, rd, curState, kind === "meet" ? c.state : null, hides && !S.fb ? (kind === "face" ? c.seats : c.seat) : null);
 pathNav(S.path, rd);
 regionBar(S.bar, rd);
-SM.setAddress({ region: rd.reg.country ? null : rd.slug, step: kind === "look" ? null : c.who ? "who" : kind, state: null, missed: rd.onlyKey || null });
+SM.setAddress({ region: rd.reg.country ? null : rd.slug, step: kind === "look" ? null : c.who ? "who" : kind, state: null, missed: rd.onlyKey || null,
+practice: rd.cfg && !rd.onlyKey ? LL().practiceOf(rd.kinds) : null, scope: rd.cfg && !rd.onlyKey ? practiceScope(rd) : null,
+order: rd.cfg && !rd.onlyKey && rd.cfg.order === "shuffle" ? "shuffle" : null });
 if (S.after) S.after(); // the Place map is sized to the card, so it is drawn once the card is on the page
 R().fitAll(card);
 document.fonts.ready.then(() => R().fitAll(card));
@@ -1921,7 +2102,9 @@ const path = h("nav", { class: "ln-path", id: "ln-path", "aria-labelledby": "ln-
 const card = h("section", { class: "ln-card", "aria-label": "Lesson" });
 const sd = h("aside", { class: "ln-side", "aria-label": "Your map" });
 const live = h("p", { class: "vh", "aria-live": "polite" });
-root.append(bar, path, card, sd, live);
+const barrow = h("div", { class: "ln-barrow" });
+barrow.append(bar, practiceButton("ln-practice"));
+root.append(barrow, path, card, sd, live);
 viewEl.replaceChildren(root);
 Object.assign(S, { root, bar, path, card, side: sd, live });
 card.addEventListener("focusin", e => { if (e.target !== card && !S.quiet) e.target.scrollIntoView({ block: "nearest" }); });
@@ -1937,21 +2120,42 @@ if (a && card.contains(a)) a.scrollIntoView({ block: "nearest" });
 }).observe(card);
 }
 document.addEventListener("keydown", e => {
-if (!SM.data || SM.state.view !== "learn" || !S.slug || S.fb || document.querySelector("dialog[open]")) return;
+if (!SM.data || SM.state.view !== "learn" || !S.key || S.fb || document.querySelector("dialog[open]")) return;
 if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
-const c = LL().current(round(S.slug));
+const c = LL().current(round(S.key));
 if (c.kind !== "pick" || !/^[1-4]$/.test(e.key) || !c.choices[+e.key - 1]) return;
 e.preventDefault();
-answerPick(round(S.slug), c, c.choices[+e.key - 1]);
+answerPick(round(S.key), c, c.choices[+e.key - 1]);
 });
 SM.views.learn = {
 render(viewEl, st, opts = {}) {
 const fromState = st.state && LL().regionOfState(st.state);
 const miss = st.missed ? LL().missedSet(next(), st.missed.split(",")) : null;
 const lastReal = S.slug && LL().region(S.slug) ? S.slug : null;
-const slug = (miss && miss.slug) || st.region || (fromState && fromState.slug) || lastReal || LL().REGIONS[0].slug;
+const pr = !miss && st.practice ? st : null;
+const prRegion = pr && pr.scope && LL().region(pr.scope) ? pr.scope : null;
+const slug = (miss && miss.slug) || prRegion || st.region || (fromState && fromState.slug) || lastReal || LL().REGIONS[0].slug;
 if (slug !== S.slug) S.fb = null;
 S.slug = slug;
+if (pr) {
+const sc = pr.scope || slug, wide = LL().region(sc) ? null : sc;
+const have = S.rounds.practice;
+let built = false;
+if (!(have && have.cfg && !have.onlyKey && LL().practiceOf(have.kinds) === pr.practice && practiceScope(have) === sc
+&& (have.cfg.order === "shuffle") === (pr.order === "shuffle"))) {
+S.rounds.practice = make(wide ? "practice" : slug, { scope: sc, order: pr.order || "region", kinds: LL().PRACTICE_KINDS[pr.practice], meet: pr.step === "meet" });
+S.fb = null;
+built = true;
+}
+S.key = "practice";
+const rd = S.rounds.practice, want = pr.step === "who" ? "pick" : pr.step;
+if (built && want && want !== "meet" && (want === "end" || rd.kinds.includes(want))) LL().fastForward(rd, want);
+if (!S.root || !viewEl.contains(S.root)) mount(viewEl);
+S.focus = opts.push ? true : S.focus;
+draw();
+return;
+}
+S.key = slug;
 const key = miss ? miss.seats.join(",") : null;
 const fresh = (whoEvery) => {
 const rd = LL().newRound(next(), slug, { names: SM.NAMES, only: miss ? miss.seats : null, whoEvery });
@@ -2355,7 +2559,7 @@ const SM = window.SM = window.SM || {};
 SM.views = SM.views || {};
 const VIEWS = ["learn", "map", "compare", "committees"];
 const LAZY = { committees: "committees.js" };
-const STEPS = ["meet", "pick", "who", "place", "end"];
+const STEPS = ["meet", "pick", "who", "place", "face", "end"];
 const SWEARING_IN = "2027-01-03";
 const SITE_URL = "https://mackforge.dev/senators/";
 SM.kbd = false;
@@ -2387,13 +2591,16 @@ const view = VIEWS.includes(p.get("view")) ? p.get("view") : "learn";
 const senate = ["now", "next"].includes(p.get("senate")) ? p.get("senate") : null;
 const state = window.Calc.cleanState(p.get("state"));
 const region = window.Calc.cleanRegion(p.get("region"));
-const step = STEPS.includes(p.get("step")) ? p.get("step") : null;
+const stepRaw = STEPS.includes(p.get("step")) ? p.get("step") : null;
 const seat = /^[A-Z]{2}-[123]$/.test(p.get("seat") || "") ? p.get("seat") : null;
 const ids = (p.get("missed") || "").split(",").filter(s => /^[A-Z]{2}-[123]$/.test(s)).slice(0, 100);
 const missed = view === "learn" && ids.length ? ids.join(",") : null;
+const pr = view === "learn" && !missed ? window.LearnLogic.cleanPractice({ practice: p.get("practice"), scope: p.get("scope"), order: p.get("order") }) : null;
+const practice = pr ? pr.practice : null, scope = pr ? pr.scope : null, order = pr ? pr.order : null;
 const sort = view === "compare" ? window.Calc.cleanSort(p.get("sort")) : null;
 const committee = view === "committees" && /^S[A-Z]{3}$/.test(p.get("c") || "") ? p.get("c") : null;
-return { view, senate, state, region, step, seat, missed, sort, committee };
+const step = stepRaw === "face" && practice !== "faces" ? null : stepRaw;
+return { view, senate, state, region, step, seat, missed, practice, scope, order, sort, committee };
 }
 SM.state = readAddress();
 SM.senate = () => (SM.state.view === "learn" ? "next" : SM.state.senate || SM.defaultSenate());
@@ -2406,6 +2613,11 @@ if (st.state) p.set("state", st.state);
 if (st.step) p.set("step", st.step);
 if (st.seat) p.set("seat", st.seat);
 if (st.missed && st.view === "learn") p.set("missed", st.missed);
+if (st.practice && st.view === "learn" && !st.missed) {
+p.set("practice", st.practice);
+if (st.scope) p.set("scope", st.scope);
+if (st.order) p.set("order", st.order);
+}
 if (st.sort && st.view === "compare") p.set("sort", st.sort);
 if (st.committee && st.view === "committees") p.set("c", st.committee);
 return "?" + p.toString().replace(/%2C/g, ",");
@@ -2421,8 +2633,10 @@ SM.go = (patch, opts = {}) => {
 const next = Object.assign({ seat: null }, SM.state, { seat: null }, patch);
 if (patch.view && patch.view !== SM.state.view && !("state" in patch) && !("region" in patch)) {
 next.state = null; next.region = null; next.step = null; next.missed = null;
+next.practice = null; next.scope = null; next.order = null;
 }
-if (next.view !== "learn") { next.missed = null; next.step = null; }
+if (next.view !== "learn") { next.missed = null; next.step = null; next.practice = null; next.scope = null; next.order = null; }
+if (next.missed) { next.practice = null; next.scope = null; next.order = null; }
 if (next.view === "compare" && SM.state.view === "map" && !("sort" in patch)) next.sort = SM.colorView;
 if (next.view !== "compare") next.sort = null;
 if (next.view !== "committees") next.committee = null;

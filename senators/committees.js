@@ -57,7 +57,7 @@
     const x = tiers && tiers.explainer;
     if (!x || !Array.isArray(x.paragraphs) || !x.paragraphs.length) return "";
     const ps = x.paragraphs.map(p => `<p>${esc(p)}</p>`).join("");
-    const src = x.source ? `<p><a href="${esc(x.source)}" target="_blank" rel="noopener">${esc(x.source_name || x.source)}</a></p>` : "";
+    const src = x.source ? `<p><a class="cm-src" href="${esc(x.source)}" target="_blank" rel="noopener">${esc(x.source_name || x.source)}</a></p>` : "";
     return `<details class="cm-rank"><summary>${esc(x.title)}</summary>${ps}${src}</details>`;
   }
 

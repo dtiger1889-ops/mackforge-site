@@ -197,6 +197,30 @@ footer.sm-foot{max-width:1440px;width:auto;margin:32px auto 0;padding:18px 16px 
 .ln-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;min-height:48px;padding:8px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r4);color:var(--ink);font-size:var(--t14);text-align:left}
 .ln-bar b{font-weight:600}
 .ln-bar .u{text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.ln-bar .bn{display:flex;flex-direction:column;min-width:0}
+.ln-bar .bn b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ln-bar .bn span{color:var(--muted);font-size:var(--t13);white-space:nowrap}
+.ln-barrow{display:flex;gap:8px;align-items:stretch}
+.ln-barrow .ln-bar{flex:1 1 auto;width:auto;min-width:0}
+.ln-practice{flex:none;min-height:48px;padding:0 16px;border:1px solid var(--line);border-radius:var(--r4);background:var(--surface);color:var(--ink);font-size:var(--t14);font-weight:600}
+.ln-practice-path{display:none;margin:0 12px 12px;width:calc(100% - 24px)}
+.sm-practice{max-height:calc(100% - 24px);overflow-y:auto}
+.sm-practice .pr-group{margin:16px 0 0}
+.sm-practice .pr-h{margin:0 0 4px;font-size:var(--t13);font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.pr-set,.pr-reg{border:0;margin:0;padding:0;min-width:0}
+.pr-reg legend{font-size:var(--t13);color:var(--muted);padding:8px 0 0}
+.pr-opt{display:flex;align-items:center;gap:10px;min-height:44px;padding:2px 0;font-size:var(--t15)}
+.pr-opt input{width:20px;height:20px;margin:0;flex:none;accent-color:var(--ink)}
+.pr-opt span{display:flex;flex-direction:column}
+.pr-opt small{color:var(--muted);font-size:var(--t13)}
+.pr-states{margin:4px 0 0 30px}
+.pr-states .pr-st{display:inline-flex;width:50%;box-sizing:border-box;vertical-align:top}
+.pr-states[hidden]{display:none}
+.sm-practice .pr-note{min-height:20px;margin:12px 0 0}
+.sm-practice .pr-start{margin:4px 0 0;width:100%}
+.sm-practice .pr-start:disabled{opacity:.5}
+.ln-placehead.faces{position:static;flex-direction:column;align-items:flex-start}
+.ln-facepair{display:flex;gap:8px;flex-wrap:wrap}
 .ln-path{display:none}
 .ln-path.open{display:block}
 .ln-path h2,.ln-side h2{font-size:var(--t13);font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 10px}
@@ -213,6 +237,8 @@ footer.sm-foot{max-width:1440px;width:auto;margin:32px auto 0;padding:18px 16px 
 .ln-crumb>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ln-crumb>span:last-child{flex:none}
 .ln-crumb b{color:var(--ink);font-weight:600}.ln-steps{display:flex;gap:4px;margin:10px 0 0}
 .ln-steps span{flex:1;height:8px;border-radius:4px;background:var(--bg);border:1px solid var(--line)}
+.ln-steps.many{gap:1px;overflow:hidden}
+.ln-steps.many span{min-width:0;border-width:0;border-radius:0}
 .ln-steps span.ok{background:var(--good);border-color:var(--good)}
 .ln-steps span.miss{background:repeating-linear-gradient(45deg,var(--miss) 0 3px,var(--surface) 3px 6px);border-color:var(--miss)}
 .ln-steps span.now{background:var(--ink);border-color:var(--ink)}
@@ -311,11 +337,12 @@ svg.lmap{background:var(--plate)}
 .ln-tally span{color:var(--muted)}
 @media(min-width:1024px) and (max-width:1359px){
   .ln{grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
-  .ln-bar,.ln-path{grid-column:1/-1}
+  .ln-barrow,.ln-path{grid-column:1/-1}
 }
 @media(min-width:1360px){
   .ln{grid-template-columns:270px minmax(0,1fr) 420px;gap:28px;align-items:start;padding-top:12px}
-  .ln-bar{display:none}
+  .ln-barrow{display:none}
+  .ln-practice-path{display:block}
   .ln-path{display:block}
 }
 @media(min-width:1024px){
@@ -412,6 +439,7 @@ svg.lmap{background:var(--plate)}
 .cm-rank{margin:0 0 12px;max-width:420px;font-size:var(--t13);color:var(--muted)}
 .cm-rank summary{cursor:pointer;font-weight:600;color:var(--ink);padding:13px 0}
 .cm-rank p{margin:0 0 8px;overflow-wrap:anywhere}
+.cm-rank a.cm-src{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
 .cm-roles{font-size:var(--t14)}
 .cm-sides{max-width:760px;margin-left:auto;margin-right:auto;display:flex;justify-content:space-between;font-size:var(--t13);font-weight:600;color:var(--muted);margin-top:0;margin-bottom:2px}
 .cm-dais{position:relative;max-width:760px;margin:0 auto}

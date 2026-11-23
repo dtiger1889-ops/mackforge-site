@@ -1197,18 +1197,21 @@ return got.length ? got : KINDS.slice();
 function newRound(next, slug, opts = {}) {
 const rng = opts.rng || Math.random;
 const wide = scopeStates(opts.scope);
-const keep = r => !opts.only || opts.only.includes(r.seat_id);
+const kinds = cleanKinds(opts.kinds);
+const onlyStates = opts.only && kinds[0] === "face"
+? new Set(opts.only.map(id => (next.find(r => r.seat_id === id) || {}).state).filter(Boolean)) : null;
+const keep = r => !opts.only || (onlyStates ? onlyStates.has(r.state) : opts.only.includes(r.seat_id));
 const nm = st => (opts.names && opts.names[st]) || st;
 const ri = st => REGIONS.findIndex(r => r.states.includes(st));
 const byRegion = (a, b) => ri(a.state) - ri(b.state) || nm(a.state).localeCompare(nm(b.state)) || (RANK[a.rank] ?? 2) - (RANK[b.rank] ?? 2);
 let seats;
 if (wide) seats = next.filter(r => wide.includes(r.state) && !neverElected(r) && keep(r)).sort(byRegion);
 else if (region(slug)) seats = lessonSenators(next, slug, opts.names).filter(keep);
+else if (onlyStates) seats = next.filter(r => onlyStates.has(r.state) && !neverElected(r)).sort(byRegion);
 else seats = (opts.only || []).map(id => next.find(r => r.seat_id === id)).filter(r => r && !neverElected(r)).sort(byRegion);
 if (opts.order === "shuffle") seats = shuffle(seats, rng);
 const states = [];
 seats.forEach(r => { if (!states.includes(r.state)) states.push(r.state); });
-const kinds = cleanKinds(opts.kinds);
 let asked = seats, pairs = null;
 if (kinds[0] === "face") {
 pairs = {};
@@ -1248,7 +1251,8 @@ function current(round) {
 if (round.cur) return round.cur;
 const open = round.items.filter(it => it.status === "ready" || it.status === "retry");
 const due = open.filter(it => it.dueQ <= round.q);
-let it = due.filter(x => x.status === "retry").sort(byDue)[0] || due.sort(byDue)[0];
+const firstPass = round.cfg && round.cfg.order === "shuffle" ? due.filter(x => x.status === "ready" && x.shows === 0) : [];
+let it = firstPass.sort(byDue)[0] || due.filter(x => x.status === "retry").sort(byDue)[0] || due.sort(byDue)[0];
 if (!round.quizzing && round.states.length) {
 const st = round.states[round.meetAt];
 round.cur = { kind: "meet", state: st, seats: round.order.filter(s => round.recs[s].state === st),
@@ -1560,6 +1564,9 @@ who.appendChild(R().ring(r, "meet", { list: "next", on: on(), stateName: name })
 const fact = SM.factLine(r);
 if (fact) who.appendChild(fact);
 who.appendChild(factList(r));
+const more = h("button", { type: "button", class: "ln-more", "aria-label": `Details: ${r.name}` }, "Details");
+more.addEventListener("click", () => SM.openDetail(r, "next", more));
+who.appendChild(more);
 if (!asked) who.appendChild(h("p", { class: "ln-said m" }, "Appointed and not yet elected, so Learn does not ask about this senator."));
 pair.appendChild(who);
 });
@@ -1802,7 +1809,7 @@ copy.dataset.link = link;
 copy.classList.add("ln-copy");
 card.appendChild(copy);
 }
-if (!reg.country) S.done.add(rd.slug);
+if (!reg.country && !rd.onlyKey) S.done.add(rd.slug);
 const act = h("div", { class: "ln-actions end" });
 act.appendChild(h("p", { class: "ln-said m" }, "Names stick better when you come back to them another day."));
 act.appendChild(primary("Mixed review of the regions you've done", () => {
@@ -2137,6 +2144,7 @@ const prRegion = pr && pr.scope && LL().region(pr.scope) ? pr.scope : null;
 const slug = (miss && miss.slug) || prRegion || st.region || (fromState && fromState.slug) || lastReal || LL().REGIONS[0].slug;
 if (slug !== S.slug) S.fb = null;
 S.slug = slug;
+const prevKey = S.key;
 if (pr) {
 const sc = pr.scope || slug, wide = LL().region(sc) ? null : sc;
 const have = S.rounds.practice;
@@ -2148,6 +2156,7 @@ S.fb = null;
 built = true;
 }
 S.key = "practice";
+if (prevKey !== S.key) S.fb = null;
 const rd = S.rounds.practice, want = pr.step === "who" ? "pick" : pr.step;
 if (built && want && want !== "meet" && (want === "end" || rd.kinds.includes(want))) LL().fastForward(rd, want);
 if (!S.root || !viewEl.contains(S.root)) mount(viewEl);
@@ -2156,6 +2165,7 @@ draw();
 return;
 }
 S.key = slug;
+if (prevKey !== S.key) S.fb = null;
 const key = miss ? miss.seats.join(",") : null;
 const fresh = (whoEvery) => {
 const rd = LL().newRound(next(), slug, { names: SM.NAMES, only: miss ? miss.seats : null, whoEvery });

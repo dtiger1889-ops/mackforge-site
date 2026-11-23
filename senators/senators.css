@@ -439,6 +439,7 @@ svg.lmap{background:var(--plate)}
 .cm-rank{margin:0 0 12px;max-width:420px;font-size:var(--t13);color:var(--muted)}
 .cm-rank summary{cursor:pointer;font-weight:600;color:var(--ink);padding:13px 0}
 .cm-rank p{margin:0 0 8px;overflow-wrap:anywhere}
+.ln-more{display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0;border:0;background:none;color:var(--ink);font-size:var(--t14);text-decoration:underline;text-underline-offset:3px}
 .cm-rank a.cm-src{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
 .cm-roles{font-size:var(--t14)}
 .cm-sides{max-width:760px;margin-left:auto;margin-right:auto;display:flex;justify-content:space-between;font-size:var(--t13);font-weight:600;color:var(--muted);margin-top:0;margin-bottom:2px}

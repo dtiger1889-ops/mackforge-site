@@ -1,0 +1,32 @@
+{
+  "groups": [
+    { "tier": "top", "label": "Top committees" },
+    { "tier": "major", "label": "Other major committees" },
+    { "tier": "standing", "label": "Other standing committees" },
+    { "tier": "select", "label": "Select and special committees" },
+    { "tier": "caucus", "label": "Caucus" }
+  ],
+  "committees": {
+    "SSAP": { "tier": "top", "label": "Top committee", "note": "One of the three committees that both parties' rules treat as most senior: a senator is generally limited to one of them.", "source": "https://www.everycrsreport.com/files/2025-08-14_R46806_8a83c4c59afacdb67abfcaa5f94f41625a9f3f22.html", "source_name": "CRS report R46806" },
+    "SSAS": { "tier": "top", "label": "Top committee", "note": "One of the three committees that both parties' rules treat as most senior: a senator is generally limited to one of them.", "source": "https://www.everycrsreport.com/files/2025-08-14_R46806_8a83c4c59afacdb67abfcaa5f94f41625a9f3f22.html", "source_name": "CRS report R46806" },
+    "SSFI": { "tier": "top", "label": "Top committee", "note": "One of the three committees that both parties' rules treat as most senior: a senator is generally limited to one of them.", "source": "https://www.everycrsreport.com/files/2025-08-14_R46806_8a83c4c59afacdb67abfcaa5f94f41625a9f3f22.html", "source_name": "CRS report R46806" },
+    "SSFR": { "tier": "major", "label": "Major committee", "note": "A major committee. Republican party rules also count it among the most senior; Democratic rules do not.", "source": "https://www.everycrsreport.com/files/2025-08-14_R46806_8a83c4c59afacdb67abfcaa5f94f41625a9f3f22.html", "source_name": "CRS report R46806" },
+    "SSAF": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSBK": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSCM": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSEG": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSEV": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSGA": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSHR": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSJU": { "tier": "major", "label": "Major committee", "note": "A major committee: a senator serves on two of these.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSBU": { "tier": "standing", "label": "Standing committee", "note": "A standing committee, but not a major one: a senator may serve on only one of these, counting Aging.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSRA": { "tier": "standing", "label": "Standing committee", "note": "A standing committee, but not a major one: a senator may serve on only one of these, counting Aging.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSSB": { "tier": "standing", "label": "Standing committee", "note": "A standing committee, but not a major one: a senator may serve on only one of these, counting Aging.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SSVA": { "tier": "standing", "label": "Standing committee", "note": "A standing committee, but not a major one: a senator may serve on only one of these, counting Aging.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SLIN": { "tier": "select", "label": "Select committee", "note": "A select committee, created for a specific purpose and now permanent. It counts as a major committee when senators are assigned (Senate Resolution 445, 2004).", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SLET": { "tier": "select", "label": "Select committee", "note": "A select committee, created for a specific purpose and now permanent. A senator may serve on it in addition to other committees.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SPAG": { "tier": "select", "label": "Special committee", "note": "A special committee, created for a specific purpose and now permanent. It counts toward a senator's one lighter-limit assignment, with the standing committees such as Budget.", "source": "https://www.govinfo.gov/content/pkg/SMAN-118/pdf/SMAN-118-pg25.pdf", "source_name": "Senate Rule XXV" },
+    "SLIA": { "tier": "select", "label": "Select or special committee", "note": "Not one of the 16 standing committees; the Senate counts it among its four special or select committees. A senator may serve on it in addition to other committees.", "source": "https://www.senate.gov/about/origins-foundations/committee-system.htm", "source_name": "senate.gov" },
+    "SCNC": { "tier": "caucus", "label": "Caucus", "note": "Not a committee: the Senate's one officially recognized caucus, set up by law in 1985.", "source": "https://www.senate.gov/committees/index.htm", "source_name": "senate.gov" }
+  }
+}

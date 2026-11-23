@@ -22,9 +22,33 @@
     return committeeList(((senate && senate.now) || []).concat((senate && senate.next) || []));
   }
 
-  // A code that is not one of the committees opens the first one.
-  function cleanCommittee(code, list) {
-    return list.some(c => c.code === code) ? code : (list[0] ? list[0].code : null);
+  // The picker's groups (assets/committee_tiers.json, a file of sources): the file's groups in its order, top tier first,
+  // alphabetical by name inside each (the list is already by name). A committee the file does not know goes in a last
+  // "Other committees" group; with no file everything is one group. Empty groups are left out.
+  function groupCommittees(list, tiers) {
+    if (!list.length) return [];
+    const info = tiers && tiers.committees;
+    if (!info) return [{ tier: "all", label: "", committees: list.slice() }];
+    const groups = tiers.groups.map(g => ({ tier: g.tier, label: g.label, committees: list.filter(c => info[c.code] && info[c.code].tier === g.tier) }));
+    groups.push({ tier: "other", label: "Other committees", committees: list.filter(c => !info[c.code] || !tiers.groups.some(g => g.tier === info[c.code].tier)) });
+    return groups.filter(g => g.committees.length);
+  }
+
+  // The committee the tab opens on: the first of the top tier, else the first in the list.
+  function defaultCommittee(list, tiers) {
+    const top = tiers && tiers.groups && tiers.groups[0] ? list.find(c => tiers.committees[c.code] && tiers.committees[c.code].tier === tiers.groups[0].tier) : null;
+    return top ? top.code : (list[0] ? list[0].code : null);
+  }
+
+  // A code that is not one of the committees opens the default one.
+  function cleanCommittee(code, list, tiers) {
+    return list.some(c => c.code === code) ? code : defaultCommittee(list, tiers);
+  }
+
+  // The tier line shown under a committee's name: { label, note, source, source_name }, or null when the file has no entry.
+  function tierNote(tiers, code) {
+    const t = tiers && tiers.committees && tiers.committees[code];
+    return t ? { label: t.label, note: t.note, source: t.source, source_name: t.source_name } : null;
   }
 
   function seatsPerRow(width, pitch) {
@@ -35,9 +59,10 @@
   // the middle column with the next majority and minority seats beside it; later rows hold only the two sides, their
   // columns half a seat off the middle. Majority seats go left, minority right, outward in rank order, row by row.
   // `col` is the seat's distance from the middle in seat widths (negative is left).
-  function dais(members, perRow) {
+  // `opts.noChair` (the incoming Senate, no chair named yet) leaves the middle seat empty and seats every majority member beside it.
+  function dais(members, perRow, opts) {
     const m0 = Math.max(1, Math.floor((perRow - 1) / 2)), m1 = Math.max(1, Math.floor(perRow / 2));
-    const chair = members.find(m => isMaj(m.entry) && m.entry.rank === 1) || null;
+    const chair = opts && opts.noChair ? null : members.find(m => isMaj(m.entry) && m.entry.rank === 1) || null;
     const maj = members.filter(m => m !== chair && isMaj(m.entry));
     const min = members.filter(m => m !== chair && !isMaj(m.entry));
     const rows = [];
@@ -55,7 +80,17 @@
     return { rows, chair, maj, min };
   }
 
-  const Logic = { committeeList, committeeListFor, cleanCommittee, seatsPerRow, dais };
+  // The words of the incoming Senate's view, where no chair or ranking member is named yet. `seating` is Calc.incomingSeating's result.
+  const PLURAL = { Democrat: "Democrats", Republican: "Republicans", Independent: "Independents" };
+  const NO_CHAIR_YET = "Chair not named yet";
+  function incomingWords(seating) {
+    return { chair: NO_CHAIR_YET, roles: ["Chair: not named yet", "Ranking member: not named yet"],
+      majority: `Majority: ${PLURAL[seating.majority]}`, minority: `Minority: ${PLURAL[seating.minority]}`,
+      note: "Seated by current committee rank; new assignments come after the Senate organizes in January" };
+  }
+  const currentTitle = t => (t ? `${t} in the current Congress` : null);
+
+  const Logic = { committeeList, committeeListFor, cleanCommittee, seatsPerRow, dais, incomingWords, currentTitle, groupCommittees, defaultCommittee, tierNote };
   if (typeof module !== "undefined" && module.exports) { module.exports = Logic; return; }
   root.CommitteesLogic = Logic;
   if (!root.SM) return;
@@ -66,11 +101,16 @@
   const h = (...a) => SM.h(...a), esc = s => SM.esc(s);
   const desk = () => innerWidth >= 1024;
   const SAG = 16, TOP = 20; // how far the outer seats drop below the middle, and the room above row 0 for "Chair"
-  let T = null, emblems = null;
+  let T = null, emblems = null, tiersFile = null, renderToken = null;
 
   function loadEmblems() {
     if (!emblems) emblems = fetch("assets/emblems/emblems.json").then(r => r.json()).catch(() => ({ seal: null, committees: {} }));
     return emblems;
+  }
+  // The tiers file; if it cannot be read the picker is one plain list and the tier line is left out.
+  function loadTiers() {
+    if (!tiersFile) tiersFile = fetch("assets/committee_tiers.json").then(r => r.json()).catch(() => null);
+    return tiersFile;
   }
 
   const initial = rec => `${rec.party[0]}-${rec.state}`;
@@ -95,10 +135,10 @@
     return out.filter(Boolean);
   }
 
-  function drawDais(box, members, list, on) {
+  function drawDais(box, members, list, on, incoming) {
     const wide = desk(), r = wide ? 26 : 18, R = r + 3, seatW = 2 * R + 6, pitch = seatW, seatH = wide ? 60 : 46, rowH = seatH + (wide ? 14 : 10);
     const W = Math.min(box.clientWidth || 358, 760), P = seatsPerRow(W, pitch);
-    const lay = dais(members, P), n = lay.rows.length;
+    const lay = dais(members, P, { noChair: !!incoming }), n = lay.rows.length;
     const H = TOP + (n - 1) * rowH + seatH + SAG + 4;
     box.replaceChildren();
     box.style.height = H + "px";
@@ -127,7 +167,7 @@
       box.appendChild(b);
       if (s.side === "chair") box.appendChild(h("span", { class: "cm-chair", style: `left:${half - 40}px;top:${top - 18}px;width:80px` }, esc(s.m.entry.title || "Chair")));
     }));
-    if (!lay.chair) box.appendChild(h("span", { class: "cm-chair", style: `left:${half - 60}px;top:${TOP - 18}px;width:120px` }, "No chair listed"));
+    if (!lay.chair) box.appendChild(h("span", { class: "cm-chair", style: `left:${half - 60}px;top:${TOP - 18}px;width:120px` }, incoming ? NO_CHAIR_YET : "No chair listed"));
     T.perRow = P; T.pitch = pitch;
   }
 
@@ -135,7 +175,7 @@
     const ol = h("ol", { class: "cm-cards" });
     members.forEach(m => {
       const li = h("li", {});
-      const role = m.entry.title || (isMaj(m.entry) ? "Majority" : "Minority");
+      const role = m.entry.title || currentTitle(m.entry.was_title) || (isMaj(m.entry) ? "Majority" : "Minority");
       const b = h("button", { type: "button", class: "cm-card" }, `<b>${esc(m.rec.name)}</b> <span>${esc(initial(m.rec))} · ${esc(role)}</span>`);
       b.addEventListener("click", () => SM.openDetail(m.rec, list, b));
       li.appendChild(b);
@@ -182,7 +222,9 @@
       T.body.replaceChildren(h("p", { class: "cm-none" }, "No committees are listed for this Senate."));
       return;
     }
-    const members = Calc.committeeMembers(recs, code);
+    const incomingSeats = Calc.incomingSeating(recs, code), incoming = !!incomingSeats;
+    const words = incoming ? incomingWords(incomingSeats) : null;
+    const members = incoming ? incomingSeats.members : Calc.committeeMembers(recs, code);
     const label = members.length ? Calc.seatsOf(members[0].rec).label : null;
     const mine = T;
     T.body.replaceChildren();
@@ -191,15 +233,18 @@
       const em = emblemBox(code, com.full_name, data);
       const head = h("div", { class: "cm-head" });
       head.appendChild(em.box);
-      const lines = roleLines(members, label).map(t => `<div>${esc(t)}</div>`).join("");
-      head.appendChild(h("div", { class: "cm-who" }, `<h2 class="cm-title" tabindex="-1">${esc(com.full_name)}</h2>${label ? `<p class="cm-label">${esc(label)}</p>` : ""}<div class="cm-roles">${lines}</div>`));
-      const sides = h("div", { class: "cm-sides", "aria-hidden": "true" },
-        `<span>Majority${sideParty(members.filter(m => isMaj(m.entry))) ? ": " + esc(sideParty(members.filter(m => isMaj(m.entry)))) : ""}</span><span>Minority${sideParty(members.filter(m => !isMaj(m.entry))) ? ": " + esc(sideParty(members.filter(m => !isMaj(m.entry)))) : ""}</span>`);
+      const lines = (incoming ? words.roles : roleLines(members, label)).map(t => `<div>${esc(t)}</div>`).join("");
+      const tier = tierNote(T.tiers, code);
+      const tierLine = tier ? `<p class="cm-tier"><b>${esc(tier.label)}.</b> ${esc(tier.note)} <a href="${esc(tier.source)}" target="_blank" rel="noopener">${esc(tier.source_name)}</a></p>` : "";
+      head.appendChild(h("div", { class: "cm-who" }, `<h2 class="cm-title" tabindex="-1">${esc(com.full_name)}</h2>${tierLine}${label ? `<p class="cm-label">${esc(label)}</p>` : ""}<div class="cm-roles">${lines}</div>`));
+      const sides = h("div", { class: "cm-sides", "aria-hidden": "true" }, incoming
+        ? `<span>${esc(words.majority)}</span><span>${esc(words.minority)}</span>`
+        : `<span>Majority${sideParty(members.filter(m => isMaj(m.entry))) ? ": " + esc(sideParty(members.filter(m => isMaj(m.entry)))) : ""}</span><span>Minority${sideParty(members.filter(m => !isMaj(m.entry))) ? ": " + esc(sideParty(members.filter(m => !isMaj(m.entry)))) : ""}</span>`);
       const box = h("div", { class: "cm-dais", role: "group", "aria-label": `${com.full_name}, ${members.length} members, seated by committee rank` });
-      T.box = box; T.members = members; T.list = list; T.on = on;
-      T.body.append(head, sides, box, h("p", { class: "cm-note" }, "Seated by committee rank"));
+      T.box = box; T.members = members; T.list = list; T.on = on; T.incoming = incoming;
+      T.body.append(head, sides, box, h("p", { class: "cm-note" }, incoming ? words.note : "Seated by committee rank"));
       if (!members.length) box.replaceWith(h("p", { class: "cm-none" }, "No members listed for this committee yet."));
-      else drawDais(box, members, list, on);
+      else drawDais(box, members, list, on, incoming);
       const nw = newcomers(list, on);
       if (nw) T.body.appendChild(nw);
       if (members.length) T.body.append(h("h3", { class: "cm-lh" }, "Members in seat order"), cards(members, list));
@@ -216,31 +261,38 @@
     timer = setTimeout(() => {
       if (!T || !T.box || !document.contains(T.box)) return;
       const W = Math.min(T.box.clientWidth || 358, 760);
-      if (SM.state.view === "committees" && seatsPerRow(W, T.pitch) !== T.perRow) drawDais(T.box, T.members, T.list, T.on);
+      if (SM.state.view === "committees" && seatsPerRow(W, T.pitch) !== T.perRow) drawDais(T.box, T.members, T.list, T.on, T.incoming);
     }, 150);
   });
 
   SM.views.committees = {
     render(viewEl, st) {
-      const list = SM.senate(), committees = committeeListFor(SM.data.senate);
-      const code = cleanCommittee(st.committee, committees);
-      if (code !== st.committee) SM.setAddress({ committee: code });
-      const sel = h("select", { id: "cm-select" });
-      committees.forEach(c => sel.appendChild(h("option", { value: c.code }, esc(c.name))));
-      sel.value = code;
-      const pick = h("label", { class: "cp-field cm-pick", for: "cm-select" }, "<span>Committee</span>");
-      pick.appendChild(sel);
-      const body = h("div", { class: "cm-body" });
-      const wrap = h("div", { class: "cm", "data-view": "committees" });
-      wrap.append(pick, body);
-      viewEl.replaceChildren(wrap);
-      T = { committees, body, code };
-      sel.addEventListener("change", () => {
-        T.code = sel.value;
-        SM.setAddress({ committee: sel.value, seat: null });
-        fill(sel.value);
+      const token = (renderToken = {});
+      loadTiers().then(tiers => {
+        if (renderToken !== token) return; // the tab was rendered again while the file loaded
+        const committees = committeeListFor(SM.data.senate);
+        const code = cleanCommittee(st.committee, committees, tiers);
+        if (code !== st.committee) SM.setAddress({ committee: code });
+        const sel = h("select", { id: "cm-select" });
+        groupCommittees(committees, tiers).forEach(g => {
+          const into = g.label ? sel.appendChild(h("optgroup", { label: g.label })) : sel;
+          g.committees.forEach(c => into.appendChild(h("option", { value: c.code }, esc(c.name))));
+        });
+        sel.value = code;
+        const pick = h("label", { class: "cp-field cm-pick", for: "cm-select" }, "<span>Committee</span>");
+        pick.appendChild(sel);
+        const body = h("div", { class: "cm-body" });
+        const wrap = h("div", { class: "cm", "data-view": "committees" });
+        wrap.append(pick, body);
+        viewEl.replaceChildren(wrap);
+        T = { committees, body, code, tiers };
+        sel.addEventListener("change", () => {
+          T.code = sel.value;
+          SM.setAddress({ committee: sel.value, seat: null });
+          fill(sel.value);
+        });
+        fill(code);
       });
-      fill(code);
     },
   };
 })(this);

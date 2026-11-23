@@ -402,6 +402,7 @@ svg.lmap{background:var(--plate)}
 .cm-who{min-width:0}
 .cm-title{margin:0 0 4px;font:600 var(--t18)/1.25 Inter,system-ui,sans-serif;text-transform:none;letter-spacing:normal;outline:none}
 .cm-label{margin:0 0 4px;font-size:var(--t13);color:var(--muted)}
+.cm-tier{margin:0 0 6px;font-size:var(--t13);color:var(--muted)}
 .cm-roles{font-size:var(--t14)}
 .cm-sides{max-width:760px;margin-left:auto;margin-right:auto;display:flex;justify-content:space-between;font-size:var(--t13);font-weight:600;color:var(--muted);margin-top:0;margin-bottom:2px}
 .cm-dais{position:relative;max-width:760px;margin:0 auto}

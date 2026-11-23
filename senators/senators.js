@@ -95,6 +95,34 @@ const side = e => (/^maj/.test(e.side) ? 0 : /^min/.test(e.side) ? 1 : 2);
 return out.sort((a, b) => side(a.entry) - side(b.entry) || (a.entry.rank ?? 999) - (b.entry.rank ?? 999) ||
 plain(a.rec.last_name || "", b.rec.last_name || "") || plain(a.rec.seat_id || "", b.rec.seat_id || ""));
 }
+function incomingSeating(records, code) {
+const labelled = r => { const p = r.placement; return !Array.isArray(r.committees) && p && p.label && Array.isArray(p.committees) && p.committees.length > 0; };
+if (!records.some(labelled)) return null;
+const PARTIES2 = ["Democrat", "Republican"], other = p => (p === "Democrat" ? "Republican" : "Democrat");
+const tally = { Democrat: 0, Republican: 0 };
+records.forEach(r => { if (!labelled(r) || !(r.party in tally)) return; r.placement.committees.forEach(c => { if (/^maj/.test(c.side)) tally[r.party]++; }); });
+const prior = tally.Democrat > tally.Republican ? "Democrat" : "Republican";
+const partyOf = r => {
+if (PARTIES2.includes(r.party)) return r.party;
+const c = labelled(r) ? r.placement.committees.find(x => /^(maj|min)/.test(x.side || "")) : null;
+if (c) return /^maj/.test(c.side) ? prior : other(prior);
+return PARTIES2.includes(r.caucus) ? r.caucus : null;
+};
+const n = { Democrat: 0, Republican: 0 };
+records.forEach(r => { const p = partyOf(r); if (p) n[p]++; });
+const majority = n.Democrat === n.Republican ? prior : n.Democrat > n.Republican ? "Democrat" : "Republican";
+const members = [];
+records.forEach(rec => {
+if (!labelled(rec)) return;
+const e = rec.placement.committees.find(c => c.code === code), p = partyOf(rec);
+if (!e || !p) return;
+members.push({ rec, entry: { ...e, side: p === majority ? "majority" : "minority", title: null, was_title: e.title || null } });
+});
+const side = e => (e.side === "majority" ? 0 : 1);
+members.sort((a, b) => side(a.entry) - side(b.entry) || (a.entry.rank ?? 999) - (b.entry.rank ?? 999) ||
+plain(a.rec.last_name || "", b.rec.last_name || "") || plain(a.rec.seat_id || "", b.rec.seat_id || ""));
+return { members, majority, minority: other(majority) };
+}
 function partyCounts(records) {
 const c = { Democrat: 0, Independent: 0, Republican: 0 };
 records.forEach(r => { if (r.party in c) c[r.party]++; });
@@ -194,7 +222,7 @@ UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia"
 const Calc = {
 STATES, STATE_NAMES, REGION_SLUGS, SORTS, cleanState, cleanRegion, cleanSort, SWEARING_IN, PARTIES, YEARS_CAP, dateFor, ageOn,
 yearsInSenate, wholeYearsInSenate, earlierYears, yearsT, sameHolder, nextElectionShown, nextElectionWords, partyCounts, caucusCounts, caucusWords, classUp, classWords, sortKeys,
-compareBy, compareState, serviceDays, ageDays, wholeYearsBetween, margin, marginCompare, seatsOf, committeeMembers,
+compareBy, compareState, serviceDays, ageDays, wholeYearsBetween, margin, marginCompare, seatsOf, committeeMembers, incomingSeating,
 };
 if (typeof module !== "undefined" && module.exports) module.exports = Calc;
 else root.Calc = Calc;

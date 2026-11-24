@@ -18,8 +18,8 @@
     "Puzzles",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:27:51Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T06:33:57Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "balatro",
@@ -57,6 +57,24 @@
    "updatedText": "1 November 2026"
   },
   {
+   "repo": "dune-spice-wars",
+   "game": "Dune: Spice Wars",
+   "description": "A free hint guide for Dune: Spice Wars, with spoiler levels you control.",
+   "introFull": "A free hint guide for Dune: Spice Wars, with spoiler levels you control. Get help with the houses, the Landsraad, Conquest and skirmish strategy. Your AI agent answers only from the guide files, and says so when the guide does not know.",
+   "url": "https://github.com/hintforge/dune-spice-wars",
+   "image": "assets/guides/dune-spice-wars.svg",
+   "imageAlt": "Dune: Spice Wars companion status: coverage, verification, spoiler control, save reader, and tools",
+   "coverage": [
+    "Mechanics",
+    "Scenarios",
+    "Items",
+    "Factions",
+    "Achievements"
+   ],
+   "updated": "2026-11-24T08:25:05Z",
+   "updatedText": "24 November 2026"
+  },
+  {
    "repo": "frostpunk",
    "game": "Frostpunk",
    "description": "A free, spoiler-controlled hint guide for Frostpunk.",
@@ -71,8 +89,8 @@
     "Endings",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:15:57Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T07:11:37Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "ftl-faster-than-light",
@@ -89,8 +107,8 @@
     "Factions",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:16:02Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T07:11:23Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "halo-infinite",
@@ -110,8 +128,8 @@
     "Optional zones",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:37:42Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T07:19:41Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "into-the-breach",
@@ -146,8 +164,8 @@
     "Pokemon",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:02:01Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T07:27:20Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "phantom-doctrine",
@@ -165,8 +183,8 @@
     "Paths",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:27:12Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T07:39:38Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "planet-zoo",
@@ -183,8 +201,8 @@
     "Settings",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:37:35Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T07:34:24Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "planet-zoo-2",
@@ -218,8 +236,8 @@
     "Puzzles",
     "Achievements"
    ],
-   "updated": "2026-11-07T15:44:06Z",
-   "updatedText": "7 November 2026"
+   "updated": "2026-11-24T06:40:22Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "red-dead-redemption-2",
@@ -255,8 +273,8 @@
     "Endings",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:16:20Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T06:28:15Z",
+   "updatedText": "24 November 2026"
   },
   {
    "repo": "warhammer-40-000-rogue-trader",
@@ -274,8 +292,8 @@
     "Puzzles",
     "Achievements"
    ],
-   "updated": "2026-11-01T20:16:25Z",
-   "updatedText": "1 November 2026"
+   "updated": "2026-11-24T07:27:36Z",
+   "updatedText": "24 November 2026"
   }
  ],
  "framework": [
